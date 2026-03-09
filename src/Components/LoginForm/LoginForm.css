@@ -1,151 +1,80 @@
 .wrapper {
-    
-    padding: 3rem;
-    border-radius: 1rem;
-    color: rgb(37, 54, 98);
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    position: relative;
-    overflow: hidden;
-}
-
-.wrapper::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    /* background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4); */
+  width: 420px;
+  background: #1f2937;
+  border-radius: 10px;
+  padding: 30px 40px;
+  margin: auto;
+  margin-top: 100px;
+  color: white;
 }
 
 .wrapper h1 {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 2rem;
-    font-weight: 600;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.wrapper form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  font-size: 36px;
+  text-align: center;
 }
 
 .input-box {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
+  margin: 20px 0;
 }
 
 .input-box input {
-    width: 100%;
-    padding: 1rem 3rem 1rem 1rem;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 0.5rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+  width: 100%;
+  height: 45px;
+  background: transparent;
+  border: 2px solid #4b5563;
+  border-radius: 40px;
+  outline: none;
+  font-size: 16px;
+  color: white;
+  padding: 0 20px;
 }
 
 .input-box input::placeholder {
-    color: rgba(255, 255, 255, 0.7);
+  color: #9ca3af;
 }
 
-.input-box input:focus {
-    outline: none;
-    border-color: #793dd9;
-    background-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+.icon {
+  position: absolute;
+  right: 20px;
+  top: 12px;
 }
 
-.input-box .icon {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 1.2rem;
-    transition: color 0.3s ease;
+button {
+  width: 100%;
+  height: 45px;
+  background: #3b82f6;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
 }
 
-.input-box input:focus + .icon {
-    color: #ab5cca;
+button:hover {
+  background: #2563eb;
 }
 
 .remember-forget {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
 }
 
-.remember-forget label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
+.register-link,
+.login-link {
+  font-size: 14px;
+  text-align: center;
+  margin-top: 20px;
 }
 
-.remember-forget input[type="checkbox"] {
-    accent-color: #a859da;
+a {
+  color: #3b82f6;
+  text-decoration: none;
 }
 
-.remember-forget a {
-    color: #d4a8f0;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.remember-forget a:hover {
-    color: #c45f4d;
-    text-decoration: underline;
-}
-
-.wrapper button {
-    width: 100%;
-    padding: 1rem;
-    border: none;
-    border-radius: 0.5rem;
-    background: linear-gradient(135deg, #88279b, #4e99c4);
-    color: white;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
-}
-
-.wrapper button:hover {
-    background: linear-gradient(135deg, #983ebe, #4ca6cc);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
-}
-
-.wrapper button:active {
-    transform: translateY(0);
-}
-
-.register-link {
-    text-align: center;
-    font-size: 0.9rem;
-}
-
-.register-link p {
-    margin: 0;
-}
-
-.register-link a {
-    color: #d4a8f0;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s ease;
-}
-
-.register-link a:hover {
-    color: #f8e47e;
-    text-decoration: underline;
+.error {
+  color: red;
+  text-align: center;
 }
