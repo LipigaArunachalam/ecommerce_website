@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import API from "../../services/api";
-// import "./ResetPassword.css";
+import API from "../../../services/api";
+import { useForm } from "react-hook-form";
+
 
 const ResetPassword = () => {
 
@@ -11,43 +12,41 @@ const ResetPassword = () => {
   const email = searchParams.get("email");
   const token = searchParams.get("token");
 
-  const [newPassword, setNewPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [error,setError] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const {register,handleSubmit, formState:{errors}}= useForm();
+
+  const handleReset = async (data) => {
 
     try {
+      const res = await API.post("/auth/reset-password", {newPassword:data.newPassword,email,token});
 
-      const res = await API.post("/auth/reset-password", {
-        email,token,newPassword});
-
-      setMessage(res.data.message);
-
+      alert("password reset successfully");
+      console.log(res);
       setTimeout(() => {
         navigate("/");
       }, 2000);
 
     } catch (err) {
       console.error(err);
-      setMessage("Password reset failed");
+      setError("Password reset failed");
     }
   };
 
   return (
     <div className="wrapper">
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(handleReset)}>
 
         <h1>Reset Password</h1>
+
+        {error && <p className="error">{error}</p>}
 
         <div className="input-box">
           <input
             type="password"
             placeholder="Enter new password"
-            required
-            value={newPassword}
-            onChange={(e)=>setNewPassword(e.target.value)}
+            {...register("newPassword",{required:"password is needed"})}
           />
         </div>
 
@@ -55,7 +54,7 @@ const ResetPassword = () => {
           Reset Password
         </button>
 
-        {message && <p className="message">{message}</p>}
+        {errors.newPassword && <p className="error">{errors.newPassword.message}</p>}
 
       </form>
 
