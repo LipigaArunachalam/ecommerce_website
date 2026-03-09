@@ -1,33 +1,25 @@
 import React, { useState } from "react";
-import "./SignUpForm.css";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
-import API from "../../services/api";
+import API from "../../../services/api";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const SignUpForm = () => {
 
   const navigate = useNavigate();
-
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [zip_code, setZipCode] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
+  
   const [error, setError] = useState("");
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
+  const {register,handleSubmit,formState: { errors }} = useForm();
 
-    if (password !== confirmPassword) {
+  const handleSignup = async (data) => {
+
+    if (data.password !== data.confirmPassword) {
       setError("Passwords do not match");
       return;
     }
-
     try {
-
-      const res = await API.post("/auth/signup", { email, username, password, zip_code, city, state });
+      const res = await API.post("/auth/signup", data);
 
       console.log("Signup success:", res.data);
 
@@ -46,7 +38,7 @@ const SignUpForm = () => {
   return (
     <div className="wrapper">
 
-      <form onSubmit={handleSignup}>
+      <form onSubmit={handleSubmit(handleSignup)}>
 
         <h1>Sign Up</h1>
 
@@ -56,74 +48,67 @@ const SignUpForm = () => {
           <input
             type="text"
             placeholder="Username"
-            required
-            value={username}
-            onChange={(e)=>setUsername(e.target.value)}
+            {...register("username" , {required:"username is required"})}
           />
           <FaUser className="icon"/>
+           {errors.username && <p className="error">{errors.username.message}</p>}
         </div>
 
         <div className="input-box">
           <input
             type="email"
             placeholder="Email"
-            required
-            value={email}
-            onChange={(e)=>setEmail(e.target.value)}
+            {...register("email",{required:"email is required"})}
           />
           <FaEnvelope className="icon"/>
+           {errors.email && <p className="error">{errors.email.message}</p>}
         </div>
 
         <div className="input-box">
           <input
             type="password"
             placeholder="Password"
-            required
-            value={password}
-            onChange={(e)=>setPassword(e.target.value)}
+            {...register("password",{required:"password is required"})}
           />
           <FaLock className="icon"/>
+           {errors.password && <p className="error">{errors.password.message}</p>}
         </div>
 
         <div className="input-box">
           <input
             type="password"
             placeholder="Confirm Password"
-            required
-            value={confirmPassword}
-            onChange={(e)=>setConfirmPassword(e.target.value)}
+            {...register("confirmPassword",{required:"password is required"})}
           />
           <FaLock className="icon"/>
+           {errors.confirmPassword && <p className="error">{errors.confirmPassword.message}</p>}
         </div>
 
         <div className="input-box">
           <input
             type="text"
             placeholder="Zip Code"
-            required
-            value={zip_code}
-            onChange={(e)=>setZipCode(e.target.value)}
+            {...register("zip_code",{required:"zip code is required"})}
           />
+           {errors.zip_code && <p className="error">{errors.zip_code.message}</p>}
         </div>
 
         <div className="input-box">
           <input
             type="text"
             placeholder="City"
-            required
-            value={city}
-            onChange={(e)=>setCity(e.target.value)}
+            {...register("city",{required: "city is required"})}
           />
+           {errors.city && <p className="error">{errors.city.message}</p>}
         </div>
 
         <div className="input-box">
           <input
             type="text"
             placeholder="State"
-            required
-            value={state}
-            onChange={(e)=>setState(e.target.value)}
+            {...register("state",{required:"state is required"})}
           />
+           {errors.state && <p className="error">{errors.state.message}</p>}
         </div>
 
         <button type="submit">Sign Up</button>
