@@ -1,5 +1,5 @@
-const Seller = () => {
-    
+const Sellers = () => {
+
 }
 
-export default Seller;
+export default Sellers;
