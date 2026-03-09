@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./LoginForm.css";
+// import "./LoginForm.css";
 import { FaUser, FaLock } from "react-icons/fa";
-import API from "../../services/api";
+import API from "../../../services/api";
 import { Link } from "react-router-dom";
 
 const LoginForm = () => {

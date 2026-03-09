@@ -1,16 +1,18 @@
 
 import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import LoginForm from './Components/LoginForm/LoginForm'
-import SignUpForm from  './Components/SignUpForm/SignUpForm'
-import ForgotPassword from './Components/auth/ForgotPassword'
-import ResetPassword from './Components/auth/resetPassword'
+import LoginForm from './Components/pages/auth/LoginForm'
+import SignUpForm from  './Components/pages/auth/SignUpForm'
+import ForgotPassword from './Components/pages/auth/ForgotPassword'
+import ResetPassword from './Components/pages/auth/resetPassword'
+import AdminDashboard from './Components/pages/admin/Dashboard'
 
 function App() {
 
   return (
     <BrowserRouter>
       <Routes>
+
 
         <Route path="/" element={<LoginForm />} />
 
@@ -19,6 +21,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
         <Route path="/reset-password" element={<ResetPassword />} />
+
 
       </Routes>
     </BrowserRouter>

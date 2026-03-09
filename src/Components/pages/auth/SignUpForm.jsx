@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./SignUpForm.css";
+// import "./SignUpForm.css";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
-import API from "../../services/api";
+import API from "../../../services/api";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
