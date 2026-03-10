@@ -9,7 +9,7 @@
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const API = createApi({
+export const AdminApi = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/api' }), 
   tagTypes: ['Sellers'],
@@ -48,4 +48,4 @@ export const API = createApi({
   }),
 }); 
 
-export const { useGetAllSellerQuery, useGetAllCustomerQuery, useDeleteSellerMutation, useAddSellerMutation } = API;
+export const { useGetAllSellerQuery, useGetAllCustomerQuery, useDeleteSellerMutation, useAddSellerMutation } = AdminApi;

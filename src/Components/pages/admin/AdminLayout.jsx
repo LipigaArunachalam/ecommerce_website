@@ -1,31 +1,3 @@
-// import { Drawer } from "@mui/material"
-// import { Outlet } from "react-router-dom"
-
-
-// export const AdminLayout = () =>{
-//     return (
-//         <div style={{ display: "flex" }}>
-//             <Drawer variant="permanent" anchor="left">
-//                 <div style={{ width: 250, padding: 20 }}>
-//                     <h3>Admin Menu</h3>
-//                     <ul style={{ listStyle: "none", padding: 0 }}>
-//                         <li><a href="/admin">Dashboard</a></li>
-//                         <li><a href="/admin/products">Products</a></li>
-//                         <li><a href="/admin/sellers">Sellers</a></li>
-//                         <li><a href="/admin/customers">Customers</a></li>
-//                         <li><a href="/admin/orders">Orders</a></li>
-//                         <li><a href="/login">logout</a></li>
-//                     </ul>
-//                 </div>
-//             </Drawer>
-//             <div style={{ flex: 1, padding: 20 }}>
-//                 <Outlet />
-//             </div>
-//         </div>
-
-//     )
-// }
-
 import React from "react";
 import { 
   Drawer, 
@@ -110,7 +82,6 @@ export const AdminLayout = () => {
         </Box>
       </Drawer>
 
-      {/* Main Content Area */}
       <Box 
         component="main" 
         sx={{ 
