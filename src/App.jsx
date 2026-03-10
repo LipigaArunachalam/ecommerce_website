@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 // import ResetPassword from './Components/pages/auth/resetPassword'
 import AdminDashboard from './Components/pages/admin/Dashboard'
 import { AdminLayout } from './Components/pages/admin/AdminLayout';
-import Products from './Components/pages/admin/Products';
+// import Products from './Components/pages/admin/Products';
 import Customers from './Components/pages/admin/Customer';
 import Sellers from './Components/pages/admin/seller';
 import Orders from './Components/pages/admin/Order';
@@ -30,7 +30,7 @@ function App() {
         <Route path="/admin" element={<AdminLayout />} >
           <Route index element={<AdminDashboard />} />
           <Route path="customers" element={<Customers />} />
-          <Route path="products" element={<Products />} />
+          {/* <Route path="products" element={<Products />} /> */}
           <Route path="sellers" element={<Sellers />} />
           <Route path="orders" element={<Orders />} />
         </Route>

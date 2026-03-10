@@ -54,7 +54,7 @@ const drawerWidth = 260;
 export const AdminLayout = () => {
   const menuItems = [
     { text: "Dashboard", icon: <Dashboard />, path: "/admin" },
-    { text: "Products", icon: <Inventory />, path: "/admin/products" },
+    // { text: "Products", icon: <Inventory />, path: "/admin/products" },
     { text: "Sellers", icon: <Storefront />, path: "/admin/sellers" },
     { text: "Customers", icon: <People />, path: "/admin/customers" },
     { text: "Orders", icon: <ShoppingCart />, path: "/admin/orders" },

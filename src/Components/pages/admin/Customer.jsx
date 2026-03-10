@@ -1,6 +1,6 @@
 
 import { useGetAllCustomerQuery } from "../../../services/api";
-import { Card, CardContent, Typography, Grid, Container, Button } from "@mui/material";
+import { Card, CardContent, Typography, Grid, Container, Button, Box } from "@mui/material";
 import { useState } from "react";
 
 const Customers = () => {
@@ -10,15 +10,26 @@ const Customers = () => {
         page,
         limit
     });
-    console.log(data);
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error occurred while fetching customers.</div>;
 
     return (
-        <Container maxWidth="lg" style={{  }}>
-            <h2>Customers</h2>
-            <Button variant="contained" onClick={() => setPage((prev) => prev + 1)}>Next Page</Button>
-            <Button variant="contained" onClick={() => setPage((prev) => Math.max(prev - 1, 1))}>Previous Page</Button>
+        <Container maxWidth="lg" >
+            <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+                <Typography variant="h4">customers</Typography>
+                <Box>
+                    <Button 
+                        disabled={page === 1} 
+                        onClick={() => setPage((prev) => prev - 1)}
+                    >
+                        Previous
+                    </Button>
+                    <Button onClick={() => setPage((prev) => prev + 1)}>
+                        Next
+                    </Button>
+                </Box>
+            </Box>
+            
             <Grid container spacing={3}>
                 {data?.map((customer) => (
                     <Grid item xs={12} sm={6} md={4} key={customer._id} >
