@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import API from "../../../services/api";
 
 import { useForm } from "react-hook-form";
+import { useResetPasswordMutation } from "../../../services/authApi";
 
 
 const ResetPassword = () => {
@@ -17,16 +17,17 @@ const ResetPassword = () => {
 
   const {register,handleSubmit, formState:{errors}}= useForm();
 
+  const[resetPassword] = useResetPasswordMutation();
+
   const handleReset = async (data) => {
 
     try {
-      const res = await API.post("/auth/reset-password", {newPassword:data.newPassword,email,token});
+      //const res = await API.post("/auth/reset-password", {newPassword:data.newPassword,email,token});
+      const res = await resetPassword({email, password : data.newPassword, token});
 
       alert("password reset successfully");
       console.log(res);
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
+      navigate("/");
 
     } catch (err) {
       console.error(err);
