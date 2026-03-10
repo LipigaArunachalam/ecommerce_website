@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
-import API from "../../../services/api";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useSignupMutation } from "../../../services/authApi";
 
 const SignUpForm = () => {
 
@@ -12,6 +12,8 @@ const SignUpForm = () => {
 
   const {register,handleSubmit,formState: { errors }} = useForm();
 
+  const [signup] = useSignupMutation();
+
   const handleSignup = async (data) => {
 
     if (data.password !== data.confirmPassword) {
@@ -19,13 +21,13 @@ const SignUpForm = () => {
       return;
     }
     try {
-      const res = await API.post("/auth/signup", data);
+      const res = await signup(data).unwrap();
 
       console.log("Signup success:", res.data);
 
       alert("Signup successful");
 
-      navigate("/");
+      navigate("/products");
 
     } catch (err) {
 

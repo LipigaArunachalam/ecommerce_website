@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
-import API from "../../../services/api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useLoginMutation } from "../../../services/authApi";
+import { Button } from "@mui/material";
 
 const LoginForm = () => {
 
@@ -10,15 +11,26 @@ const LoginForm = () => {
 
   const {register,handleSubmit,formState: { errors }} = useForm();
 
+  const [login] = useLoginMutation();
+  const navigate = useNavigate();
+
   const onSubmit = async (data) => {
 
     try {
 
-      const res = await API.post("/auth/login", data);
+      //const res = await API.post("/auth/login", data);
+      const res = await login(data).unwrap();
+      localStorage.setItem("email", res.user.email);
+      localStorage.setItem("role", res.user.role);
+      localStorage.setItem("user_id", res.user.user_id);
 
-      console.log("Login success:", res.data);
+      console.log("Login success:", res);
 
       alert("Login successful");
+      if(localStorage.getItem("role")==="seller"){
+         navigate("/seller-profile");
+      }
+     
 
     } catch (err) {
 
@@ -74,7 +86,8 @@ const LoginForm = () => {
 
         </div>
 
-        <button type="submit">Login</button>
+        {/* <button type="submit">Login</button> */}
+        <Button variant="contained" type="submit">Login</Button>
 
         <div className="register-link">
           <p>
