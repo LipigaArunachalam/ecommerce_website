@@ -1,5 +1,5 @@
 
-import { useGetAllCustomerQuery } from "../../../services/api";
+import { useGetAllCustomerQuery } from "../../../services/rtkQuery/adminApi";
 import { Card, CardContent, Typography, Grid, Container, Button, Box } from "@mui/material";
 import { useState } from "react";
 

@@ -40,6 +40,8 @@ function App() {
         <Route path="/add-product" element={<AddProduct/>}/>
         <Route path="/order-status" element={<OrderStatus/>}/>
 
+       
+
       </Routes>
     </BrowserRouter>
   );

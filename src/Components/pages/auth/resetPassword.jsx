@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
-import { useResetPasswordMutation } from "../../../services/authApi";
+import { useResetPasswordMutation } from "../../../services/rtkQuery/authApi";
 
 
 const ResetPassword = () => {
@@ -23,7 +23,7 @@ const ResetPassword = () => {
 
     try {
       //const res = await API.post("/auth/reset-password", {newPassword:data.newPassword,email,token});
-      const res = await resetPassword({email, password : data.newPassword, token});
+      const res = await resetPassword({email, newPassword : data.newPassword, token});
 
       alert("password reset successfully");
       console.log(res);

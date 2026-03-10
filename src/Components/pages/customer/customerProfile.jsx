@@ -1,9 +1,9 @@
 import React from "react";
-import { useGetSellerDetailsQuery } from "../../../services/rtkQuery/sellerApi";
+import { useGetCustomerDetailsQuery } from "../../../services/rtkQuery/sellerApi";
 
-const SellerProfile = () => {
+const CustomerProfile = () => {
 
-  const { data, error, isLoading } = useGetSellerDetailsQuery();
+  const { data, error, isLoading } = useGetCustomerDetailsQuery();
 
   if (isLoading) {
     return <p>Loading profile...</p>;
@@ -29,4 +29,4 @@ const SellerProfile = () => {
   );
 };
 
-export default SellerProfile;
+export default CustomerProfile;

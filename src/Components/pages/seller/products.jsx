@@ -3,7 +3,7 @@ import {
   useDeleteProductMutation,
   useGetProductsQuery,
   useUpdateProductMutation
-} from "../../../services/sellerApi";
+} from "../../../services/rtkQuery/sellerApi";
 
 import {
   Box, Card, CardContent, Typography, Button, Stack, Dialog, 
