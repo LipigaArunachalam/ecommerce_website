@@ -7,6 +7,7 @@ import ResetPassword from './Components/pages/auth/resetPassword'
 import SellerProfile from './Components/pages/seller/sellerProfile'
 import Products from './Components/pages/seller/products'
 import AddProduct from './Components/pages/seller/adddProduct'
+import OrderStatus from './Components/pages/seller/orderStatus'
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/seller-profile" element={<SellerProfile/>}/>
         <Route path="/products" element={<Products/>}/>
         <Route path="/add-product" element={<AddProduct/>}/>
+        <Route path="/order-status" element={<OrderStatus/>}/>
 
       </Routes>
     </BrowserRouter>
