@@ -1,15 +1,6 @@
-// import axios from "axios";
-
-// const API = axios.create({
-//   baseURL: "http://localhost:3000",
-//   withCredentials: true,
-// });
-
-// export default API;
-
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const AdminApi = createApi({
+export const adminApi = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/api' }), 
   tagTypes: ['Sellers'],
@@ -48,4 +39,4 @@ export const AdminApi = createApi({
   }),
 }); 
 
-export const { useGetAllSellerQuery, useGetAllCustomerQuery, useDeleteSellerMutation, useAddSellerMutation } = AdminApi;
+export const { useGetAllSellerQuery, useGetAllCustomerQuery, useDeleteSellerMutation, useAddSellerMutation } = adminApi;

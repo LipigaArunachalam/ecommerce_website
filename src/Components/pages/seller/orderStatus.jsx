@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography,Button,Grid,CardContent,Box,Card,FormControl,InputLabel,MenuItem,Select } from "@mui/material";
-import { useOrderStatusQuery,useUpdateOrderStatusMutation } from "../../../services/sellerApi";
+import { useOrderStatusQuery,useUpdateOrderStatusMutation } from "../../../services/rtkQuery/sellerApi";
 
 const OrderStatus=()=>{
     const {data,error,isLoading} = useOrderStatusQuery();

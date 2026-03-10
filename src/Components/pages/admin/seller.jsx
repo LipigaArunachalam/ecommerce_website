@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { 
     useGetAllSellerQuery, 
     useDeleteSellerMutation, 
-    useAddSellerMutation } from "../../../services/api";
+    useAddSellerMutation } from "../../../services/rtkQuery/adminApi";
 import { 
     Card, 
     CardContent,

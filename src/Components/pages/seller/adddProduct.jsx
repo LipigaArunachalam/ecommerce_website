@@ -1,5 +1,5 @@
 import React from "react";
-import { useAddProductMutation } from "../../../services/sellerApi";
+import { useAddProductMutation } from "../../../services/rtkQuery/sellerApi";
 import { Box, Typography, Button, TextField, Paper } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useSignupMutation } from "../../../services/authApi";
+import { useSignupMutation } from "../../../services/rtkQuery/authApi";
 
 const SignUpForm = () => {
 
