@@ -86,6 +86,7 @@ const Products = () => {
     } catch (err) {
 
       console.error("Update failed", err);
+      setOpen(false);
 
     }
 
@@ -99,7 +100,7 @@ const Products = () => {
 
     <Box sx={{ padding: 4 }}>
 
-      <Typography variant="h4" mb={3}>
+      <Typography variant="h4" mb={3}  >
         Seller Products
       </Typography>
       <Button variant="contained" color="primary" onClick={handleAdd}>Add Product</Button>
