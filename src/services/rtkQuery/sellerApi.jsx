@@ -14,7 +14,8 @@ export const sellerApi = createApi({
       query: () => ({
         url: "/sellers",
         method: "GET"
-      })
+      }),
+      providesTags: ["Products"]
     }),
 
     getProducts : builder.query({
@@ -56,7 +57,7 @@ export const sellerApi = createApi({
         url:`/sellers/status`,
         method:"GET",
       }),
-     invalidatesTags: ["Products"],
+     providesTags: ["Products"],
     }),
 
     updateOrderStatus: builder.mutation({

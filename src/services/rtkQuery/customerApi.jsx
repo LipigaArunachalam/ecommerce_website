@@ -14,10 +14,19 @@ export const customerApi = createApi({
       query: () => ({
         url: "/users",
         method: "GET"
-      })
+      }),
+      providesTags:["customers"]
+    }),
+
+    getCatalog : builder.query({
+      query :()=>({
+        url : "/users/4f21938f7b925dd621343fc205395145/products", 
+        method:"GET",
+      }),
+      providesTags: ["customers"]
     }),
    
 })
 });
 
-export const {useCustomerDetailsQuery} = customerApi;
+export const {useCustomerDetailsQuery, useGetCatalogQuery} = customerApi;

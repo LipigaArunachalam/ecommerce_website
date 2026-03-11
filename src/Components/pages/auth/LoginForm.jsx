@@ -26,7 +26,6 @@ const LoginForm = () => {
 
       console.log("Login success:", res);
 
-      alert("Login successful");
       if(localStorage.getItem("role")==="seller"){
          navigate("/seller-profile");
       }
@@ -88,10 +87,9 @@ const LoginForm = () => {
                 type="submit" 
                 size="large" 
                 fullWidth
-                sx={{ py: 1.5, borderRadius: 2 }}
-              >
-                Login
+                sx={{ py: 1.5, borderRadius: 2 }}>  Login
               </Button>
+              
 
               <Typography variant="body2" align="center">
                 Don't have an account?{" "}

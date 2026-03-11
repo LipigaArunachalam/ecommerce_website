@@ -99,16 +99,18 @@ const Products = () => {
   return (
 
     <Box sx={{ padding: 4 }}>
-
+       <Box display="flex" justifyContent="space-between" sx={{mb:2}}>
       <Typography variant="h4" mb={3}  >
-        Seller Products
+        Products
       </Typography>
-      <Button variant="outlined" color="primary" onClick={handleAdd}>Add Product</Button>
-     <Grid container spacing ={3} justifyContent="center" alignItems="center">
+   
+      <Button variant="contained" color="primary" onClick={handleAdd}>Add Product</Button>
+      </Box>
+     <Grid container spacing ={3} justifyContent="center" alignItems="center" >
         {data.map((product) => (
         <Grid item xs={12} sm={6} md={4} key={product.product_id}>
         {/* <Card key={product.product_id} sx={{ mb: 3 }}> */}
-        <Card>
+        <Card sx={{boxShadow:6}}>
 
           <CardContent>
 

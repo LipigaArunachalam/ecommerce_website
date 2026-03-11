@@ -8,7 +8,8 @@ export const store = configureStore({
   reducer: {
     [adminApi.reducerPath]: adminApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
-    [sellerApi.reducerPath] : sellerApi.reducer
+    [sellerApi.reducerPath] : sellerApi.reducer,
+    [customerApi.reducerPath] : customerApi.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(authApi.middleware).concat(sellerApi.middleware).concat(adminApi.middleware)

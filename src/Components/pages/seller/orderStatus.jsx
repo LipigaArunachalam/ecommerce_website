@@ -30,10 +30,10 @@ const OrderStatus=()=>{
 
   return(
     <Box>
-      <Grid container spacing ={3} justifyContent="center" alignItems="center">
+      <Grid container spacing ={4} justifyContent="center" alignItems="center">
         {data.map((product) => (
         <Grid item xs={12} sm={6} md={4} key={product.product_id}>
-        <Card sx={{borderRadius:5}}>
+        <Card sx={{borderRadius:5,boxShadow:6}}>
 
           <CardContent >
             <Typography variant="h6" mb={2} sx={{color:"#1f77d0", fontWeight:"600"}}>Order ID: {product.order_id}</Typography>
