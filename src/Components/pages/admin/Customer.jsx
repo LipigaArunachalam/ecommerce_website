@@ -1,5 +1,5 @@
 
-import { useGetAllCustomerQuery } from "../../../services/api";
+import { useGetAllCustomerQuery } from "../../../services/rtkQuery/adminApi";
 import { Card, CardContent, Typography, Grid, Container, Button, Box } from "@mui/material";
 import { useState } from "react";
 
@@ -35,7 +35,7 @@ const Customers = () => {
                     <Grid item xs={12} sm={6} md={4} key={customer._id} >
                         <Card>
                             <CardContent>
-                                <Typography variant="h6" component="div" gutterBottom>
+                                <Typography variant="h6" component="div" textTransform="capitalize" gutterBottom>
                                     {customer.customer_name}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary" gutterBottom>

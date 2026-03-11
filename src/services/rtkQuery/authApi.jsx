@@ -4,7 +4,7 @@ export const authApi = createApi({
   reducerPath: "authApi",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000",
+    baseUrl: "http://localhost:3000/api",
     credentials: "include"
   }),
 
@@ -35,10 +35,10 @@ export const authApi = createApi({
     }),
 
     resetPassword: builder.mutation({
-      query: ({email, password, token}) => ({
+      query: ({email, newPassword, token}) => ({
         url: "/auth/reset-password",
         method: "POST",
-        body: {email, password, token}
+        body: {email, newPassword, token}
       })
     })
 

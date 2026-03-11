@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useForgotPasswordMutation } from "../../../services/authApi";
+import { useForgotPasswordMutation } from "../../../services/rtkQuery/authApi";
 
 const ForgotPassword = () => {
 

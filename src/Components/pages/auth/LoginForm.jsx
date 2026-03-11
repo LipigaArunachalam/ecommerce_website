@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useLoginMutation } from "../../../services/authApi";
+import { useLoginMutation } from "../../../services/rtkQuery/authApi";
 import { Button } from "@mui/material";
 
 const LoginForm = () => {
@@ -29,6 +29,9 @@ const LoginForm = () => {
       alert("Login successful");
       if(localStorage.getItem("role")==="seller"){
          navigate("/seller-profile");
+      }
+      if(localStorage.getItem("role")==="admin"){
+         navigate("/admin");
       }
      
 

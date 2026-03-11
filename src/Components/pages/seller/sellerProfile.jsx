@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetSellerDetailsQuery } from "../../../services/sellerApi";
+import { useGetSellerDetailsQuery } from "../../../services/rtkQuery/sellerApi";
 
 const Profile = () => {
 

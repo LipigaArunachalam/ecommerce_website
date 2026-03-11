@@ -17,19 +17,20 @@ import {
   Storefront, 
   People, 
   ShoppingCart, 
-  Logout 
+  Logout,
+  Person 
 } from "@mui/icons-material";
 import { Outlet, NavLink } from "react-router-dom";
+
 
 const drawerWidth = 260;
 
 export const AdminLayout = () => {
   const menuItems = [
     { text: "Dashboard", icon: <Dashboard />, path: "/admin" },
-    // { text: "Products", icon: <Inventory />, path: "/admin/products" },
     { text: "Sellers", icon: <Storefront />, path: "/admin/sellers" },
     { text: "Customers", icon: <People />, path: "/admin/customers" },
-    { text: "Orders", icon: <ShoppingCart />, path: "/admin/orders" },
+    { text: "Profile", icon: <Person/>, path: "/admin/profile" },
   ];
 
   return (
@@ -73,7 +74,7 @@ export const AdminLayout = () => {
           
           <List>
             <ListItem disablePadding>
-              <ListItemButton component={NavLink} to="/login">
+              <ListItemButton component={NavLink} to="/">
                 <ListItemIcon><Logout color="error" /></ListItemIcon>
                 <ListItemText primary="Logout" />
               </ListItemButton>
