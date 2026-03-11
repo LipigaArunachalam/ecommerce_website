@@ -3,6 +3,7 @@ import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSignupMutation } from "../../../services/rtkQuery/authApi";
+import { CardContent, Card, Box, Typography,Stack, TextField,Button , Link as MuiLink } from "@mui/material";
 
 const SignUpForm = () => {
 
@@ -38,92 +39,85 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="wrapper">
+   <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
+    <Card sx={{  p: 2, borderRadius: 7, boxShadow: 4 }}>
+      <CardContent>
+        <Typography variant="h4" align="center" fontWeight="bold">SIGNUP</Typography>
+
+        {error && <Typography color="error" align="center">{error}</Typography>}
 
       <form onSubmit={handleSubmit(handleSignup)}>
-
-        <h1>Sign Up</h1>
-
-        {error && <p className="error">{error}</p>}
-
-        <div className="input-box">
-          <input
-            type="text"
-            placeholder="Username"
-            {...register("username" , {required:"username is required"})}
+      <Stack spacing={2} sx={{ mt: 2 }}>
+          <TextField
+            label="Username"
+            variant="outlined"
+            fullWidth
+            {...register("username", { required: "Username is required" })}
+            error={!!errors.username}
+            helperText={errors.username?.message}
           />
-          <FaUser className="icon"/>
-           {errors.username && <p className="error">{errors.username.message}</p>}
-        </div>
-
-        <div className="input-box">
-          <input
+         
+  
+          <TextField
+            label="Email"
             type="email"
-            placeholder="Email"
+            variant="outlined"
             {...register("email",{required:"email is required"})}
+            error={!!errors.email}
+            helperText={errors.email?.message}
           />
-          <FaEnvelope className="icon"/>
-           {errors.email && <p className="error">{errors.email.message}</p>}
-        </div>
-
-        <div className="input-box">
-          <input
+       
+          <TextField
+            label="Password"
             type="password"
-            placeholder="Password"
-            {...register("password",{required:"password is required"})}
+            variant="outlined"
+            fullWidth
+            {...register("password", { required: "Password is required" })}
+            error={!!errors.password}
+            helperText={errors.password?.message}
           />
-          <FaLock className="icon"/>
-           {errors.password && <p className="error">{errors.password.message}</p>}
-        </div>
-
-        <div className="input-box">
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            {...register("confirmPassword",{required:"password is required"})}
+    
+  
+ 
+          <TextField
+            label="ZipCode"
+            variant="outlined"
+            fullWidth
+            {...register("zip_code", { required: "ZipCode is required" })}
+            error={!!errors.zip_code}
+            helperText={errors.zip_code?.message}
           />
-          <FaLock className="icon"/>
-           {errors.confirmPassword && <p className="error">{errors.confirmPassword.message}</p>}
-        </div>
-
-        <div className="input-box">
-          <input
-            type="text"
-            placeholder="Zip Code"
-            {...register("zip_code",{required:"zip code is required"})}
+      
+          <TextField
+            label="City"
+            variant="outlined"
+            fullWidth
+            {...register("city", { required: "city is required" })}
+            error={!!errors.city}
+            helperText={errors.city?.message}
           />
-           {errors.zip_code && <p className="error">{errors.zip_code.message}</p>}
-        </div>
-
-        <div className="input-box">
-          <input
-            type="text"
-            placeholder="City"
-            {...register("city",{required: "city is required"})}
+    
+          <TextField
+            label="State"
+            variant="outlined"
+            fullWidth
+            {...register("state", { required: "state is required" })}
+            error={!!errors.state}
+            helperText={errors.state?.message}
           />
-           {errors.city && <p className="error">{errors.city.message}</p>}
-        </div>
+     
 
-        <div className="input-box">
-          <input
-            type="text"
-            placeholder="State"
-            {...register("state",{required:"state is required"})}
-          />
-           {errors.state && <p className="error">{errors.state.message}</p>}
-        </div>
-
-        <button type="submit">Sign Up</button>
-
-        <div className="login-link">
-          <p>
-            Already have an account? <Link to="/">Login</Link>
-          </p>
-        </div>
-
+        <Button type="submit" variant="contained">Sign Up</Button>
+         <Typography variant="body2" align="center">Already have an account?{" "}
+                <MuiLink component={Link} to="/" fontWeight="bold"> Login</MuiLink>
+          </Typography>
+    
+      </Stack>
       </form>
-
-    </div>
+      
+      </CardContent>
+    </Card>
+   </Box>
   );
 };
 

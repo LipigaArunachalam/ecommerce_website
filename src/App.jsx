@@ -16,6 +16,7 @@ import OrderStatus from './Components/pages/seller/orderStatus'
 import CustomerProfile from './Components/pages/customer/customerProfile'
 import SellerLayout from './Components/pages/seller/sellerLayout'
 import ProtectedRoute from './services/authCheck/protectedRouute';
+import Logout from './Components/pages/auth/Logout';
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
         <Route path="/products" element={<Products/>}/>
         <Route path="/add-product" element={<AddProduct/>}/>
         <Route path="/order-status" element={<OrderStatus/>}/>
+        <Route path="/logout" element={<Logout/>}/>
       </Route>
       </Route>
 

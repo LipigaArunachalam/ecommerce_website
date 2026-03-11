@@ -103,7 +103,7 @@ const Products = () => {
       <Typography variant="h4" mb={3}  >
         Seller Products
       </Typography>
-      <Button variant="contained" color="primary" onClick={handleAdd}>Add Product</Button>
+      <Button variant="outlined" color="primary" onClick={handleAdd}>Add Product</Button>
      <Grid container spacing ={3} justifyContent="center" alignItems="center">
         {data.map((product) => (
         <Grid item xs={12} sm={6} md={4} key={product.product_id}>
@@ -124,7 +124,7 @@ const Products = () => {
             <Stack direction="row" spacing={2} mt={2}>
 
               <Button
-                variant="contained"
+                variant="outlined"
                 color="primary"
                 onClick={() => handleUpdate(product)}
               >
@@ -132,7 +132,7 @@ const Products = () => {
               </Button>
 
               <Button
-                variant="contained"
+                variant="outlined"
                 color="error"
                 onClick={() => handleDelete(product.product_id)}
               >

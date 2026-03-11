@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import { useResetPasswordMutation } from "../../../services/rtkQuery/authApi";
+import { CardContent,Box, Card, Typography,Stack,Button,Link as MuiLink, TextField } from "@mui/material";
 
 
 const ResetPassword = () => {
@@ -36,31 +37,42 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="wrapper">
+    <Box  sx={{ display: 'flex', justifyContent: 'center', mt: 18 }}>
+      <Card sx={{ p: 2, borderRadius: 7, boxShadow: 4 }}>
+        <CardContent>
 
+      <Typography  variant="h4" align="center" fontWeight="bold">RESET PASSWORD</Typography>
       <form onSubmit={handleSubmit(handleReset)}>
-
-        <h1>Reset Password</h1>
+        <Stack spacing={3} sx={{ mt: 2 }}>
 
         {error && <p className="error">{error}</p>}
 
-        <div className="input-box">
-          <input
+
+          <TextField
             type="password"
+            label="New Password"
+            variant="outlined"
+            fullWidth
             placeholder="Enter new password"
             {...register("newPassword",{required:"password is needed"})}
+            error={!!errors.newPassword}
+            helperText={errors.newPassword?.message}
           />
-        </div>
-
-        <button type="submit">
+        
+        <Button variant="contained" 
+                type="submit" 
+                size="large" 
+                fullWidth
+                sx={{ py: 1.5, borderRadius: 2 }}>
           Reset Password
-        </button>
+        </Button>
 
-        {errors.newPassword && <p className="error">{errors.newPassword.message}</p>}
-
+        
+       </Stack>
       </form>
-
-    </div>
+      </CardContent>
+      </Card>
+</Box>
   );
 };
 

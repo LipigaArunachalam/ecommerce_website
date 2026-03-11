@@ -17,11 +17,13 @@ import {
   Storefront, 
   People, 
   ShoppingCart, 
-  Logout 
+  Logout as LogoutIcon
 } from "@mui/icons-material";
 import { Outlet, NavLink } from "react-router-dom";
+import Logout from "../auth/Logout";
 
 const drawerWidth = 260;
+const { handleLogout } = Logout;
 
 const SellerLayout = () => {
   const menuItems = [
@@ -73,8 +75,8 @@ const SellerLayout = () => {
           
           <List>
             <ListItem disablePadding>
-              <ListItemButton component={NavLink} to="/login">
-                <ListItemIcon><Logout color="error" /></ListItemIcon>
+              <ListItemButton onClick={handleLogout}>
+                <ListItemIcon><LogoutIcon color="error" /></ListItemIcon>
                 <ListItemText primary="Logout" />
               </ListItemButton>
             </ListItem>
