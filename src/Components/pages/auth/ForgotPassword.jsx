@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useForgotPasswordMutation } from "../../../services/rtkQuery/authApi";
+import { CardContent, Typography,Card,Stack,Box, TextField,Button } from "@mui/material";
 
 const ForgotPassword = () => {
 
@@ -26,23 +27,34 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="wrapper">
+      <Box  sx={{ display: 'flex', justifyContent: 'center', mt: 18 }}>
+        <Card sx={{ p: 2, borderRadius: 7, boxShadow: 4 }}>
+          <CardContent >
+          <Typography  variant="h5" align="center" fontWeight="bold">FORGET PASSWORD</Typography>
+
       <form onSubmit={handleSubmit(handlePassword)}>
-        <h1>Forgot Password</h1>
+        <Stack spacing={3} sx={{ mt: 2 }}>
     
         {error && <p className="error">{error}</p>}
 
-        <input
-          type="email"
-          placeholder="Enter email"
-          {...register("email",{required:"emailisrequired"})}
+        <TextField
+          label="Email"
+          variant="outlined"
+          fullWidth
+          {...register("email", { required: "Email is required" })}
+          error={!!errors.email}
+          helperText={errors.email?.message}
         />
 
-        <button type="submit">Send Reset Link</button>
+        <Button variant="contained" type="submit" fullWidth
+                sx={{ py: 1.5, borderRadius: 2 }}>Send Reset Link</Button>
 
         {errors.email && <p>{errors.email.message}</p>}
+        </Stack>
       </form>
-    </div>
+      </CardContent>
+      </Card>
+    </Box>
   );
 };
 

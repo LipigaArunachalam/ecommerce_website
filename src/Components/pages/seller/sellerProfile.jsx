@@ -56,9 +56,7 @@ const SellerProfile = () => {
     />
   </CardContent>
 </Card>
-
-  
-      <Grid container spacing={3}>
+      <Grid container spacing={5}>
         <Grid item xs={12} md={6}>
           <Paper variant="outlined" sx={{ p: 2, borderRadius: 2, display: 'flex', alignItems: 'center', gap: 2 }}>
             <Email color="primary" />
@@ -89,7 +87,7 @@ const SellerProfile = () => {
           </Paper>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           <Paper variant="outlined" sx={{ p: 2, borderRadius: 2, display: 'flex', alignItems: 'center', gap: 2 }}>
             <Badge color="primary" />
             <Box>
@@ -97,7 +95,7 @@ const SellerProfile = () => {
               <Typography variant="body1" sx={{ textTransform: 'capitalize' }}>{data.role}</Typography>
             </Box>
           </Paper>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Box>
   );

@@ -3,7 +3,7 @@ import { FaUser, FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useLoginMutation } from "../../../services/rtkQuery/authApi";
-import { Button } from "@mui/material";
+import { Button,Card, CardContent,Stack,Typography,Link as MuiLink,TextField,Box } from "@mui/material";
 
 const LoginForm = () => {
 
@@ -48,62 +48,63 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="wrapper">
+    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 18 }}>
+      <Card sx={{ p: 2, borderRadius: 7, boxShadow: 4 }}>
+        <CardContent>
+          <Typography variant="h4" align="center" fontWeight="bold">LOGIN</Typography>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+          {error && <Typography color="error" align="center">{error}</Typography>}
 
-        <h1>Login</h1>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Stack spacing={3} sx={{ mt: 2 }}>
+              
+              <TextField
+                label="Email"
+                variant="outlined"
+                fullWidth
+                {...register("email", { required: "Email is required" })}
+                error={!!errors.email}
+                helperText={errors.email?.message}
+              />
 
-        {error && <p className="error">{error}</p>}
+              <TextField
+                label="Password"
+                type="password"
+                variant="outlined"
+                fullWidth
+                {...register("password", { required: "Password is required" })}
+                error={!!errors.password}
+                helperText={errors.password?.message}
+              />
 
-        <div className="input-box">
+              <Box sx={{ textAlign: 'right' }}>
+                <MuiLink component={Link} to="/forgot-password" variant="body2">
+                  Forgot Password?
+                </MuiLink>
+              </Box>
 
-          <input
-            type="email"
-            placeholder="Email"
-            {...register("email", { required: "Email is required" })}
-          />
+              <Button 
+                variant="contained" 
+                type="submit" 
+                size="large" 
+                fullWidth
+                sx={{ py: 1.5, borderRadius: 2 }}
+              >
+                Login
+              </Button>
 
-          <FaUser className="icon"/>
+              <Typography variant="body2" align="center">
+                Don't have an account?{" "}
+                <MuiLink component={Link} to="/signup" fontWeight="bold">
+                  Signup
+                </MuiLink>
+              </Typography>
 
-          {errors.email && <p className="error">{errors.email.message}</p>}
-
-        </div>
-
-        <div className="input-box">
-
-          <input
-            type="password"
-            placeholder="Password"
-            {...register("password", { required: "Password is required" })}
-          />
-
-          <FaLock className="icon"/>
-
-          {errors.password && <p className="error">{errors.password.message}</p>}
-
-        </div>
-
-        <div className="remember-forget">
-
-          <Link to="/forgot-password">
-            Forgot Password?
-          </Link>
-
-        </div>
-
-        {/* <button type="submit">Login</button> */}
-        <Button variant="contained" type="submit">Login</Button>
-
-        <div className="register-link">
-          <p>
-            Don't have an account? <Link to="/signup">Signup</Link>
-          </p>
-        </div>
-
-      </form>
-
-    </div>
+            </Stack>
+          </form>
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
 
