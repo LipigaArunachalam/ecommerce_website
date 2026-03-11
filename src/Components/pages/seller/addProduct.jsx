@@ -37,7 +37,7 @@ const AddProduct = () => {
           <TextField label="photos qty" type="number" {...register("product_photos_qty")} />
           
           <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-            <Button variant="outlined" onClick={() => navigate("/seller/products")}>Cancel</Button>
+            <Button variant="outlined" onClick={() => navigate("/products")}>Cancel</Button>
             <Button type="submit" variant="contained" color="primary">Add Product</Button>
           </Box>
         </Box>
