@@ -4,7 +4,7 @@ export const sellerApi = createApi({
   reducerPath: "sellerApi",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000",
+    baseUrl: "http://localhost:3000/api",
     credentials: "include"
   }),
   tagTypes: ["Products"],

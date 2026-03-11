@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { adminApi} from "../rtkQuery/adminApi";
 import { authApi } from "../rtkQuery/authApi";
 import { sellerApi } from "../rtkQuery/sellerApi";
+import { customerApi } from "../rtkQuery/customerApi";
 
 export const store = configureStore({
   reducer: {
@@ -11,4 +12,5 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(authApi.middleware).concat(sellerApi.middleware).concat(adminApi.middleware)
+  .concat(customerApi.middleware)
 });

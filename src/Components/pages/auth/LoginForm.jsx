@@ -31,7 +31,7 @@ const LoginForm = () => {
          navigate("/seller-profile");
       }
       if(localStorage.getItem("role")==="customer"){
-         navigate("/seller-profile");
+         navigate("/customer-profile");
       }
       if(localStorage.getItem("role")==="admin"){
          navigate("/seller-profile");

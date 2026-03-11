@@ -4,13 +4,13 @@ export const customerApi = createApi({
   reducerPath: "customerApi",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000",
+    baseUrl: "http://localhost:3000/api",
     credentials: "include"
   }),
   tagTypes: ["customers"],
   endpoints: (builder) => ({
 
-    getSellerDetails: builder.query({
+    customerDetails: builder.query({
       query: () => ({
         url: "/users",
         method: "GET"

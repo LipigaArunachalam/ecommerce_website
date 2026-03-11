@@ -1,9 +1,9 @@
 import React from "react";
-import { useGetCustomerDetailsQuery } from "../../../services/rtkQuery/sellerApi";
+import { useCustomerDetailsQuery} from "./../../../services/rtkQuery/customerApi";
 
 const CustomerProfile = () => {
 
-  const { data, error, isLoading } = useGetCustomerDetailsQuery();
+  const { data, error, isLoading } = useCustomerDetailsQuery();
 
   if (isLoading) {
     return <p>Loading profile...</p>;
