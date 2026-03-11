@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetCustomerDetailsQuery } from "../../../services/rtkQuery/customerApi";
+import { useCustomerDetailsQuery } from "../../../services/rtkQuery/customerApi";
 import { 
   Box, 
   Card, 
@@ -15,7 +15,7 @@ import { Email, LocationOn, HomeWork, Badge } from "@mui/icons-material";
 
 const CustomerProfile = () => {
 
-  const { data, error, isLoading } = useGetCustomerDetailsQuery();
+  const { data, error, isLoading } = useCustomerDetailsQuery();
 
   if (isLoading) {
     return <p>Loading profile...</p>;

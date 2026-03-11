@@ -18,7 +18,6 @@ const LoginForm = () => {
 
     try {
 
-      //const res = await API.post("/auth/login", data);
       const res = await login(data).unwrap();
       localStorage.setItem("email", res.user.email);
       localStorage.setItem("role", res.user.role);
@@ -30,13 +29,13 @@ const LoginForm = () => {
       if(localStorage.getItem("role")==="seller"){
          navigate("/seller-profile");
       }
+      if(localStorage.getItem("role")==="admin"){
+         navigate("/admin");
+      }
+
       if(localStorage.getItem("role")==="customer"){
          navigate("/customer-profile");
-      }
-      if(localStorage.getItem("role")==="admin"){
-         navigate("/seller-profile");
-      }
-     
+      }     
 
     } catch (err) {
 
@@ -48,7 +47,7 @@ const LoginForm = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 18 }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
       <Card sx={{ p: 2, borderRadius: 7, boxShadow: 4 }}>
         <CardContent>
           <Typography variant="h4" align="center" fontWeight="bold">LOGIN</Typography>
