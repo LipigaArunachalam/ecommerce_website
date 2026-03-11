@@ -72,6 +72,7 @@ const Sellers = () => {
                 await deleteSeller(id).unwrap();
                 alert("seller Deleted");
             } catch (err) {
+                console.log(err)
                  alert("failed to delete seller ")
             }
         }

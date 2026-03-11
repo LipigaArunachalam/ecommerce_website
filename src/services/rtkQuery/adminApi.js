@@ -1,4 +1,3 @@
-
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const adminApi = createApi({
@@ -45,6 +44,7 @@ export const adminApi = createApi({
         body: newSeller,
       }),
       invalidatesTags: ['Sellers']
+
     }),
     searchUser: builder.query({
       query: ({city, page=1, limit=100}) => ({
@@ -64,3 +64,4 @@ export const {
   useDeleteSellerMutation,
   useAddSellerMutation
 } = adminApi;
+

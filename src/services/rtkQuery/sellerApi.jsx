@@ -21,8 +21,8 @@ export const sellerApi = createApi({
       query :()=>({
         url : "/sellers/products", 
         method:"GET",
-        providesTags: ["Products"]
-      })
+      }),
+      providesTags: ["Products"]
     }),
 
     deleteProduct : builder.mutation({
@@ -49,9 +49,25 @@ export const sellerApi = createApi({
         body:data
       }),
       invalidatesTags:["Products"]
-    })
+    }),
+
+    orderStatus : builder.query({
+      query:()=>({
+        url:`/sellers/status`,
+        method:"GET",
+      }),
+     invalidatesTags: ["Products"],
+    }),
+
+    updateOrderStatus: builder.mutation({
+      query: ({ oid, status }) => ({
+        url: `/orders/${oid}/${status}`,
+        method: "PATCH"
+  }),
+  invalidatesTags: ["Products"], 
+}),
 })
 });
 
 export const {useGetSellerDetailsQuery, useGetProductsQuery, useDeleteProductMutation,
-  useUpdateProductMutation,useAddProductMutation} = sellerApi;
+  useUpdateProductMutation,useAddProductMutation,useOrderStatusQuery,useUpdateOrderStatusMutation} = sellerApi;

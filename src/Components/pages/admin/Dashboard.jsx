@@ -54,7 +54,7 @@ const AdminDashboard = () => {
             {/* Search Section */}
             <Paper elevation={2} sx={{ p: 3, mb: 4, borderRadius: 2 }}>
                 <Typography variant="h6" gutterBottom fontWeight="medium">
-                    Search Customers and Sellers by City
+                    Search Customers and Sellers 
                 </Typography>
                 <Box
                     component="form"
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
                 >
                     <TextField
                         fullWidth
-                        label="Enter City Name"
+                        label="Enter "
                         variant="outlined"
                         size="small"
                         value={city}

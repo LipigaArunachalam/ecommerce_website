@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetSellerDetailsQuery } from "../../../services/rtkQuery/sellerApi";
+import { useCustomerDetailsQuery } from "../../../services/rtkQuery/customerApi";
 import { 
   Box, 
   Card, 
@@ -13,9 +13,9 @@ import {
 } from "@mui/material";
 import { Email, LocationOn, HomeWork, Badge } from "@mui/icons-material";
 
-const SellerProfile = () => {
+const CustomerProfile = () => {
 
-  const { data, error, isLoading } = useGetSellerDetailsQuery();
+  const { data, error, isLoading } = useCustomerDetailsQuery();
 
   if (isLoading) {
     return <p>Loading profile...</p>;
@@ -101,4 +101,4 @@ const SellerProfile = () => {
   );
 };
 
-export default SellerProfile;
+export default CustomerProfile;

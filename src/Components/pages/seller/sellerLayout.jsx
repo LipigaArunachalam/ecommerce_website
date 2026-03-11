@@ -17,23 +17,24 @@ import {
   Storefront, 
   People, 
   ShoppingCart, 
-  Logout,
-  Person 
+  Logout as LogoutIcon
 } from "@mui/icons-material";
 import { Outlet, NavLink } from "react-router-dom";
 import useLogout from "../auth/Logout";
 
 const drawerWidth = 260;
 
-export const AdminLayout = () => {
-  const menuItems = [
-    { text: "Dashboard", icon: <Dashboard />, path: "/admin" },
-    { text: "Sellers", icon: <Storefront />, path: "/admin/sellers" },
-    { text: "Customers", icon: <People />, path: "/admin/customers" },
-    { text: "Profile", icon: <Person/>, path: "/admin/profile" },
-  ];
 
-  const {handleLogout} = useLogout();
+const SellerLayout = () => {
+  const menuItems = [
+    { text: "Dashboard", icon: <Dashboard />, path: "/seller-profile" },
+    // { text: "Products", icon: <Inventory />, path: "/admin/products" },
+    { text: "Inventory", icon: <Storefront />, path: "/products" },
+    // { text: "Add Product", icon: <People />, path: "/add-product" },
+    { text: "Orders", icon: <ShoppingCart />, path: "/order-status" },
+  ];
+  const { handleLogout } =useLogout();
+
   return (
     <Box sx={{ display: "flex" }}>
       {/* Sidebar Navigation */}
@@ -47,7 +48,7 @@ export const AdminLayout = () => {
       >
         <Toolbar>
           <Typography variant="h6" color="primary" fontWeight="bold">
-            Admin Panel
+            Seller Panel
           </Typography>
         </Toolbar>
         <Divider />
@@ -76,7 +77,7 @@ export const AdminLayout = () => {
           <List>
             <ListItem disablePadding>
               <ListItemButton onClick={handleLogout}>
-                <ListItemIcon><Logout color="error" /></ListItemIcon>
+                <ListItemIcon><LogoutIcon color="error" /></ListItemIcon>
                 <ListItemText primary="Logout" />
               </ListItemButton>
             </ListItem>
@@ -86,10 +87,9 @@ export const AdminLayout = () => {
 
       <Box 
         component="main" 
-        sx={{ 
-          flexGrow: 1, 
+        sx={{  
           p: 3, 
-          backgroundColor: "#f9f9f9", 
+          backgroundColor: "#ffffff", 
           minHeight: "100vh" 
         }}
       >
@@ -98,3 +98,5 @@ export const AdminLayout = () => {
     </Box>
   );
 };
+
+export default SellerLayout;
