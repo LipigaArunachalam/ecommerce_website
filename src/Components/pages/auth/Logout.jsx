@@ -2,13 +2,12 @@ import React from "react";
 import { useLogoutMutation } from "../../../services/rtkQuery/authApi";
 import { useNavigate } from "react-router-dom";
 
-const Logout=()=>{
-    const [login] = useLogoutMutation();
+const useLogout=()=>{
+    const [logout] = useLogoutMutation();
     const navigate = useNavigate();
     const handleLogout = async()=>{
         try{
-            console.log("logout is hitted")
-           await login(localStorage.getItem("user_id")).unwrap();
+           await logout();
            localStorage.clear();
            navigate("/");
         }catch(err){
@@ -20,4 +19,4 @@ const Logout=()=>{
    
 }
 
-export default Logout;
+export default useLogout;

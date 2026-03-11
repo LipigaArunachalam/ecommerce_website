@@ -20,10 +20,10 @@ import {
   Logout as LogoutIcon
 } from "@mui/icons-material";
 import { Outlet, NavLink } from "react-router-dom";
-import Logout from "../auth/Logout";
+import useLogout from "../auth/Logout";
 
 const drawerWidth = 260;
-const { handleLogout } = Logout;
+
 
 const SellerLayout = () => {
   const menuItems = [
@@ -33,6 +33,7 @@ const SellerLayout = () => {
     // { text: "Add Product", icon: <People />, path: "/add-product" },
     { text: "Orders", icon: <ShoppingCart />, path: "/order-status" },
   ];
+  const { handleLogout } =useLogout();
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -86,10 +87,9 @@ const SellerLayout = () => {
 
       <Box 
         component="main" 
-        sx={{ 
-          flexGrow: 1, 
+        sx={{  
           p: 3, 
-          backgroundColor: "#f9f9f9", 
+          backgroundColor: "#ffffff", 
           minHeight: "100vh" 
         }}
       >
