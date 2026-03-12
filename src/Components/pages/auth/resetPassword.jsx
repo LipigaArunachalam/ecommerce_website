@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-
 import { useForm } from "react-hook-form";
 import { useResetPasswordMutation } from "../../../services/rtkQuery/authApi";
 import { CardContent,Box, Card, Typography,Stack,Button,Link as MuiLink, TextField } from "@mui/material";
+import  SnackBar  from './../../../services/snackBar/snackBar'
 
 
 const ResetPassword = () => {
@@ -14,7 +14,11 @@ const ResetPassword = () => {
   const email = searchParams.get("email");
   const token = searchParams.get("token");
 
-  const [error,setError] = useState("");
+  const [snackOpen, setSnackOpen] = useState(false);
+  const [snackMessage, setSnackMessage] = useState("");
+  const [snackSeverity, setSnackSeverity] = useState("error");
+
+  // const [error,setError] = useState("");
 
   const {register,handleSubmit, formState:{errors}}= useForm();
 
@@ -26,13 +30,18 @@ const ResetPassword = () => {
       //const res = await API.post("/auth/reset-password", {newPassword:data.newPassword,email,token});
       const res = await resetPassword({email, newPassword : data.newPassword, token});
 
-      alert("password reset successfully");
+      setSnackMessage("Password resetted successfully")
+      setSnackSeverity("success")
+      setSnackOpen(true)
+
       console.log(res);
       navigate("/");
 
     } catch (err) {
       console.error(err);
-      setError("Password reset failed");
+      setSnackMessage("Failed to reset")
+      setSnackSeverity("error")
+      setSnackOpen(true)
     }
   };
 
@@ -45,7 +54,7 @@ const ResetPassword = () => {
       <form onSubmit={handleSubmit(handleReset)}>
         <Stack spacing={3} sx={{ mt: 2 }}>
 
-        {error && <p className="error">{error}</p>}
+        {/* {error && <p className="error">{error}</p>} */}
 
 
           <TextField
@@ -72,6 +81,12 @@ const ResetPassword = () => {
       </form>
       </CardContent>
       </Card>
+      <SnackBar
+        open={snackOpen}
+        message={snackMessage}
+        severity={snackSeverity}
+        handleClose={() => setSnackOpen(false)}
+      />
 </Box>
   );
 };

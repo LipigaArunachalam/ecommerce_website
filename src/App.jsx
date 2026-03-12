@@ -11,7 +11,6 @@ import ForgotPassword from './Components/pages/auth/ForgotPassword'
 import ResetPassword from './Components/pages/auth/resetPassword'
 import SellerProfile from './Components/pages/seller/sellerProfile'
 import Products from './Components/pages/seller/products'
-import AddProduct from './Components/pages/seller/addProduct'
 import OrderStatus from './Components/pages/seller/orderStatus'
 import CustomerProfile from './Components/pages/customer/customerProfile'
 import SellerLayout from './Components/pages/seller/sellerLayout'
@@ -45,7 +44,6 @@ function App() {
         <Route path="/seller-layout" element={<SellerLayout/>}/>
         <Route path="/seller-profile" element={<SellerProfile/>}/>
         <Route path="/products" element={<Products/>}/>
-        <Route path="/add-product" element={<AddProduct/>}/>
         <Route path="/order-status" element={<OrderStatus/>}/>
         <Route path="/logout" element={<Logout/>}/>
       </Route>

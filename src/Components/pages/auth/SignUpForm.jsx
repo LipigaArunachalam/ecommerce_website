@@ -4,35 +4,46 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSignupMutation } from "../../../services/rtkQuery/authApi";
 import { CardContent, Card, Box, Typography, Stack, TextField, Button, Link as MuiLink } from "@mui/material";
+import  SnackBar  from './../../../services/snackBar/snackBar'
 
 const SignUpForm = () => {
 
   const navigate = useNavigate();
 
-  const [error, setError] = useState("");
 
   const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const [snackOpen, setSnackOpen] = useState(false);
+  const [snackMessage, setSnackMessage] = useState("");
+  const [snackSeverity, setSnackSeverity] = useState("error");
 
   const [signup] = useSignupMutation();
 
   const handleSignup = async (data) => {
     if (data.password !== data.confirmPassword) {
-      setError("Passwords do not match");
+      setSnackMessage("Password didnt match")
+      setSnackSeverity("error")
+      setSnackOpen(true)
       return;
     }
     try {
       const res = await signup(data).unwrap();
 
       console.log("Signup success:", res.data);
-
-      alert("Signup successful");
+      setSnackMessage("Signup successfull")
+      setSnackSeverity("success")
+      setSnackOpen(true)
+      
 
       navigate("/products");
 
     } catch (err) {
 
       console.error(err);
-      setError("Signup failed");
+      const message = err?.data?.message || "Signup failed";
+      setSnackMessage(message)
+      setSnackSeverity("error")
+      setSnackOpen(true)
 
     }
   };
@@ -42,8 +53,6 @@ const SignUpForm = () => {
       <Card sx={{ p: 2, borderRadius: 7, boxShadow: 4 }}>
         <CardContent>
           <Typography variant="h4" align="center" fontWeight="bold">SIGNUP</Typography>
-
-          {error && <Typography color="error" align="center">{error}</Typography>}
 
           <form onSubmit={handleSubmit(handleSignup)}>
             <Stack spacing={2} sx={{ mt: 2 }}>
@@ -126,6 +135,12 @@ const SignUpForm = () => {
 
         </CardContent>
       </Card>
+      <SnackBar
+        open={snackOpen}
+        message={snackMessage}
+        severity={snackSeverity}
+        handleClose={() => setSnackOpen(false)}
+      />
     </Box>
   );
 };

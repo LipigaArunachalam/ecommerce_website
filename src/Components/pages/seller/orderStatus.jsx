@@ -1,49 +1,68 @@
 import React from "react";
-import { Typography,Button,Grid,CardContent,Box,Card,FormControl,InputLabel,MenuItem,Select } from "@mui/material";
-import { useOrderStatusQuery,useUpdateOrderStatusMutation } from "../../../services/rtkQuery/sellerApi";
+import { Typography, Button, Grid, CardContent, Box, Card, FormControl, InputLabel, MenuItem, Select,Paper,
+  TableBody, TableContainer, Table, TableHead, TableRow, TableCell
+ } from "@mui/material";
+import { useOrderStatusQuery, useUpdateOrderStatusMutation } from "../../../services/rtkQuery/sellerApi";
 
-const OrderStatus=()=>{
-    const {data,error,isLoading} = useOrderStatusQuery();
-    const [updateStatus] = useUpdateOrderStatusMutation();
-    if (isLoading) {
-      return <p>Loading products...</p>;
-    }
+const OrderStatus = () => {
+  const { data, error, isLoading } = useOrderStatusQuery();
+  const [updateStatus] = useUpdateOrderStatusMutation();
+  if (isLoading) {
+    return <p>Loading products...</p>;
+  }
 
-    if (error) {
-      return <p>Error loading products</p>;
-    }
+  if (error) {
+    return <p>Error loading products</p>;
+  }
 
-    if (!data) {
-      return <p>No data</p>;
-    }
-    console.log(data);
+  if (!data) {
+    return <p>No data</p>;
+  }
+  console.log(data);
 
-    const handleStatusChange=async(orderId, event)=>{
-      const newStatus = event.target.value;
+  const handleStatusChange = async (orderId, event) => {
+    const newStatus = event.target.value;
     try {
       await updateStatus({ oid: orderId, status: newStatus }).unwrap();
       console.log("Status updated!");
     } catch (err) {
       console.error("Failed to update status", err);
     }
-    }
+  }
 
-  return(
-    <Box>
-      <Grid container spacing ={4} justifyContent="center" alignItems="center">
-        {data.map((product) => (
-        <Grid item xs={12} sm={6} md={4} key={product.product_id}>
-        <Card sx={{borderRadius:5,boxShadow:6}}>
+  return (
+    <TableContainer component={Paper} sx={{ mt: 3, boxShadow: 6, borderRadius: 2 }}>
+      <Table sx={{ minWidth: 800 }} aria-label="orders table">
+        <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
+          <TableRow>
+            <TableCell><strong>Order ID</strong></TableCell>
+            <TableCell><strong>Status</strong></TableCell>
+            <TableCell><strong>Est. Delivery</strong></TableCell>
+            <TableCell><strong>Payment</strong></TableCell>
+            <TableCell><strong>Installation</strong></TableCell>
+            <TableCell align="right"><strong>Price</strong></TableCell>
+            <TableCell align="right"><strong>Freight</strong></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map((product) => (
+            <TableRow key={product.order_id} hover>
+              {/* Order ID with your custom blue styling */}
+              <TableCell sx={{ color: "#1f77d0", fontWeight: "600" }}>
+                {product.order_id}
+              </TableCell>
 
-          <CardContent >
-            <Typography variant="h6" mb={2} sx={{color:"#1f77d0", fontWeight:"600"}}>Order ID: {product.order_id}</Typography>
-                
-                <FormControl sx={{ mt: 2, mb: 2 }}>
-                  <InputLabel sx={{ color: "blue" }}>Order Status</InputLabel>
-                  <Select sx={{ color: "blue" }}
-                    value={product.order_status} 
-                    label="Order Status"
+              {/* Inline Status Dropdown */}
+              <TableCell>
+                <FormControl size="small" sx={{ minWidth: 120 }}>
+                  <Select
+                    value={product.order_status}
                     onChange={(e) => handleStatusChange(product.order_id, e)}
+                    sx={{
+                      color: "blue",
+                      fontSize: '0.875rem',
+                      ".MuiOutlinedInput-notchedOutline": { borderColor: "rgba(0,0,255,0.3)" }
+                    }}
                   >
                     <MenuItem value="delivered">Delivered</MenuItem>
                     <MenuItem value="shipped">Shipped</MenuItem>
@@ -51,23 +70,18 @@ const OrderStatus=()=>{
                     <MenuItem value="canceled">Canceled</MenuItem>
                   </Select>
                 </FormControl>
-            <Typography>Estimated delivery date: {product.estimated_delivery_date}</Typography>
-            <Typography>payment type: {product.payment_type}</Typography>
-            <Typography>Installation: {product.Installation}</Typography>
-            <Typography>Price: {product.price}</Typography>
-            <Typography>Freight value: {product.freight_value}</Typography>
-            {/* <Typography>product_id: {product.product_id}</Typography> */}
-            {/* <Typography>seller_id: {product.seller_id}</Typography> */}
-            {/* <Typography>order_id: {product.order_id}</Typography> */}
+              </TableCell>
 
-
-          </CardContent>
-
-        </Card>
-    </Grid>
-      ))}
-    </Grid>
-    </Box>
+              <TableCell>{product.estimated_delivery_date}</TableCell>
+              <TableCell>{product.payment_type}</TableCell>
+              <TableCell>{product.Installation}</TableCell>
+              <TableCell align="right">${product.price}</TableCell>
+              <TableCell align="right">${product.freight_value}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
 

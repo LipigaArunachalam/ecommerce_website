@@ -2,267 +2,194 @@ import React, { useState } from "react";
 import {
   useDeleteProductMutation,
   useGetProductsQuery,
-  useUpdateProductMutation
+  useUpdateProductMutation,
+  useAddProductMutation // 1. Import Add Mutation
 } from "../../../services/rtkQuery/sellerApi";
 
 import {
-  Box, Card, CardContent, Typography, Button, Stack, Dialog, 
-  DialogTitle, DialogContent, DialogActions, TextField, Grid} from "@mui/material";
+  Box, Typography, Button, Stack, Dialog,
+  DialogTitle, DialogContent, DialogActions, TextField, Paper,
+  TableBody, TableContainer, Table, TableHead, TableRow, TableCell
+} from "@mui/material";
 
 import { useForm } from "react-hook-form";
-import {useNavigate} from "react-router-dom";
-
 
 
 const Products = () => {
-
-  const { data, error, isLoading } = useGetProductsQuery();
+  const { data} = useGetProductsQuery();
   const [deleteProduct] = useDeleteProductMutation();
   const [updateProduct] = useUpdateProductMutation();
+  const [addProduct] = useAddProductMutation();
 
   const [open, setOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
   const [currentPid, setCurrentPid] = useState(null);
 
-  const { register, handleSubmit, reset } = useForm();
-  const navigate = useNavigate();
+  const { register, handleSubmit, reset,formState: { errors } } = useForm();
+  const [urlImg, setUrlImg]=useState();
+
+  const handleUpdate = (product) => {
+    setIsEditMode(true);
+    setCurrentPid(product.product_id);
+    reset(product);
+    setOpen(true);
+  };
+
+  const handleOpenAdd = () => {
+    setIsEditMode(false);
+    setCurrentPid(null);
+    reset({
+      product_category_name: "",
+      product_weight_g: "",
+      product_height_cm: "",
+      product_length_cm: "",
+      product_width_cm: "",
+      product_photos_qty: ""
+    });
+    setOpen(true);
+  };
 
   const handleDelete = async (pid) => {
-
     const user_id = localStorage.getItem("user_id");
-
     try {
-
       await deleteProduct({
         sid: user_id,
         pid: pid
       }).unwrap();
-
       console.log("Deleted product:", pid);
-
     } catch (err) {
-
       console.error("Delete failed", err);
-
     }
-
   };
 
-  const handleUpdate = (product) => {
-
-    setCurrentPid(product.product_id);
-
-    reset({
-      product_category_name: product.product_category_name,
-      product_weight_g: product.product_weight_g,
-      product_height_cm: product.product_height_cm,
-      product_length_cm: product.product_length_cm,
-      product_width_cm: product.product_width_cm
+  const handleFileUpload=async (e)=>{
+    const file = e.target.files[0];
+    console.log(file);
+    if(!file) return ;
+    const data =new FormData()
+    data.append("file",file)
+    data.append("upload_preset","Ecommerce")
+    data.append("cloud_name","dyrw2esoq")
+    const res =await fetch("https://api.cloudinary.com/v1_1/dyrw2esoq/image/upload",{
+      method:"POST",
+      body:data
     });
-
-    setOpen(true);
-
-  };
-
-  const handleAdd=()=>{
-    navigate("/add-product")
-  };
-
+    const uploaded= await res.json();
+    setUrlImg(uploaded.secure_url)
+    console.log(uploaded.secure_url)
+  }
 
 
   const onSubmit = async (formData) => {
-
     const user_id = localStorage.getItem("user_id");
-
     try {
+      if (isEditMode) {
 
-      await updateProduct({
-        sid: user_id,
-        pid: currentPid,
-        data: formData
-      }).unwrap();
-
+        await updateProduct({
+          sid: user_id,
+          pid: currentPid,
+          data: {...formData,product_image_url:urlImg}
+        }).unwrap();
+        setUrlImg("");
+      } else {
+        console.log({...formData,product_image_url:urlImg})
+        await addProduct({
+          sid: user_id,
+          data: {...formData,product_image_url:urlImg}
+        }).unwrap();
+        setUrlImg("");
+      }
       setOpen(false);
 
     } catch (err) {
-
-      console.error("Update failed", err);
-      setOpen(false);
-
+      console.error("Operation failed", err);
     }
-
   };
 
-  if (isLoading) return <p>Loading products...</p>;
-  if (error) return <p>Error loading products</p>;
-  if (!data) return <p>No data</p>;
 
   return (
-
     <Box sx={{ padding: 4 }}>
-       <Box display="flex" justifyContent="space-between" sx={{mb:2}}>
-      <Typography variant="h4" mb={3}  >
-        Products
-      </Typography>
-   
-      <Button variant="contained" color="primary" onClick={handleAdd}>Add Product</Button>
+      <Box display="flex" justifyContent="space-between" sx={{ mb: 2 }}>
+        <Typography variant="h4">Products</Typography>
+        <Button variant="contained" color="primary" onClick={handleOpenAdd}>
+          Add Product
+        </Button>
       </Box>
-     <Grid container spacing ={3} justifyContent="center" alignItems="center" >
-        {data.map((product) => (
-        <Grid item xs={12} sm={6} md={4} key={product.product_id}>
-        {/* <Card key={product.product_id} sx={{ mb: 3 }}> */}
-        <Card sx={{boxShadow:6}}>
 
-          <CardContent>
+      <TableContainer component={Paper} sx={{ mt: 3, boxShadow: 3 }}>
+        <Table sx={{ minWidth: 650 }}>
+          <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
+            <TableRow>
+              <TableCell><strong>Category</strong></TableCell>
+              <TableCell><strong>Image</strong></TableCell>
+              <TableCell align="right"><strong>Weight</strong></TableCell>
+              <TableCell align="right"><strong>Height</strong></TableCell>
+              <TableCell align="right"><strong>Length</strong></TableCell>
+              <TableCell align="right"><strong>Width</strong></TableCell>
+              <TableCell align="center"><strong>Actions</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data?.map((product) => (
+              <TableRow key={product.product_id} hover>
+                <TableCell>{product.product_category_name}</TableCell>
+                <TableCell align="right"><img src={product.product_image_url} height="100px" width="100px"></img></TableCell>
+                <TableCell align="right">{product.product_weight_g}</TableCell>
+                <TableCell align="right">{product.product_height_cm}</TableCell>
+                <TableCell align="right">{product.product_length_cm}</TableCell>
+                <TableCell align="right">{product.product_width_cm}</TableCell>
+                <TableCell align="center">
+                  <Stack direction="row" spacing={1} justifyContent="center">
+                    <Button size="small" variant="outlined" onClick={() => handleUpdate(product)}>Edit</Button>
+                    <Button size="small" variant="outlined" color="error" onClick={() => handleDelete(product.product_id)}>Delete</Button>
+                  </Stack>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
-            <Typography variant="h6">
-              {product.product_category_name}
-            </Typography>
-
-            <Typography>Weight: {product.product_weight_g}</Typography>
-            <Typography>Height: {product.product_height_cm}</Typography>
-            <Typography>Length: {product.product_length_cm}</Typography>
-            <Typography>Width: {product.product_width_cm}</Typography>
-
-            <Stack direction="row" spacing={2} mt={2}>
-
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={() => handleUpdate(product)}
-              >
-                Update
-              </Button>
-
-              <Button
-                variant="outlined"
-                color="error"
-                onClick={() => handleDelete(product.product_id)}
-              >
-                Delete
-              </Button>
-
-            </Stack>
-
-          </CardContent>
-
-        </Card>
-</Grid>
-      ))}
-      </Grid>
-      
-
-
-      <Dialog open={open} onClose={() => setOpen(false)}>
-
-        <DialogTitle>Update Product</DialogTitle>
-
+      <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
+        <DialogTitle>{isEditMode ? "Update Product" : "Add New Product"}</DialogTitle>
         <DialogContent>
+          <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
+            <TextField label="Category" {...register("product_category_name", { required: "Category is required" })} disabled={isEditMode} 
+              error={!!errors.product_category_name}
+              helperText={errors.product_category_name?.message} />
 
-          <Box
-            component="form"
-            onSubmit={handleSubmit(onSubmit)}
-            sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
-          >
+            <TextField label="Weight" type="number" {...register("product_weight_g", { required: "Weight is required" })} required
+            error={!!errors.product_weight_g}
+              helperText={errors.product_weight_g?.message} />
 
-            <TextField
-              label="Category"
-              {...register("product_category_name")}
-            />
+            <TextField label="Height" type="number" {...register("product_height_cm", { required: "Height is required" })} required
+            error={!!errors.product_height_cm}
+              helperText={errors.product_height_cm?.message} />
+              
+            <TextField label="Length" type="number" {...register("product_length_cm", { required: "Length is required" })} required 
+            error={!!errors.product_length_cm}
+              helperText={errors.product_length_cm?.message}/>
 
-            <TextField
-              label="Weight"
-              {...register("product_weight_g")}
-            />
+            <TextField label="Width" type="number" {...register("product_width_cm", { required: "Width is required" })} required
+            error={!!errors.product_width_cm}
+              helperText={errors.product_width_cm?.message} />
 
-            <TextField
-              label="Height"
-              {...register("product_height_cm")}
-            />
+            <TextField label="Photos Quantity" type="number" {...register("product_photos_qty", { required: "Photo qty is required" })} required
+            error={!!errors.product_photos_qty}
+              helperText={errors.product_photos_qty?.message} />
 
-            <TextField
-              label="Length"
-              {...register("product_length_cm")}
-            />
-
-            <TextField
-              label="Width"
-              {...register("product_width_cm")}
-            />
-
-            <DialogActions>
-
-              <Button onClick={() => setOpen(false)}>
-                Cancel
-              </Button>
-
-              <Button type="submit" variant="contained">
-                Update
-              </Button>
-
-            </DialogActions>
-
+            <TextField type="file" onChange={handleFileUpload}/>
           </Box>
-
         </DialogContent>
-
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={handleSubmit(onSubmit)} variant="contained">
+            {isEditMode ? "Update" : "Add"}
+          </Button>
+        </DialogActions>
       </Dialog>
-
     </Box>
   );
 };
 
 export default Products;
-
-
-
-
-
-
-
-
-
-// import React from "react";
-// import { useGetProductsQuery } from "../../../services/sellerApi";
-
-// const Products = () => {
-
-//   const { data, error, isLoading } = useGetProductsQuery();
-
-//   if (isLoading) {
-//     return <p>Loading products...</p>;
-//   }
-
-//   if (error) {
-//     return <p>Error loading products</p>;
-//   }
-
-//   if (!data) {
-//     return <p>No data</p>;
-//   }
-//   console.log(data);
-
-//     return (
-//     <div>
-
-//       <h2>Seller Products</h2>
-
-//       {data.map((product) => (
-
-//         <div key={product.product_id} style={{border:"1px solid gray", margin:"10px", padding:"10px"}}>
-
-//           <h3>{product.product_category_name}</h3>
-//           <p>ID: {product.product_id}</p>
-//           <p>Weight: {product.product_weight_g}</p>
-//           <p>Height: {product.product_height_cm}</p>
-//           <p>Length: {product.product_length_cm}</p>
-//           <p>Width: {product.product_width_cm}</p>
-
-//         </div>
-
-//       ))}
-
-//     </div>
-//   );
-// };
-
-// export default Products;
