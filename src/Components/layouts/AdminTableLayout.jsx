@@ -68,15 +68,22 @@ const AdminTableLayout = ({
       {/* ── Page header ── */}
       <Box
         display="flex"
+        flexDirection={{ xs: "column", sm: "row" }}
         justifyContent="space-between"
-        alignItems="center"
+        alignItems={{ xs: "flex-start", sm: "center" }}
+        gap={2}
         mb={3}
       >
-        <Typography variant="h4" fontWeight={700}>
+        <Typography variant="h4" fontWeight={700} sx={{ fontSize: { xs: "1.75rem", sm: "2.125rem" } }}>
           {title}
         </Typography>
-        {headerActions && <Box display="flex" gap={1}>{headerActions}</Box>}
+        {headerActions && (
+          <Box display="flex" gap={1} width={{ xs: "100%", sm: "auto" }}>
+            {headerActions}
+          </Box>
+        )}
       </Box>
+
 
       {/* ── Table card ── */}
       <Card

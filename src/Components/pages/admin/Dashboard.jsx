@@ -118,12 +118,11 @@ const AdminDashboard = () => {
         <Typography
           variant="h4"
           fontWeight="bold"
-          fontStyle="italic"
           textTransform="capitalize"
           gutterBottom
           color="primary"
         >
-          Welcome {adminData?.username}
+          Welcome {adminData?.username} !!!
         </Typography>
         <Divider />
       </Box>

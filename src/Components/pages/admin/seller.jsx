@@ -116,8 +116,9 @@ const Sellers = () => {
             color="error"
             size="small"
             onClick={() => openDeleteDialog(row.id)}
+            
           >
-            <DeleteIcon fontSize="small" />
+            <DeleteIcon fontSize="small"  />
           </IconButton>
         </Tooltip>
       ),
