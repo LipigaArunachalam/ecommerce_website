@@ -22,6 +22,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import AdminTableLayout from "../../layouts/AdminTableLayout";
 
+import DeleteDialog from "../../dialogs/DeleteDialog";
+
 const Sellers = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -162,7 +164,7 @@ const Sellers = () => {
           component="form"
           sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
         >
-            <Typography sx={{color:"red"}}>Fields with * are required</Typography>
+          <Typography sx={{ color: "red" }}>Fields with * are required</Typography>
           <TextField
             label="Username*"
             fullWidth
@@ -225,50 +227,13 @@ const Sellers = () => {
         </DialogActions>
       </Dialog>
       {/* ── Delete Confirmation Dialog ── */}
-      <Dialog
+      <DeleteDialog
         open={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}
-        PaperProps={{
-          sx: { borderRadius: 2, minWidth: 320, p: 1 },
-        }}
-      >
-        <DialogTitle sx={{ fontWeight: 700, fontSize: "1.125rem" }}>
-          Delete
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure want to delete?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button
-            variant="contained"
-            onClick={handleDeleteConfirm}
-            sx={{
-              fontWeight: 600,
-              borderRadius: 1.5,
-              px: 3,
-            }}
-          >
-            Delete
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={() => setDeleteDialogOpen(false)}
-            sx={{
-              color: "text.primary",
-              borderColor: "divider",
-              textTransform: "none",
-              fontWeight: 600,
-              borderRadius: 1.5,
-              px: 3,
-              "&:hover": { bgcolor: "grey.100" },
-            }}
-          >
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onConfirm={handleDeleteConfirm}
+        title="Delete Seller"
+        description="Are you sure you want to delete this seller?"
+      />
     </>
   );
 };
