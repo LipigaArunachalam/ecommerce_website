@@ -15,7 +15,6 @@ import Products from './Components/pages/seller/products'
 import OrderStatus from './Components/pages/seller/orderStatus'
 import CustomerProfile from './Components/pages/customer/customerProfile'
 import SellerLayout from './Components/pages/seller/sellerLayout'
-import ProtectedRoute from './services/authCheck/protectedRoute';
 import Logout from './Components/pages/auth/Logout';
 import Catalog from './Components/pages/customer/catalog';
 
