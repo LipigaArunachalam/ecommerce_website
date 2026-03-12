@@ -1,24 +1,24 @@
 import React from "react";
-import { 
-  Drawer, 
-  List, 
-  ListItem, 
-  ListItemButton, 
-  ListItemIcon, 
-  ListItemText, 
-  Toolbar, 
-  Divider, 
-  Box, 
-  Typography 
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  Divider,
+  Box,
+  Typography
 } from "@mui/material";
-import { 
-  Dashboard, 
-  Inventory, 
-  Storefront, 
-  People, 
-  ShoppingCart, 
+import {
+  Dashboard,
+  Inventory,
+  Storefront,
+  People,
+  ShoppingCart,
   Logout,
-  Person 
+  Person
 } from "@mui/icons-material";
 import { Outlet, NavLink } from "react-router-dom";
 import useLogout from "../auth/Logout";
@@ -30,10 +30,10 @@ export const AdminLayout = () => {
     { text: "Dashboard", icon: <Dashboard />, path: "/admin" },
     { text: "Sellers", icon: <Storefront />, path: "/admin/sellers" },
     { text: "Customers", icon: <People />, path: "/admin/customers" },
-    { text: "Profile", icon: <Person/>, path: "/admin/profile" },
+    { text: "Profile", icon: <Person />, path: "/admin/profile" },
   ];
 
-  const {handleLogout} = useLogout();
+  const { handleLogout } = useLogout();
   return (
     <Box sx={{ display: "flex" }}>
       {/* Sidebar Navigation */}
@@ -51,13 +51,13 @@ export const AdminLayout = () => {
           </Typography>
         </Toolbar>
         <Divider />
-        
+
         <Box sx={{ overflow: "auto" }}>
           <List>
             {menuItems.map((item) => (
               <ListItem key={item.text} disablePadding>
-                <ListItemButton 
-                  component={NavLink} 
+                <ListItemButton
+                  component={NavLink}
                   to={item.path}
                   style={({ isActive }) => ({
                     backgroundColor: isActive ? "#f0f7ff" : "transparent",
@@ -70,9 +70,9 @@ export const AdminLayout = () => {
               </ListItem>
             ))}
           </List>
-          
+
           <Divider sx={{ my: 1 }} />
-          
+
           <List>
             <ListItem disablePadding>
               <ListItemButton onClick={handleLogout}>
@@ -84,13 +84,13 @@ export const AdminLayout = () => {
         </Box>
       </Drawer>
 
-      <Box 
-        component="main" 
-        sx={{ 
-          flexGrow: 1, 
-          p: 3, 
-          backgroundColor: "#f9f9f9", 
-          minHeight: "100vh" 
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          backgroundColor: "#f9f9f9",
+          minHeight: "100vh"
         }}
       >
         <Outlet />
