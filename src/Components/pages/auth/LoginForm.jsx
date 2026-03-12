@@ -3,16 +3,22 @@ import { FaUser, FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useLoginMutation } from "../../../services/rtkQuery/authApi";
-import { Button,Card, CardContent,Stack,Typography,Link as MuiLink,TextField,Box } from "@mui/material";
+import { Button, Card, CardContent, Stack, Typography, Link as MuiLink, TextField, Box } from "@mui/material";
+import  SnackBar  from './../../../services/snackBar/snackBar'
 
 const LoginForm = () => {
 
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
 
-  const {register,handleSubmit,formState: { errors }} = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const [login] = useLoginMutation();
   const navigate = useNavigate();
+
+
+  const [snackOpen, setSnackOpen] = useState(false);
+  const [snackMessage, setSnackMessage] = useState("");
+  const [snackSeverity, setSnackSeverity] = useState("error");
 
   const onSubmit = async (data) => {
 
@@ -22,25 +28,32 @@ const LoginForm = () => {
       localStorage.setItem("email", res.user.email);
       localStorage.setItem("role", res.user.role);
       localStorage.setItem("user_id", res.user.user_id);
+      const role = res.user.role;
 
       console.log("Login success:", res);
+      setSnackMessage("login successfull")
+      setSnackSeverity("success")
+      setSnackOpen(true);
 
-      alert("Login successful");
-      if(localStorage.getItem("role")==="seller"){
-         navigate("/seller-profile");
+      setTimeout(()=>{
+        if (role === "seller") {
+        navigate("/seller-profile");
       }
-      if(localStorage.getItem("role")==="admin"){
-         navigate("/admin");
+      if (role === "customer") {
+        navigate("/customer-profile");
       }
-
-      if(localStorage.getItem("role")==="customer"){
-         navigate("/customer-profile");
-      }     
+      if (role === "admin") {
+        navigate("/seller-profile");
+      }
+      }, 1000);
 
     } catch (err) {
 
       console.error(err);
-      setError("Invalid email or password");
+      // setError("Invalid email or password");
+       setSnackMessage("login failed")
+      setSnackSeverity("error")
+      setSnackOpen(true);
 
     }
 
@@ -52,11 +65,11 @@ const LoginForm = () => {
         <CardContent>
           <Typography variant="h4" align="center" fontWeight="bold">LOGIN</Typography>
 
-          {error && <Typography color="error" align="center">{error}</Typography>}
+          {/* {error && <Typography color="error" align="center">{error}</Typography>} */}
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={3} sx={{ mt: 2 }}>
-              
+
               <TextField
                 label="Email"
                 variant="outlined"
@@ -82,15 +95,14 @@ const LoginForm = () => {
                 </MuiLink>
               </Box>
 
-              <Button 
-                variant="contained" 
-                type="submit" 
-                size="large" 
+              <Button
+                variant="contained"
+                type="submit"
+                size="large"
                 fullWidth
-                sx={{ py: 1.5, borderRadius: 2 }}
-              >
-                Login
+                sx={{ py: 1.5, borderRadius: 2 }}>  Login
               </Button>
+
 
               <Typography variant="body2" align="center">
                 Don't have an account?{" "}
@@ -102,8 +114,16 @@ const LoginForm = () => {
             </Stack>
           </form>
         </CardContent>
+
       </Card>
+      <SnackBar
+        open={snackOpen}
+        message={snackMessage}
+        severity={snackSeverity}
+        handleClose={() => setSnackOpen(false)}
+      />
     </Box>
+
   );
 };
 

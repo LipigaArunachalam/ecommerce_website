@@ -12,11 +12,12 @@ import ForgotPassword from './Components/pages/auth/ForgotPassword'
 import ResetPassword from './Components/pages/auth/resetPassword'
 import SellerProfile from './Components/pages/seller/sellerProfile'
 import Products from './Components/pages/seller/products'
-import AddProduct from './Components/pages/seller/addProduct'
 import OrderStatus from './Components/pages/seller/orderStatus'
 import CustomerProfile from './Components/pages/customer/customerProfile'
 import SellerLayout from './Components/pages/seller/sellerLayout'
+import ProtectedRoute from './services/authCheck/protectedRoute';
 import Logout from './Components/pages/auth/Logout';
+import Catalog from './Components/pages/customer/catalog';
 
 
 function App() {
@@ -45,7 +46,6 @@ function App() {
         <Route path="/seller-layout" element={<SellerLayout/>}/>
         <Route path="/seller-profile" element={<SellerProfile/>}/>
         <Route path="/products" element={<Products/>}/>
-        <Route path="/add-product" element={<AddProduct/>}/>
         <Route path="/order-status" element={<OrderStatus/>}/>
         <Route path="/logout" element={<Logout/>}/>
       </Route>
@@ -53,6 +53,7 @@ function App() {
 
 
        <Route path="/customer-profile" element={<CustomerProfile/>}/>
+       <Route path="/catalog" element={<Catalog/>}/>
 
       </Routes>
     </BrowserRouter>
