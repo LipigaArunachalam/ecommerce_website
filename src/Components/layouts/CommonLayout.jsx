@@ -22,7 +22,6 @@ const drawerWidth = 260;
 
 const CommonLayout = ({ title, menuItems, handleLogout }) => {
   const theme = useTheme();
-  // Drawer is permanent on 'md' and up (>=900px by default in MUI)
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -114,7 +113,7 @@ const CommonLayout = ({ title, menuItems, handleLogout }) => {
           open={isDesktop ? true : mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             "& .MuiDrawer-paper": {

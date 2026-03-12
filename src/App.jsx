@@ -2,7 +2,6 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import AdminDashboard from './Components/pages/admin/Dashboard'
 import { AdminLayout } from './Components/pages/admin/AdminLayout';
-import ProtectedRoute from './services/authCheck/ProtectedRoute';
 import Customers from './Components/pages/admin/Customer';
 import Sellers from './Components/pages/admin/seller';
 import AdminProfile from './Components/pages/admin/Profile';

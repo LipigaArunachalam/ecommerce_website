@@ -43,7 +43,7 @@ const LoginForm = () => {
         navigate("/customer-profile");
       }
       if (role === "admin") {
-        navigate("/seller-profile");
+        navigate("/admin");
       }
       }, 1000);
 
@@ -51,7 +51,7 @@ const LoginForm = () => {
 
       console.error(err);
       // setError("Invalid email or password");
-       setSnackMessage("login failed")
+      setSnackMessage("login failed")
       setSnackSeverity("error")
       setSnackOpen(true);
 
