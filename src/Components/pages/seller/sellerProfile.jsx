@@ -1,21 +1,21 @@
 import React from "react";
 import { useGetSellerDetailsQuery } from "../../../services/rtkQuery/sellerApi";
-import { 
-  Box, 
-  Card, 
-  CardContent, 
-  Typography, 
-  Avatar, 
-  Divider, 
-  Grid, 
-  Paper,
-  Chip
-} from "@mui/material";
-import { Email, LocationOn, HomeWork, Badge } from "@mui/icons-material";
+import { Email, LocationOn, Map, Home } from "@mui/icons-material";
+import ProfileLayout from "../../layouts/ProfileLayout";
+import { useSellerDashboardQuery } from "../../../services/rtkQuery/sellerApi";
+import { Box, Typography, Grid, Card, CardContent } from "@mui/material";
 
 const SellerProfile = () => {
 
   const { data, error, isLoading } = useGetSellerDetailsQuery();
+  const { data: dashData } = useSellerDashboardQuery();
+
+  const fields = [
+    { icon: <Email color="primary" />, label: "Email Address", value: data?.email },
+    { icon: <LocationOn color="primary" />, label: "City", value: data?.city },
+    { icon: <Map color="primary" />, label: "State", value: data?.state },
+    { icon: <Home color="primary" />, label: "Zip Code", value: data?.zip_code },
+  ];
 
   if (isLoading) {
     return <p>Loading profile...</p>;
@@ -28,76 +28,101 @@ const SellerProfile = () => {
   if (!data) {
     return <p>No data</p>;
   }
+  console.log(dashData);
 
   return (
-    <Box sx={{ maxWidth: 3000, mx: "auto", mt: 4 }}>
-      <Card sx={{ borderRadius: 2, boxShadow: 1, mb: 4, textAlign: 'center' }}>
-  <CardContent sx={{ p: 4 }}>
-    <Avatar 
-      sx={{ 
-        width: 80, 
-        height: 80, 
-        mx: 'auto', 
-        bgcolor: 'primary.main',
-        mb: 2 
-      }}
-    >
-      {data.username?.charAt(0).toUpperCase()}
-    </Avatar>
+    <Box>
+      <ProfileLayout
+        data={data}
+        isLoading={isLoading}
+        isError={!!error}
+        fields={fields} />
 
-    <Typography variant="h5" fontWeight="bold" sx={{textTransform: 'capitalize'}}>
-      {data.username}
-    </Typography>
+      <Box mt={4}>
+        <Grid container spacing={3}>
 
-    <Chip 
-      label={data.role} 
-      size="large" 
-      sx={{ mt: 1, textTransform: 'capitalize' }} 
-    />
-  </CardContent>
-</Card>
-      <Grid container spacing={5}>
-        <Grid item xs={12} md={6}>
-          <Paper variant="outlined" sx={{ p: 2, borderRadius: 2, display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Email color="primary" />
-            <Box>
-              <Typography variant="caption" color="text.secondary">Email Address</Typography>
-              <Typography variant="body1">{data.email}</Typography>
-            </Box>
-          </Paper>
+          <Grid xs={12} sm={6} md={4}>
+            <Card elevation={3}>
+              <CardContent>
+                <Typography variant="subtitle2" color="text.secondary">
+                  Total Products
+                </Typography>
+                <Typography variant="h5" fontWeight="bold">
+                  {dashData?.totalProducts || 0}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid xs={12} sm={6} md={4}>
+            <Card elevation={3}>
+              <CardContent>
+                <Typography variant="subtitle2" color="text.secondary">
+                  Total Revenue
+                </Typography>
+                <Typography variant="h5" fontWeight="bold">
+                  ${dashData?.totalRevenue || 0}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid xs={12} sm={6} md={4}>
+            <Card elevation={3}>
+              <CardContent>
+                <Typography variant="subtitle2" color="text.secondary">
+                  Delivered Orders
+                </Typography>
+                <Typography variant="h5" fontWeight="bold">
+                  {dashData?.statusCounts?.delivered || 0}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid xs={12} sm={6} md={4}>
+            <Card elevation={3}>
+              <CardContent>
+                <Typography variant="subtitle2" color="text.secondary">
+                  Shipped Orders
+                </Typography>
+                <Typography variant="h5" fontWeight="bold">
+                  {dashData?.statusCounts?.shipped || 0}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid xs={12} sm={6} md={4}>
+            <Card elevation={3}>
+              <CardContent>
+                <Typography variant="subtitle2" color="text.secondary">
+                  Processing Orders
+                </Typography>
+                <Typography variant="h5" fontWeight="bold">
+                  {dashData?.statusCounts?.processing || 0}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid xs={12} sm={6} md={4}>
+            <Card elevation={3}>
+              <CardContent>
+                <Typography variant="subtitle2" color="text.secondary">
+                  Cancelled Orders
+                </Typography>
+                <Typography variant="h5" fontWeight="bold">
+                  {dashData?.statusCounts?.canceled || 0}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
         </Grid>
-        
-        <Grid item xs={12} md={6}>
-          <Paper variant="outlined" sx={{ p: 2, borderRadius: 2, display: 'flex', alignItems: 'center', gap: 2 }}>
-            <LocationOn color="primary" />
-            <Box>
-              <Typography variant="caption" color="text.secondary">Location</Typography>
-              <Typography variant="body1">{data.city}, {data.state}</Typography>
-            </Box>
-          </Paper>
-        </Grid>
-
-        <Grid item xs={12} md={6}>
-          <Paper variant="outlined" sx={{ p: 2, borderRadius: 2, display: 'flex', alignItems: 'center', gap: 2 }}>
-            <HomeWork color="primary" />
-            <Box>
-              <Typography variant="caption" color="text.secondary">Zip Code</Typography>
-              <Typography variant="body1">{data.zip_code}</Typography>
-            </Box>
-          </Paper>
-        </Grid>
-
-        {/* <Grid item xs={12} md={6}>
-          <Paper variant="outlined" sx={{ p: 2, borderRadius: 2, display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Badge color="primary" />
-            <Box>
-              <Typography variant="caption" color="text.secondary">Account Type</Typography>
-              <Typography variant="body1" sx={{ textTransform: 'capitalize' }}>{data.role}</Typography>
-            </Box>
-          </Paper>
-        </Grid> */}
-      </Grid>
+      </Box>
     </Box>
+
   );
 };
 
