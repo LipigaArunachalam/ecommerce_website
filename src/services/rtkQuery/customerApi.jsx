@@ -22,7 +22,7 @@ export const customerApi = createApi({
       query :({uid,limit, page})=>({
         url: `/users/${uid}/products`,
         method : "GET",
-        Params:{limit, offset:(page - 1)*limit},
+        params:{limit, page:(page - 1)*limit},
       }),
       providesTags: ["customers"]
     }),
@@ -31,7 +31,7 @@ export const customerApi = createApi({
       query :({limit, page})=>({
         url : "/users/products", 
         method:"GET",
-        Params:{limit, offset:(page - 1)*limit},
+        params:{limit, page:(page - 1)*limit},
       }),
       providesTags: ["customers"]
     }),
