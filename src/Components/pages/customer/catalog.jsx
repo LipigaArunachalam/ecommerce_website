@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import AdminTableLayout from "../../layouts/AdminTableLayout";
-import { useGetCatalogQuery } from "../../../services/rtkQuery/customerApi";
+import { useAddToCartMutation, useGetCatalogQuery } from "../../../services/rtkQuery/customerApi";
 import { Box, Stack, Button } from "@mui/material"
+import { useNavigate } from "react-router-dom";
 
 
 const Catalog = () => {
@@ -9,10 +10,14 @@ const Catalog = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
+    const navigate= useNavigate();
+
     const { data, isLoading, error } = useGetCatalogQuery({
         page: page + 1,
         limit: rowsPerPage,
     });
+
+    const [addToCart] = useAddToCartMutation();
 
 
     const columns = [
@@ -56,8 +61,8 @@ const Catalog = () => {
             label: "Actions",
             render: (row) => (
                 <Stack direction="row" spacing={1} justifyContent="center">
-                    <Button size="small" variant="outlined" onClick={() => handleCart(row)}>Cart</Button>
-                    <Button size="small" variant="outlined" color="error" onClick={() => handleBuy(row.product_id)}>Buy</Button>
+                    <Button size="small" variant="outlined" onClick={() => handleCart(row.product_id)}>Cart</Button>
+                    <Button size="small" variant="outlined" onClick={() => handleBuy(row.product_id)}>Buy</Button>
                 </Stack>
             )
         }
@@ -67,8 +72,14 @@ const Catalog = () => {
 
     };
 
-    const handleCart = async () => {
-
+    const handleCart = async (product_id) => {
+          const uid = localStorage.getItem("user_id")
+          try{
+            await addToCart({uid:uid, pid : product_id})
+            navigate("/customer/cart")
+          }catch(err){
+            console.error(err);
+          }
     };
 
 
