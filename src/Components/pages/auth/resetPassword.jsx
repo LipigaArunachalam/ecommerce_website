@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useResetPasswordMutation } from "../../../services/rtkQuery/authApi";
-import { CardContent,Box, Card, Typography,Stack,Button,Link as MuiLink, TextField } from "@mui/material";
-import  SnackBar  from './../../../services/snackBar/snackBar'
+import { CardContent, Box, Card, Typography, Stack, Button, Link as MuiLink, TextField } from "@mui/material";
+import SnackBar from './../../../services/snackBar/snackBar'
 
 
 const ResetPassword = () => {
@@ -20,22 +20,24 @@ const ResetPassword = () => {
 
   // const [error,setError] = useState("");
 
-  const {register,handleSubmit, formState:{errors}}= useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const[resetPassword] = useResetPasswordMutation();
+  const [resetPassword] = useResetPasswordMutation();
 
   const handleReset = async (data) => {
 
     try {
       //const res = await API.post("/auth/reset-password", {newPassword:data.newPassword,email,token});
-      const res = await resetPassword({email, newPassword : data.newPassword, token});
+      const res = await resetPassword({ email, newPassword: data.newPassword, token });
 
       setSnackMessage("Password resetted successfully")
       setSnackSeverity("success")
       setSnackOpen(true)
 
       console.log(res);
-      navigate("/");
+      setTimeout(() => {
+        navigate("/")
+      }, 1000)
 
     } catch (err) {
       console.error(err);
@@ -46,40 +48,50 @@ const ResetPassword = () => {
   };
 
   return (
-    <Box  sx={{ display: 'flex', justifyContent: 'center', mt: 18 }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 18 }}>
       <Card sx={{ p: 2, borderRadius: 7, boxShadow: 4 }}>
         <CardContent>
 
-      <Typography  variant="h4" align="center" fontWeight="bold">RESET PASSWORD</Typography>
-      <form onSubmit={handleSubmit(handleReset)}>
-        <Stack spacing={3} sx={{ mt: 2 }}>
+          <Typography variant="h4" align="center" fontWeight="bold">RESET PASSWORD</Typography>
+          <form onSubmit={handleSubmit(handleReset)}>
+            <Stack spacing={3} sx={{ mt: 2 }}>
 
-        {/* {error && <p className="error">{error}</p>} */}
+              {/* {error && <p className="error">{error}</p>} */}
 
 
-          <TextField
-            type="password"
-            label="New Password"
-            variant="outlined"
-            fullWidth
-            placeholder="Enter new password"
-            {...register("newPassword",{required:"password is needed"})}
-            error={!!errors.newPassword}
-            helperText={errors.newPassword?.message}
-          />
-        
-        <Button variant="contained" 
-                type="submit" 
-                size="large" 
+              <TextField
+                type="password"
+                label="New Password"
+                variant="outlined"
+                fullWidth
+                placeholder="Enter new password"
+                {...register("newPassword", { required: "password is needed" })}
+                error={!!errors.newPassword}
+                helperText={errors.newPassword?.message}
+              />
+              <TextField
+                type="password"
+                label="New Password"
+                variant="outlined"
+                fullWidth
+                placeholder="Enter new password"
+                {...register("newPassword", { required: "password is needed" })}
+                error={!!errors.newPassword}
+                helperText={errors.newPassword?.message}
+              />
+
+              <Button variant="contained"
+                type="submit"
+                size="large"
                 fullWidth
                 sx={{ py: 1.5, borderRadius: 2 }}>
-          Reset Password
-        </Button>
+                Reset Password
+              </Button>
 
-        
-       </Stack>
-      </form>
-      </CardContent>
+
+            </Stack>
+          </form>
+        </CardContent>
       </Card>
       <SnackBar
         open={snackOpen}
@@ -87,7 +99,7 @@ const ResetPassword = () => {
         severity={snackSeverity}
         handleClose={() => setSnackOpen(false)}
       />
-</Box>
+    </Box>
   );
 };
 

@@ -16,10 +16,18 @@ import { useForm } from "react-hook-form";
 
 
 const Products = () => {
-  const { data,isLoading, error } = useGetProductsQuery();
   const [deleteProduct] = useDeleteProductMutation();
   const [updateProduct] = useUpdateProductMutation();
   const [addProduct] = useAddProductMutation();
+
+  const [page, setPage] = useState(0); 
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const { data, isLoading, error } = useGetProductsQuery({
+    page: page + 1,
+    limit: rowsPerPage,
+  });
+
 
   const [open, setOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -66,6 +74,10 @@ const Products = () => {
       )
     },
     {
+      key:"price",
+      label :"Price"
+    },
+    {
       key: "product_weight_g",
       label: "Weight"
     },
@@ -76,6 +88,10 @@ const Products = () => {
     {
       key: "product_width_cm",
       label: "Width"
+    },
+    {
+      key: "product_qty",
+      label: "Stock"
     },
     {
       key: "actions",
@@ -150,63 +166,72 @@ const Products = () => {
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" sx={{ mb: 2 }}>
-          <Typography variant="h4"><strong>Products</strong></Typography>
-          <Button variant="contained" color="primary" onClick={handleOpenAdd}>
-            Add Product
-          </Button>
-        </Box>
-    <AdminTableLayout
-      // title="Products"
-      columns={columns}
-      data={data || []}
-      page={0}
-      rowsPerPage={10}
-      totalCount={data?.length || 0}
-      isLoading={isLoading}
-      isError={!!error}
-      getRowId={(row) => row.product_id}
-    />
-    
-        <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
-          <DialogTitle>{isEditMode ? "Update Product" : "Add New Product"}</DialogTitle>
-          <DialogContent>
-            <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
-              <TextField label="Category" {...register("product_category_name", { required: "Category is required" })} disabled={isEditMode}
-                error={!!errors.product_category_name}
-                helperText={errors.product_category_name?.message} />
+        <Typography variant="h4"><strong>Products</strong></Typography>
+        <Button variant="contained" color="primary" onClick={handleOpenAdd}>
+          Add Product
+        </Button>
+      </Box>
+      <AdminTableLayout
+        // title="Products"
+        columns={columns}
+        data={data || []}
+        page={0}
+        onPageChange={(_, newPage) => setPage(newPage)}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={(e) => {
+        setRowsPerPage(parseInt(e.target.value, 10));
+        setPage(0);
+      }}
+        totalCount={data?.length || 0}
+        isLoading={isLoading}
+        isError={!!error}
+        getRowId={(row) => row.product_id}
+      />
 
-              <TextField label="Weight" type="number" {...register("product_weight_g", { required: "Weight is required" })} required
-                error={!!errors.product_weight_g}
-                helperText={errors.product_weight_g?.message} />
+      <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
+        <DialogTitle>{isEditMode ? "Update Product" : "Add New Product"}</DialogTitle>
+        <DialogContent>
+          <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
+            <TextField label="Category" {...register("product_category_name", { required: "Category is required" })} disabled={isEditMode} required
+              error={!!errors.product_category_name}
+              helperText={errors.product_category_name?.message} />
 
-              <TextField label="Height" type="number" {...register("product_height_cm", { required: "Height is required" })} required
-                error={!!errors.product_height_cm}
-                helperText={errors.product_height_cm?.message} />
-
-              <TextField label="Length" type="number" {...register("product_length_cm", { required: "Length is required" })} required
-                error={!!errors.product_length_cm}
-                helperText={errors.product_length_cm?.message} />
-
-              <TextField label="Width" type="number" {...register("product_width_cm", { required: "Width is required" })} required
-                error={!!errors.product_width_cm}
-                helperText={errors.product_width_cm?.message} />
-
-              <TextField label="Photos Quantity" type="number" {...register("product_photos_qty", { required: "Photo qty is required" })} required
+            <TextField label="Price" type="number" {...register("price", { required: "Price is required" })} required
                 error={!!errors.product_photos_qty}
                 helperText={errors.product_photos_qty?.message} />
 
-              <TextField type="file" onChange={handleFileUpload} />
-            </Box>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSubmit(onSubmit)} variant="contained">
-              {isEditMode ? "Update" : "Add"}
-            </Button>
-          </DialogActions>
-        </Dialog>
-        </Box>
-  );
-  };
+            <TextField label="Weight" type="number" {...register("product_weight_g", { required: "Weight is required" })} required 
+              error={!!errors.product_weight_g}
+              helperText={errors.product_weight_g?.message} />
 
-  export default Products;
+            <TextField label="Height" type="number" {...register("product_height_cm", { required: "Height is required" })} required
+              error={!!errors.product_height_cm}
+              helperText={errors.product_height_cm?.message} />
+
+            <TextField label="Length" type="number" {...register("product_length_cm", { required: "Length is required" })} required
+              error={!!errors.product_length_cm}
+              helperText={errors.product_length_cm?.message} />
+
+            <TextField label="Width" type="number" {...register("product_width_cm", { required: "Width is required" })} required
+              error={!!errors.product_width_cm}
+              helperText={errors.product_width_cm?.message} />
+
+            <TextField label="Stock" type="number" {...register("product_qty", { required: "Quantity is required" })} required
+              error={!!errors.product_qty}
+              helperText={errors.product_qty?.message} />
+
+            <TextField type="file" onChange={handleFileUpload} />
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={handleSubmit(onSubmit)} variant="contained">
+            {isEditMode ? "Update" : "Add"}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
+  );
+};
+
+export default Products;
