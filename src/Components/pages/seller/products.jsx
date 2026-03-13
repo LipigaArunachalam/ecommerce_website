@@ -6,11 +6,8 @@ import {
   useAddProductMutation // 1. Import Add Mutation
 } from "../../../services/rtkQuery/sellerApi";
 
-import {
-  Box, Typography, Button, Stack, Dialog,
-  DialogTitle, DialogContent, DialogActions, TextField, Paper,
-  TableBody, TableContainer, Table, TableHead, TableRow, TableCell
-} from "@mui/material";
+import { Box, Typography, Button, Stack, Dialog,
+  DialogTitle, DialogContent, DialogActions, TextField, } from "@mui/material";
 import AdminTableLayout from "../../layouts/AdminTableLayout";
 import { useForm } from "react-hook-form";
 

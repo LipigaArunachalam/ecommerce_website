@@ -78,14 +78,13 @@ const Order = () => {
         <AdminTableLayout
             columns={columns}
             data={data || []}
-            page={0}
+            page={page}
             onPageChange={(_, newPage) => setPage(newPage)}
             rowsPerPage={rowsPerPage}
             onRowsPerPageChange={(e) => {
                 setRowsPerPage(parseInt(e.target.value, 10));
                 setPage(0);
             }}
-            totalCount={data?.length || 0}
             isLoading={isLoading}
             isError={!!error}
             getRowId={(row) => row.product_id}
