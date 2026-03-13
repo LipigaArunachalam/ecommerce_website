@@ -165,7 +165,7 @@ const Sellers = () => {
           component="form"
           sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}
         >
-          <Typography sx={{ color: "red" }}>Fields with * are required</Typography>
+          
           <TextField
             label="Username*"
             fullWidth
