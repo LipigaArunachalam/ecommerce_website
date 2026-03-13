@@ -30,7 +30,10 @@ const ForgotPassword = () => {
       setSnackMessage("Mail sentif existed")
       setSnackSeverity("info")
       setSnackOpen(true)
-      navigate("/")
+      setTimeout(()=>{
+        navigate("/")
+      },1000)
+      
 
     } catch (err) {
       console.error(err);

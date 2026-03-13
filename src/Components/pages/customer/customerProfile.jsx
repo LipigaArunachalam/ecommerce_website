@@ -1,6 +1,7 @@
 import React from "react";
 import { useCustomerDetailsQuery } from "../../../services/rtkQuery/customerApi";
 import { Email, LocationOn, Home,Map } from "@mui/icons-material";
+import ProfileLayout from "../../layouts/ProfileLayout";
 
 const CustomerProfile = () => {
 

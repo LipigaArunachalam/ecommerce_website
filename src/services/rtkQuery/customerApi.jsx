@@ -18,10 +18,20 @@ export const customerApi = createApi({
       providesTags:["customers"]
     }),
 
+    getAllProducts : builder.query({
+      query :({uid,limit, page})=>({
+        url: `/users/${uid}/products`,
+        method : "GET",
+        Params:{limit, offset:(page - 1)*limit},
+      }),
+      providesTags: ["customers"]
+    }),
+
     getCatalog : builder.query({
-      query :()=>({
-        url : "/users/4f21938f7b925dd621343fc205395145/products", 
+      query :({limit, page})=>({
+        url : "/users/products", 
         method:"GET",
+        Params:{limit, offset:(page - 1)*limit},
       }),
       providesTags: ["customers"]
     }),
@@ -29,4 +39,4 @@ export const customerApi = createApi({
 })
 });
 
-export const {useCustomerDetailsQuery, useGetCatalogQuery} = customerApi;
+export const {useCustomerDetailsQuery, useGetCatalogQuery, useGetAllProductsQuery} = customerApi;

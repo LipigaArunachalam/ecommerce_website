@@ -4,6 +4,9 @@ import { Email, LocationOn, Map, Home } from "@mui/icons-material";
 import ProfileLayout from "../../layouts/ProfileLayout";
 import { useSellerDashboardQuery } from "../../../services/rtkQuery/sellerApi";
 import { Box, Typography, Grid, Card, CardContent } from "@mui/material";
+import { BarChart } from '@mui/x-charts/BarChart';
+import { PieChart } from '@mui/x-charts/PieChart';
+
 
 const SellerProfile = () => {
 
@@ -37,11 +40,34 @@ const SellerProfile = () => {
         isLoading={isLoading}
         isError={!!error}
         fields={fields} />
+      <Box display={"flex"} justifyContent={"space-between"}>
+        <PieChart
+          series={[
+            {
+              data: [
+                { id: 0, value: dashData?.statusCounts?.delivered || 0, label: 'Delivered' },
+                { id: 1, value: dashData?.statusCounts?.shipped || 0, label: 'Shipped' },
+                { id: 2, value: dashData?.statusCounts?.processing || 0, label: 'Processing' },
+                { id: 3, value: dashData?.statusCounts?.canceled || 0, label: 'Cancelled' },
+              ],
+            },
+          ]}
+          width={400}
+          height={200} />
 
-      <Box mt={4}>
-        <Grid container spacing={3}>
+        <BarChart
+          xAxis={[{ scaleType: 'band', data: ['Revenue'] }]}
+          series={[
+            { data: [dashData?.totalRevenue || 0], label: 'Revenue ($)' }
+          ]}
+          width={400}
+          height={300}
+        />
+      </Box>
+      {/* <Box mt={4}>
+        <Grid container spacing={3} justifyContent="center">
 
-          <Grid xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <Card elevation={3}>
               <CardContent>
                 <Typography variant="subtitle2" color="text.secondary">
@@ -54,7 +80,7 @@ const SellerProfile = () => {
             </Card>
           </Grid>
 
-          <Grid xs={12} sm={6} md={4}>
+          <Grid  item xs={12} sm={6} md={4}>
             <Card elevation={3}>
               <CardContent>
                 <Typography variant="subtitle2" color="text.secondary">
@@ -67,7 +93,7 @@ const SellerProfile = () => {
             </Card>
           </Grid>
 
-          <Grid xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <Card elevation={3}>
               <CardContent>
                 <Typography variant="subtitle2" color="text.secondary">
@@ -80,7 +106,7 @@ const SellerProfile = () => {
             </Card>
           </Grid>
 
-          <Grid xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <Card elevation={3}>
               <CardContent>
                 <Typography variant="subtitle2" color="text.secondary">
@@ -93,7 +119,7 @@ const SellerProfile = () => {
             </Card>
           </Grid>
 
-          <Grid xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <Card elevation={3}>
               <CardContent>
                 <Typography variant="subtitle2" color="text.secondary">
@@ -106,7 +132,7 @@ const SellerProfile = () => {
             </Card>
           </Grid>
 
-          <Grid xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={4}>
             <Card elevation={3}>
               <CardContent>
                 <Typography variant="subtitle2" color="text.secondary">
@@ -120,7 +146,7 @@ const SellerProfile = () => {
           </Grid>
 
         </Grid>
-      </Box>
+      </Box> */}
     </Box>
 
   );

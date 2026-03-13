@@ -17,6 +17,10 @@ import SellerLayout from './Components/pages/seller/sellerLayout'
 import Logout from './Components/pages/auth/Logout';
 import Catalog from './Components/pages/customer/catalog';
 import ProtectedRoute from  './services/authCheck/protectedRoute';
+import ProtectedRoute from './services/authCheck/protectedRoute';
+import CustomerLayout from './Components/pages/customer/customerLayout'
+import Cart from './Components/pages/customer/cart';
+import Order from './Components/pages/customer/order';
 
 function App() {
 
@@ -39,19 +43,30 @@ function App() {
           </Route>
         </Route>
 
-      <Route element={<ProtectedRoute allowedRole="seller"/>}>
-      <Route path="/" element={<SellerLayout />}>
-        <Route path="/seller-layout" element={<SellerLayout/>}/>
-        <Route path="/seller-profile" element={<SellerProfile/>}/>
-        <Route path="/products" element={<Products/>}/>
-        <Route path="/order-status" element={<OrderStatus/>}/>
-        <Route path="/logout" element={<Logout/>}/>
-      </Route>
-      </Route>
+        <Route element={<ProtectedRoute allowedRole="seller" />}>
+          <Route path="/" element={<SellerLayout />}>
+            <Route path="/seller-layout" element={<SellerLayout />} />
+            <Route path="/seller-profile" element={<SellerProfile />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/order-status" element={<OrderStatus />} />
+            <Route path="/logout" element={<Logout />} />
+          </Route>
+        </Route>
 
 
-       <Route path="/customer-profile" element={<CustomerProfile/>}/>
-       <Route path="/catalog" element={<Catalog/>}/>
+
+        <Route element={<ProtectedRoute allowedRole="customer" />}>
+          <Route path="/" element={<CustomerLayout />}>
+            <Route path="/customer-layout" element={<CustomerLayout />} />
+            <Route path="/customer-profile" element={<CustomerProfile />} />
+            <Route path="/catalog" element={<Catalog />} />
+            <Route path="/cart" element={<Cart/>}/>
+            <Route path="/orders" element={<Order/>}/>
+          </Route>
+        </Route>
+
+
+
 
       </Routes>
     </BrowserRouter>

@@ -34,8 +34,10 @@ const SignUpForm = () => {
       setSnackSeverity("success")
       setSnackOpen(true)
       
-
-      navigate("/products");
+      setTimeout(()=>{
+        navigate("/products");
+      },1000)
+      
 
     } catch (err) {
 
