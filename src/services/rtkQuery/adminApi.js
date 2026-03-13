@@ -1,12 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseApi } from './baseApi';
 
-export const adminApi = createApi({
-  reducerPath: 'api',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3000/api',
-    credentials: 'include'
-  }),
-  tagTypes: ['Sellers'],
+export const adminApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllSeller: builder.query({
       query: ({ limit = 10, page = 1 }) => ({
