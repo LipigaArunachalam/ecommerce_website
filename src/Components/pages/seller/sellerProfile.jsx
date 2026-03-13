@@ -48,7 +48,10 @@ const SellerProfile = () => {
                 { id: 0, value: dashData?.statusCounts?.delivered || 0, label: 'Delivered' },
                 { id: 1, value: dashData?.statusCounts?.shipped || 0, label: 'Shipped' },
                 { id: 2, value: dashData?.statusCounts?.processing || 0, label: 'Processing' },
-                { id: 3, value: dashData?.statusCounts?.canceled || 0, label: 'Cancelled' },
+                { id: 3, value: dashData?.statusCounts?.cancelled || 0, label: 'Cancelled' },
+                {id: 4, value: dashData?.statusCounts?.approved || 0, label: 'approved'},
+                {id: 5, value: dashData?.statusCounts?.created || 0, label: 'created'},
+                {id: 6, value: dashData?.statusCounts?.unavailable || 0, label: 'unavailable'},
               ],
             },
           ]}

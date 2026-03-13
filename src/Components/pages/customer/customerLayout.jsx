@@ -5,10 +5,10 @@ import CommonLayout from "../../layouts/CommonLayout";
 
 const CustomerLayout = () => {
     const menuItems = [
-        { text: "Dashboard", icon: <Dashboard />, path: "/customer-profile" },
-        { text: "Cart", icon: <ShoppingCart />, path: "/cart" },
-        { text: "Orders", icon: <Storefront />, path: "/orders" },
-        { text: "Products", icon: <GridView/>, path: "/catalog"},
+        { text: "Dashboard", icon: <Dashboard />, path: "/customer/customer-profile" },
+        { text: "Cart", icon: <ShoppingCart />, path: "/customer/cart" },
+        { text: "Orders", icon: <Storefront />, path: "/customer/orders" },
+        { text: "Products", icon: <GridView/>, path: "/customer/catalog"},
     ];
 
 

@@ -9,9 +9,10 @@ const useLogout = () => {
         try {
             await logout();
             localStorage.clear();
-            setTimeout(() => {
-                navigate("/")
-            }, 1000)
+            navigate("/")
+            // setTimeout(() => {
+            //     navigate("/")
+            // }, 1000)
         } catch (err) {
             console.error(err);
         }

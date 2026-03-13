@@ -37,10 +37,10 @@ const LoginForm = () => {
 
       setTimeout(()=>{
         if (role === "seller") {
-        navigate("/seller-profile");
+        navigate("/seller/seller-profile");
       }
       if (role === "customer") {
-        navigate("/customer-profile");
+        navigate("/customer/customer-profile");
       }
       if (role === "admin") {
         navigate("/admin");

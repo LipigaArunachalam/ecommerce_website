@@ -9,7 +9,7 @@ const ProtectedRoute = ({ allowedRole }) => {
     }
 
     if (allowedRole && userRole !== allowedRole) {
-        
+        localStorage.clear();
         return <Navigate to="/" replace />;
     }
 

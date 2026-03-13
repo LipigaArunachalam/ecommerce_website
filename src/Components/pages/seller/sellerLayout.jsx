@@ -13,9 +13,9 @@ import CommonLayout from "../../layouts/CommonLayout";
 
 const SellerLayout = () => {
   const menuItems = [
-    { text: "Dashboard", icon: <Dashboard />, path: "/seller-profile" },
-    { text: "Inventory", icon: <Storefront />, path: "/products" },
-    { text: "Orders", icon: <ShoppingCart />, path: "/order-status" },
+    { text: "Dashboard", icon: <Dashboard />, path: "/seller/seller-profile" },
+    { text: "Inventory", icon: <Storefront />, path: "/seller/products" },
+    { text: "Orders", icon: <ShoppingCart />, path: "/seller/order-status" },
   ];
 
 
