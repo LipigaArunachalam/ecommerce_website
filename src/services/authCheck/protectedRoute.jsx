@@ -9,10 +9,8 @@ const ProtectedRoute = ({ allowedRole }) => {
     }
 
     if (allowedRole && userRole !== allowedRole) {
-
-        if (userRole === "seller") return <Navigate to="/seller-layout" replace />
-        if (userRole === "customer") return <Navigate to="/customer-layout" replace />
-        if (userRole === "admin") return <Navigate to="/admin" replace />
+        
+        return <Navigate to="/" replace />;
     }
 
     return <Outlet />;
