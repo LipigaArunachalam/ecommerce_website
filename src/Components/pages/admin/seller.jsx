@@ -21,14 +21,15 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import AdminTableLayout from "../../layouts/AdminTableLayout";
-
 import DeleteDialog from "../../dialogs/DeleteDialog";
+import MessageDialog from "../../dialogs/MessageDialog";
 
 const Sellers = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [open, setOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [sellerToDelete, setSellerToDelete] = useState(null);
 
   const [deleteSeller] = useDeleteSellerMutation();
@@ -67,6 +68,7 @@ const Sellers = () => {
       };
       await addSeller(payload).unwrap();
       handleClose();
+      setSuccessDialogOpen(true);
     } catch (err) {
       console.error("Failed to add seller", err);
     }
@@ -234,6 +236,14 @@ const Sellers = () => {
         onConfirm={handleDeleteConfirm}
         title="Delete Seller"
         description="Are you sure you want to delete this seller?"
+      />
+
+      {/* ── Success Feedback Dialog ── */}
+      <MessageDialog
+        open={successDialogOpen}
+        onClose={() => setSuccessDialogOpen(false)}
+        title="Seller Added"
+        message="seller added, mail sent if existed"
       />
     </>
   );
