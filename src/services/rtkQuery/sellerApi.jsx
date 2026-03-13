@@ -1,13 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { baseApi } from "./baseApi";
 
-export const sellerApi = createApi({
-  reducerPath: "sellerApi",
-
-  baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000/api",
-    credentials: "include"
-  }),
-  tagTypes: ["Products"],
+export const sellerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
 
     getSellerDetails: builder.query({
