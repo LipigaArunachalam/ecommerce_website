@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AdminTableLayout from "../../layouts/AdminTableLayout";
 import { useAddToCartMutation, useGetCatalogQuery } from "../../../services/rtkQuery/customerApi";
 import { Box, Stack, Button } from "@mui/material"
+import BuyProductDialog from "./BuyProductDialog";
 import { useNavigate } from "react-router-dom";
 
 
@@ -9,6 +10,8 @@ const Catalog = () => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [isBuyDialogOpen, setIsBuyDialogOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const navigate= useNavigate();
 
@@ -62,14 +65,15 @@ const Catalog = () => {
             render: (row) => (
                 <Stack direction="row" spacing={1} justifyContent="center">
                     <Button size="small" variant="outlined" onClick={() => handleCart(row.product_id)}>Cart</Button>
-                    <Button size="small" variant="outlined" onClick={() => handleBuy(row.product_id)}>Buy</Button>
+                    <Button size="small" variant="outlined" onClick={() => handleBuy(row)}>Buy</Button>
                 </Stack>
             )
         }
     ];
 
-    const handleBuy = async () => {
-
+    const handleBuy = (product) => {
+        setSelectedProduct(product);
+        setIsBuyDialogOpen(true);
     };
 
     const handleCart = async (product_id) => {
@@ -100,6 +104,12 @@ const Catalog = () => {
                 isLoading={isLoading}
                 isError={!!error}
                 getRowId={(row) => row.product_id}
+            />
+
+            <BuyProductDialog
+                open={isBuyDialogOpen}
+                onClose={() => setIsBuyDialogOpen(false)}
+                product={selectedProduct}
             />
         </Box>
     );

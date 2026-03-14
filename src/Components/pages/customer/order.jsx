@@ -1,19 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import AdminTableLayout from "../../layouts/AdminTableLayout";
-import { useState } from "react";
-import { useGetAllProductsQuery } from "../../../services/rtkQuery/customerApi";
+import { useGetAllProductsQuery, useCancelOrderMutation } from "../../../services/rtkQuery/customerApi";
+import { Button } from "@mui/material";
+import DeleteDialog from "../../dialogs/DeleteDialog";
 
 const Order = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
 
-    const uid= localStorage.getItem("user_id");
+    const uid = localStorage.getItem("user_id");
 
     const { data, isLoading, error } = useGetAllProductsQuery({
         page: page + 1,
         limit: rowsPerPage,
         uid: uid,
     });
+
+    const [cancelOrder] = useCancelOrderMutation();
+
+    const handleCancel = (row) => {
+        setSelectedOrder(row);
+        setIsDeleteDialogOpen(true);
+    };
+
+    const handleConfirmCancel = async () => {
+        if (selectedOrder) {
+            try {
+                await cancelOrder(selectedOrder.order_id).unwrap();
+                setIsDeleteDialogOpen(false);
+                setSelectedOrder(null);
+            } catch (err) {
+                console.error("Failed to cancel order:", err);
+            }
+        }
+    };
 
     const columns = [
         {
@@ -72,6 +94,22 @@ const Order = () => {
             key: "estimated_delivery",
             label: "Est. Delivery"
         },
+        {
+            key: "action",
+            label: "Action",
+            render: (row) => {
+                return (
+                    <Button 
+                        variant="outlined" 
+                        color="error" 
+                        onClick={() => handleCancel(row)}
+                        disabled={row.status === "cancelled" || row.status === "delivered"}
+                    >
+                        Cancel
+                    </Button>
+                )
+            }
+        }
     ]
 
     return (
@@ -92,6 +130,5 @@ const Order = () => {
     );
 
 }
-
 
 export default Order;
