@@ -44,9 +44,27 @@ export const customerApi = baseApi.injectEndpoints({
         method : "PATCH"
       }),
       invalidatesTags : ["customers"]
+    }),
+   
+    addToCart : builder.mutation({
+      query :({uid, pid})=>({
+        url : `/users/${uid}/add-to-cart/${pid}`,
+        method:"POST",
+      }),
+      invalidatesTags:["customers"]
+    }),
+
+    cart : builder.query({
+      query :()=>({
+        url : "/users/cart",
+        method:"GET",
+      }),
+      invalidatesTags:["customers"]
     })
    
 })
 });
 
-export const {useCustomerDetailsQuery, useGetCatalogQuery, useGetAllProductsQuery, useBuyProductMutation, useCancelOrderMutation } = customerApi;
+export const {useCustomerDetailsQuery, useGetCatalogQuery, useGetAllProductsQuery,
+  useAddToCartMutation, useCartQuery, useBuyProductMutation, useCancelOrderMutation } = customerApi;
+

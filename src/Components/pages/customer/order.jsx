@@ -113,33 +113,20 @@ const Order = () => {
     ]
 
     return (
-        <>
-            <AdminTableLayout
-                columns={columns}
-                data={data || []}
-                page={page}
-                onPageChange={(_, newPage) => setPage(newPage)}
-                rowsPerPage={rowsPerPage}
-                onRowsPerPageChange={(e) => {
-                    setRowsPerPage(parseInt(e.target.value, 10));
-                    setPage(0);
-                }}
-                totalCount={data?.length || 0}
-                isLoading={isLoading}
-                isError={!!error}
-                getRowId={(row) => row.product_id}
-            />
-
-            <DeleteDialog
-                open={isDeleteDialogOpen}
-                onClose={() => setIsDeleteDialogOpen(false)}
-                onConfirm={handleConfirmCancel}
-                title="Cancel Order"
-                description={`Are you sure you want to cancel this order? this action cannot be undone`}
-                confirmText="Cancel Order"
-                cancelText="Keep Order"
-            />
-        </>
+        <AdminTableLayout
+            columns={columns}
+            data={data || []}
+            page={page}
+            onPageChange={(_, newPage) => setPage(newPage)}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={(e) => {
+                setRowsPerPage(parseInt(e.target.value, 10));
+                setPage(0);
+            }}
+            isLoading={isLoading}
+            isError={!!error}
+            getRowId={(row) => row.product_id}
+        />
     );
 
 }

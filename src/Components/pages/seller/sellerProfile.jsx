@@ -61,7 +61,8 @@ const SellerProfile = () => {
         <BarChart
           xAxis={[{ scaleType: 'band', data: ['Revenue'] }]}
           series={[
-            { data: [dashData?.totalRevenue || 0], label: 'Revenue ($)' }
+            { data: [dashData?.totalRevenue || 0], label: 'Revenue ($)' },
+            { data: [dashData?.totalLoss || 0], label: 'Loss ($)' },
           ]}
           width={400}
           height={300}
