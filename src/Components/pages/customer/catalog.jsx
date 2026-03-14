@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import AdminTableLayout from "../../layouts/AdminTableLayout";
 import { useGetCatalogQuery } from "../../../services/rtkQuery/customerApi";
 import { Box, Stack, Button } from "@mui/material"
+import BuyProductDialog from "./BuyProductDialog";
 
 
 const Catalog = () => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [isBuyDialogOpen, setIsBuyDialogOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const { data, isLoading, error } = useGetCatalogQuery({
         page: page + 1,
@@ -57,14 +60,15 @@ const Catalog = () => {
             render: (row) => (
                 <Stack direction="row" spacing={1} justifyContent="center">
                     <Button size="small" variant="outlined" onClick={() => handleCart(row)}>Cart</Button>
-                    <Button size="small" variant="outlined" color="error" onClick={() => handleBuy(row.product_id)}>Buy</Button>
+                    <Button size="small" variant="outlined" color="error" onClick={() => handleBuy(row)}>Buy</Button>
                 </Stack>
             )
         }
     ];
 
-    const handleBuy = async () => {
-
+    const handleBuy = (product) => {
+        setSelectedProduct(product);
+        setIsBuyDialogOpen(true);
     };
 
     const handleCart = async () => {
@@ -89,6 +93,12 @@ const Catalog = () => {
                 isLoading={isLoading}
                 isError={!!error}
                 getRowId={(row) => row.product_id}
+            />
+
+            <BuyProductDialog
+                open={isBuyDialogOpen}
+                onClose={() => setIsBuyDialogOpen(false)}
+                product={selectedProduct}
             />
         </Box>
     );

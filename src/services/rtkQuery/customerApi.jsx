@@ -28,8 +28,25 @@ export const customerApi = baseApi.injectEndpoints({
       }),
       providesTags: ["customers"]
     }),
+
+    buyProduct : builder.mutation({
+      query:(data)=>({
+        url:`/users/buy`,
+        method:"POST",
+        body:data,
+      }),
+      invalidatesTags: ["customers"]
+    }),
+
+    cancelOrder : builder.mutation({
+      query : (oid) => ({
+        url : `/orders/${oid}/cancelled`,
+        method : "PATCH"
+      }),
+      invalidatesTags : ["customers"]
+    })
    
 })
 });
 
-export const {useCustomerDetailsQuery, useGetCatalogQuery, useGetAllProductsQuery} = customerApi;
+export const {useCustomerDetailsQuery, useGetCatalogQuery, useGetAllProductsQuery, useBuyProductMutation, useCancelOrderMutation } = customerApi;
