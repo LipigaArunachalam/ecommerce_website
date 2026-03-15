@@ -1,0 +1,23 @@
+const palette = (mode) => ({
+  mode,
+
+  primary: {
+    main: "#761fc2"
+  },
+
+  secondary: {
+    main: "#9541da"
+  },
+
+  background: {
+    default: mode === "light" ? "#f4f5f7" : "#0f0f14",
+    paper: mode === "light" ? "#ffffff" : "#1c1c25"
+  },
+
+  text: {
+    primary: mode === "light" ? "#111" : "#fff",
+    secondary: mode === "light" ? "#555" : "#aaa"
+  }
+});
+
+export default palette;

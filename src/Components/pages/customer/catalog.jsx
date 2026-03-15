@@ -29,6 +29,10 @@ const Catalog = () => {
             label: "product category"
         },
         {
+            key:"product_name",
+            label:"Product name"
+        },
+        {
             key: "product_image_url",
             label: "Image",
             render: (row) => (

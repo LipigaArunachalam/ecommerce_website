@@ -35,7 +35,7 @@ const OrderStatus = () => {
       key: "order_id",
       label: "Order ID",
       render: (row) => (
-        <span style={{ color: "#1f77d0", fontWeight: 600 }}>
+        <span style={{ color: "#9c35c5", fontWeight: 600 }}>
           {row.order_id}
         </span>
       )

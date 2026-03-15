@@ -12,6 +12,9 @@ import {
 } from "@mui/material";
 import { Logout } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
+import ThemeToggle from "../../theme/themeToggle.jsx";
+
+
 
 const DrawerLayout = ({ title, menuItems, handleLogout, isDesktop, handleDrawerToggle }) => {
   return (
@@ -22,19 +25,28 @@ const DrawerLayout = ({ title, menuItems, handleLogout, isDesktop, handleDrawerT
         </Typography>
       </Toolbar>
       <Divider />
-      <Box sx={{ overflow: "auto", display: "flex", flexDirection: "column", height: "calc(100vh - 64px)" }}>
+      <Box sx={{ overflowY: "auto",scrollbarWidth: "none",  msOverflowStyle: "none", overflow:"hidden",   
+        "&::-webkit-scrollbar": {
+          display: "none"            
+        }, display: "flex", flexDirection: "column", height: "calc(100vh - 64px)" }}>
         <List sx={{ flexGrow: 1 }}>
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
               <ListItemButton
                 component={NavLink}
                 to={item.path}
-                // Close drawer on click for mobile
+                className={({ isActive }) => (isActive ? "active" : "")}
                 onClick={!isDesktop ? handleDrawerToggle : undefined}
-                style={({ isActive }) => ({
-                  backgroundColor: isActive ? "#f0f7ff" : "transparent",
-                  color: isActive ? "#1976d2" : "inherit",
-                })}
+                sx={{
+                  "&.active": {
+                    backgroundColor: "primary.main",
+                    color: "primary.contrastText",
+                  },
+
+                  "&.active .MuiListItemIcon-root": {
+                    color: "primary.contrastText",
+                  }
+                }}
               >
                 <ListItemIcon sx={{ color: "inherit" }}>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
@@ -45,6 +57,18 @@ const DrawerLayout = ({ title, menuItems, handleLogout, isDesktop, handleDrawerT
         <Divider />
         <List>
           <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <ThemeToggle />
+              </ListItemIcon>
+              <ListItemText primary="Theme Mode" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+
+
+        <List>
+          <ListItem disablePadding>
             <ListItemButton onClick={handleLogout}>
               <ListItemIcon>
                 <Logout color="error" />
@@ -53,6 +77,18 @@ const DrawerLayout = ({ title, menuItems, handleLogout, isDesktop, handleDrawerT
             </ListItemButton>
           </ListItem>
         </List>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          p: 2
+        }}
+      >
+
+
+
       </Box>
     </div>
   );

@@ -66,6 +66,10 @@ const Products = () => {
       label: "product category"
     },
     {
+      key:"product_name",
+      label:"Product name"
+    },
+    {
       key: "product_image_url",
       label: "Image",
       render: (row) => (
@@ -209,6 +213,10 @@ const Products = () => {
               error={!!errors.product_category_name}
               helperText={errors.product_category_name?.message} />
 
+            <TextField label="Category" {...register("product_name", { required: "Name is required" })} disabled={isEditMode} required
+              error={!!errors.product_name}
+              helperText={errors.product_name?.message} />
+
             <TextField label="Price" type="number" {...register("price", { required: "Price is required" })} required
               error={!!errors.product_photos_qty}
               helperText={errors.product_photos_qty?.message} />
@@ -256,7 +264,7 @@ const Products = () => {
                 component="label"
                 sx={{ mb: 2 }}
               >
-                Change image
+                {isEditMode ? "Change image" : "upload image"}
                 <input
                   type="file"
                   hidden
