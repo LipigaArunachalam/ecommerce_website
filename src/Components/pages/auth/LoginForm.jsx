@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useLoginMutation } from "../../../services/rtkQuery/authApi";
 import { Button, Card, CardContent, Stack, Typography, Link as MuiLink, TextField, Box } from "@mui/material";
-import  SnackBar  from './../../../services/snackBar/snackBar'
+import SnackBar from './../../../services/snackBar/snackBar'
 
 const LoginForm = () => {
 
@@ -19,6 +19,22 @@ const LoginForm = () => {
   const [snackOpen, setSnackOpen] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
   const [snackSeverity, setSnackSeverity] = useState("error");
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+
+    if (role === "seller") {
+      navigate("/seller/seller-profile");
+    }
+
+    if (role === "customer") {
+      navigate("/customer/customer-profile");
+    }
+
+    if (role === "admin") {
+      navigate("/admin");
+    }
+  }, [navigate]);
 
   const onSubmit = async (data) => {
 
@@ -35,16 +51,16 @@ const LoginForm = () => {
       setSnackSeverity("success")
       setSnackOpen(true);
 
-      setTimeout(()=>{
+      setTimeout(() => {
         if (role === "seller") {
-        navigate("/seller/seller-profile");
-      }
-      if (role === "customer") {
-        navigate("/customer/customer-profile");
-      }
-      if (role === "admin") {
-        navigate("/admin");
-      }
+          navigate("/seller/seller-profile");
+        }
+        if (role === "customer") {
+          navigate("/customer/customer-profile");
+        }
+        if (role === "admin") {
+          navigate("/admin");
+        }
       }, 1000);
 
     } catch (err) {
