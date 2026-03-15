@@ -3,13 +3,16 @@ import {
   useDeleteProductMutation,
   useGetProductsQuery,
   useUpdateProductMutation,
-  useAddProductMutation // 1. Import Add Mutation
+  useAddProductMutation
 } from "../../../services/rtkQuery/sellerApi";
 
-import { Box, Typography, Button, Stack, Dialog,
-  DialogTitle, DialogContent, DialogActions, TextField, } from "@mui/material";
+import {
+  Box, Typography, Button, Stack, Dialog,
+  DialogTitle, DialogContent, DialogActions, TextField,
+} from "@mui/material";
 import AdminTableLayout from "../../layouts/AdminTableLayout";
 import { useForm } from "react-hook-form";
+import SnackBar from './../../../services/snackBar/snackBar'
 
 
 const Products = () => {
@@ -17,13 +20,14 @@ const Products = () => {
   const [updateProduct] = useUpdateProductMutation();
   const [addProduct] = useAddProductMutation();
 
-  const [page, setPage] = useState(0); 
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const { data, isLoading, error } = useGetProductsQuery({
-    page: page + 1,
-    limit: rowsPerPage,
-  });
+  const { data, isLoading, error } = useGetProductsQuery({ page: page + 1, limit: rowsPerPage, });
+
+  const [snackOpen, setSnackOpen] = useState(false);
+  const [snackMessage, setSnackMessage] = useState("");
+  const [snackSeverity, setSnackSeverity] = useState("error");
 
 
   const [open, setOpen] = useState(false);
@@ -36,6 +40,7 @@ const Products = () => {
   const handleUpdate = (product) => {
     setIsEditMode(true);
     setCurrentPid(product.product_id);
+    setUrlImg(product.product_image_url);
     reset(product);
     setOpen(true);
   };
@@ -43,6 +48,7 @@ const Products = () => {
   const handleOpenAdd = () => {
     setIsEditMode(false);
     setCurrentPid(null);
+    setUrlImg("");
     reset({
       product_category_name: "",
       product_weight_g: "",
@@ -71,8 +77,8 @@ const Products = () => {
       )
     },
     {
-      key:"price",
-      label :"Price"
+      key: "price",
+      label: "Price"
     },
     {
       key: "product_weight_g",
@@ -132,6 +138,10 @@ const Products = () => {
     console.log(uploaded.secure_url)
   }
 
+  const handleClose = () => {
+    setOpen(false);
+    setUrlImg("");
+  };
 
 
   const onSubmit = async (formData) => {
@@ -145,6 +155,9 @@ const Products = () => {
           data: { ...formData, product_image_url: urlImg }
         }).unwrap();
         setUrlImg("");
+        setSnackMessage("Updated Successfully");
+        setSnackSeverity("info")
+        setSnackOpen(true)
       } else {
         console.log({ ...formData, product_image_url: urlImg })
         await addProduct({
@@ -152,6 +165,9 @@ const Products = () => {
           data: { ...formData, product_image_url: urlImg }
         }).unwrap();
         setUrlImg("");
+        setSnackMessage("Added product Successfully");
+        setSnackSeverity("info")
+        setSnackOpen(true)
       }
       setOpen(false);
 
@@ -176,16 +192,16 @@ const Products = () => {
         onPageChange={(_, newPage) => setPage(newPage)}
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={(e) => {
-        setRowsPerPage(parseInt(e.target.value, 10));
-        setPage(0);
-      }}
+          setRowsPerPage(parseInt(e.target.value, 10));
+          setPage(0);
+        }}
         totalCount={data?.length || 0}
         isLoading={isLoading}
         isError={!!error}
         getRowId={(row) => row.product_id}
       />
 
-      <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle>{isEditMode ? "Update Product" : "Add New Product"}</DialogTitle>
         <DialogContent>
           <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
@@ -194,10 +210,10 @@ const Products = () => {
               helperText={errors.product_category_name?.message} />
 
             <TextField label="Price" type="number" {...register("price", { required: "Price is required" })} required
-                error={!!errors.product_photos_qty}
-                helperText={errors.product_photos_qty?.message} />
+              error={!!errors.product_photos_qty}
+              helperText={errors.product_photos_qty?.message} />
 
-            <TextField label="Weight" type="number" {...register("product_weight_g", { required: "Weight is required" })} required 
+            <TextField label="Weight" type="number" {...register("product_weight_g", { required: "Weight is required" })} required
               error={!!errors.product_weight_g}
               helperText={errors.product_weight_g?.message} />
 
@@ -217,16 +233,54 @@ const Products = () => {
               error={!!errors.product_qty}
               helperText={errors.product_qty?.message} />
 
-            <TextField type="file" onChange={handleFileUpload} />
+            {/* <TextField type="file" onChange={handleFileUpload} /> */}
+            <Box>
+              {urlImg && (
+                <Box mt={1}>
+                  <Typography variant="body2">Preview:</Typography>
+                  <img
+                    src={urlImg}
+                    alt="preview"
+                    style={{
+                      width: "120px",
+                      height: "120px",
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                      border: "1px solid #ddd"
+                    }}
+                  />
+                </Box>
+              )}
+              <Button
+                variant="outlined"
+                component="label"
+                sx={{ mb: 2 }}
+              >
+                Change image
+                <input
+                  type="file"
+                  hidden
+                  accept="image/*"
+                  onChange={handleFileUpload}
+                />
+              </Button>
+            </Box>
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleSubmit(onSubmit)} variant="contained">
             {isEditMode ? "Update" : "Add"}
           </Button>
         </DialogActions>
       </Dialog>
+
+      <SnackBar
+        open={snackOpen}
+        message={snackMessage}
+        severity={snackSeverity}
+        handleClose={() => setSnackOpen(false)}
+      />
     </Box>
   );
 };

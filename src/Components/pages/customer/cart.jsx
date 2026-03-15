@@ -1,5 +1,5 @@
 import React from "react";
-import { useCartQuery } from "../../../services/rtkQuery/customerApi";
+import { useCartQuery, useRemoveFromCartMutation } from "../../../services/rtkQuery/customerApi";
 import AdminTableLayout from "../../layouts/AdminTableLayout";
 import { useState } from "react";
 import {Stack,Button}from "@mui/material"
@@ -7,6 +7,8 @@ import {Stack,Button}from "@mui/material"
 const Cart = () => {
     const [page, setPage] = useState(0); 
       const [rowsPerPage, setRowsPerPage] = useState(10);
+
+      const [remove] = useRemoveFromCartMutation();
     
       const { data, isLoading, error } = useCartQuery({
         page: page + 1,
@@ -55,11 +57,20 @@ const Cart = () => {
           label: "Actions",
           render: (row) => (
             <Stack direction="row" spacing={1} justifyContent="center">
-              <Button size="small" variant="outlined" color="error">Remove from cart</Button>
+              <Button size="small" variant="outlined" color="error" onClick={(()=>handleRemove(row.product_id))}>Remove from cart</Button>
             </Stack>
           )
         }
       ];
+
+      const handleRemove=async(pid)=>{
+        try{
+          await remove({uid: localStorage.getItem("user_id"),pid:pid})
+        }
+         catch(err){
+            console.error(err)
+         }
+      }
 
     if (isLoading) {
         return <p>Loading profile...</p>;
