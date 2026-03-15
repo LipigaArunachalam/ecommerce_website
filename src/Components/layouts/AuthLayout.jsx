@@ -29,15 +29,14 @@ const AuthLayout = ({ children }) => {
           fontWeight="bold"
           sx={{ mb: 2 }}
         >
-          MyShop
+          Ecom website
         </Typography>
 
         <Typography
           variant="h6"
           sx={{ opacity: 0.9, lineHeight: 1.6 }}
         >
-          Manage your store, track sales, and grow your business
-          all in one powerful platform.
+          Click. Shop. Enjoy. 
         </Typography>
       </Box>
 

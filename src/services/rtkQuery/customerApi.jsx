@@ -68,11 +68,19 @@ export const customerApi = baseApi.injectEndpoints({
         method:"PATCH"
       }),
       invalidatesTags:["customers"]
-    })
+    }),
+
+    userDashboard: builder.query({
+      query: () => ({
+        url: `/users/dashboard`,
+        method: "GET"
+      }),
+      invalidatesTags: ["customers"],
+    }),
    
 })
 });
 
-export const {useCustomerDetailsQuery, useGetCatalogQuery, useGetAllProductsQuery,
+export const {useCustomerDetailsQuery, useGetCatalogQuery, useGetAllProductsQuery,useUserDashboardQuery,
   useAddToCartMutation, useCartQuery, useRemoveFromCartMutation, useBuyProductMutation, useCancelOrderMutation} = customerApi;
 

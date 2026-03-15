@@ -6,7 +6,7 @@ const palette = (mode) => ({
   },
 
   secondary: {
-    main: "#9541da"
+    main: "#902ee1"
   },
 
   background: {

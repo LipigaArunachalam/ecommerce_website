@@ -8,11 +8,17 @@ export const ColorModeContext = createContext();
 
 const ThemeProviderWrapper = ({ children }) => {
 
-  const [mode, setMode] = useState("light");
+  const [mode, setMode] = useState(localStorage.getItem("theme") ?? "light")
+
 
   const toggleTheme = () => {
-    setMode((prev) => (prev === "light" ? "dark" : "light"));
+    setMode((prev) => {
+      const theme = prev === "light" ? "dark" : "light";
+      localStorage.setItem("theme", theme)
+      return theme
+    });
   };
+
 
   const theme = useMemo(() => {
     return createTheme({

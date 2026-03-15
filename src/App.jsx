@@ -5,10 +5,6 @@ import { AdminLayout } from './Components/pages/admin/AdminLayout';
 import Customers from './Components/pages/admin/Customer';
 import Sellers from './Components/pages/admin/seller';
 import AdminProfile from './Components/pages/admin/Profile';
-import LoginForm from './Components/pages/auth/LoginForm'
-import SignUpForm from './Components/pages/auth/SignUpForm'
-import ForgotPassword from './Components/pages/auth/ForgotPassword'
-import ResetPassword from './Components/pages/auth/resetPassword'
 import SellerProfile from './Components/pages/seller/sellerProfile'
 import Products from './Components/pages/seller/products'
 import OrderStatus from './Components/pages/seller/orderStatus'
@@ -33,13 +29,9 @@ function App() {
         <Routes>
 
 
-          {/* <Route path="/" element={<LoginForm />} /> */}
           <Route path="/" element={<Login />} />
-          {/* <Route path="/signup" element={<SignUpForm />} /> */}
           <Route path="/signup" element={<Signup />} />
-          {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
           <Route path="/forgot-password" element={<ForgetPassword />} />
-          {/* <Route path="/reset-password" element={<ResetPassword />} /> */}
           <Route path="/reset-password" element={<PasswordReset />} />
 
           <Route element={<ProtectedRoute allowedRole="admin" />}>
@@ -73,15 +65,7 @@ function App() {
           </Route>
 
 
-          {/* <Route
-          path="*"
-          element={
-            <>
-              {localStorage.clear()}
-              <Navigate to="/" replace />
-            </>
-          }
-        /> */}
+          <Route path="*" element={<Navigate to="/" replace />} />
 
         </Routes>
       </BrowserRouter>
