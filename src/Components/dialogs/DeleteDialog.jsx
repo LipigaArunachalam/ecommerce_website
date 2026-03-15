@@ -14,6 +14,8 @@ const DeleteDialog = ({
   onConfirm,
   title = "Delete",
   description = "Are you sure want to delete?",
+  confirmText = "Delete",
+  cancelText = "Cancel",
 }) => {
   return (
     <Dialog
@@ -43,7 +45,7 @@ const DeleteDialog = ({
             "&:hover": { bgcolor: "error.dark" },
           }}
         >
-          Delete
+          {confirmText}
         </Button>
         <Button
           variant="outlined"
@@ -58,7 +60,7 @@ const DeleteDialog = ({
             "&:hover": { bgcolor: "grey.100" },
           }}
         >
-          Cancel
+          {cancelText}
         </Button>
       </DialogActions>
     </Dialog>

@@ -232,6 +232,8 @@ const Sellers = () => {
         onConfirm={handleDeleteConfirm}
         title="Delete Seller"
         description="Are you sure you want to delete this seller?"
+        confirmText="Delete Seller"
+        cancelText="Cancel"
       />
     </>
   );
