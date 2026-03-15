@@ -29,11 +29,11 @@ const DrawerLayout = ({ title, menuItems, handleLogout, isDesktop, handleDrawerT
               <ListItemButton
                 component={NavLink}
                 to={item.path}
-                // Close drawer on click for mobile
+                end
                 onClick={!isDesktop ? handleDrawerToggle : undefined}
                 style={({ isActive }) => ({
-                  backgroundColor: isActive ? "#f0f7ff" : "transparent",
-                  color: isActive ? "#1976d2" : "inherit",
+                  backgroundColor: isActive ? "rgba(120, 81, 169, 0.08)" : "transparent",
+                  color: isActive ? "primary" : "inherit",
                 })}
               >
                 <ListItemIcon sx={{ color: "inherit" }}>{item.icon}</ListItemIcon>

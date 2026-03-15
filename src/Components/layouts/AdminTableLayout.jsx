@@ -14,22 +14,6 @@ import {
   Alert,
 } from "@mui/material";
 
-/**
- * 
- * 
- * @param {string}      title         – Page heading
- * @param {Array}       columns       – [{ key, label, render? }]
- * @param {Array}       data          – Row data array
- * @param {number}      page          – Current page (0-indexed for MUI)
- * @param {Function}    onPageChange  – (event, newPage) => void
- * @param {number}      rowsPerPage   – Rows per page
- * @param {Function}    onRowsPerPageChange – (event) => void
- * @param {number}      totalCount    – Total number of records (for pagination label)
- * @param {boolean}     isLoading     – Show loading spinner
- * @param {boolean}     isError       – Show error alert
- * @param {ReactNode}   headerActions – Buttons rendered in the top-right area
- * @param {Function}    getRowId      – (row) => unique id
- */
 const AdminTableLayout = ({
   title,
   columns = [],
@@ -65,7 +49,6 @@ const AdminTableLayout = ({
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      {/* ── Page header ── */}
       <Box
         display="flex"
         flexDirection={{ xs: "column", sm: "row" }}
@@ -84,8 +67,6 @@ const AdminTableLayout = ({
         )}
       </Box>
 
-
-      {/* ── Table card ── */}
       <Card
         variant="outlined"
         sx={{
@@ -97,7 +78,6 @@ const AdminTableLayout = ({
         {headerContent && headerContent}
         <TableContainer>
           <Table>
-            {/* ── Head ── */}
             <TableHead>
               <TableRow
                 sx={{
@@ -121,7 +101,6 @@ const AdminTableLayout = ({
               </TableRow>
             </TableHead>
 
-            {/* ── Body ── */}
             <TableBody>
               {data.length === 0 ? (
                 <TableRow>
@@ -158,7 +137,6 @@ const AdminTableLayout = ({
           </Table>
         </TableContainer>
 
-        {/* ── Pagination ── */}
         <TablePagination
           component="div"
           count={totalCount ?? (data.length < rowsPerPage ? page * rowsPerPage + data.length : -1)}

@@ -97,7 +97,6 @@ const ProfileLayout = ({
 
         <Divider sx={{ mb: 4 }} />
 
-        {/* ── Detail fields ── */}
         <Grid container spacing={3}>
           {fields.map((field, idx) => (
             <Grid item xs={12} sm={6} key={idx}>

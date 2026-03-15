@@ -25,7 +25,6 @@ const CommonLayout = ({ title, menuItems, handleLogout }) => {
 
   return (
     <Box sx={{ display: "flex" }}>
-      {/* AppBar for mobile view */}
       {!isDesktop && (
         <AppBar
           position="fixed"
@@ -53,7 +52,6 @@ const CommonLayout = ({ title, menuItems, handleLogout }) => {
         </AppBar>
       )}
 
-      {/* Sidebar Navigation */}
       <Box
         component="nav"
         sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
@@ -84,7 +82,6 @@ const CommonLayout = ({ title, menuItems, handleLogout }) => {
         </Drawer>
       </Box>
 
-      {/* Main Content Area */}
       <Box
         component="main"
         sx={{
@@ -93,7 +90,6 @@ const CommonLayout = ({ title, menuItems, handleLogout }) => {
           backgroundColor: "#f9f9f9",
           minHeight: "100vh",
           width: { md: `calc(100% - ${drawerWidth}px)` },
-          // Adjust top margin for mobile AppBar
           mt: { xs: 8, md: 0 },
         }}
       >

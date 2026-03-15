@@ -150,7 +150,6 @@ const Sellers = () => {
               textTransform: "none",
               borderRadius: 1.5,
               fontWeight: 600,
-              "&:hover": { bgcolor: "#6c9ff2ff" },
             }}
           >
             Add Seller
