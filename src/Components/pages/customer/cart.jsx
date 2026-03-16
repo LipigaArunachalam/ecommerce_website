@@ -81,8 +81,7 @@ const Cart = () => {
         setSelectedProduct(product);
         setIsBuyDialogOpen(true);
     };
- 
-
+  
     const handleRemove = (pid) => {
         setSelectedProductId(pid);
         setIsDeleteDialogOpen(true);
