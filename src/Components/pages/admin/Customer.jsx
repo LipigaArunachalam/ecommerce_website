@@ -4,15 +4,14 @@ import { Typography } from "@mui/material";
 import AdminTableLayout from "../../layouts/AdminTableLayout";
 
 const Customers = () => {
-  const [page, setPage] = useState(0); // 0-indexed for MUI TablePagination
+  const [page, setPage] = useState(0); 
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const { data, isLoading, isError } = useGetAllCustomerQuery({
-    page: page + 1, // API is 1-indexed
+    page: page + 1, 
     limit: rowsPerPage,
   });
 
-  // ── Column definitions ──
   const columns = [
     {
       key: "customer_name",

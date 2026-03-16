@@ -82,5 +82,5 @@ export const customerApi = baseApi.injectEndpoints({
 });
 
 export const {useCustomerDetailsQuery, useGetCatalogQuery, useGetAllProductsQuery,useUserDashboardQuery,
-  useAddToCartMutation, useCartQuery, useRemoveFromCartMutation, useBuyProductMutation, useCancelOrderMutation} = customerApi;
+  useAddToCartMutation, useCartQuery, useBuyProductMutation, useCancelOrderMutation, useRemoveFromCartMutation } = customerApi;
 

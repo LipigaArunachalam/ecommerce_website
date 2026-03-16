@@ -1,6 +1,8 @@
 import React from "react";
 import {
   Box,
+  Card,
+  Typography,
   Table,
   TableBody,
   TableCell,
@@ -13,7 +15,8 @@ import {
   Typography,Card
 } from "@mui/material";
 
-const AdminTableLayout = ({ title,
+const AdminTableLayout = ({
+  title,
   columns = [],
   data = [],
   page = 0,
@@ -64,13 +67,23 @@ const AdminTableLayout = ({ title,
           </Box>
         )}
       </Box>
-
       <Card
         variant="outlined"
         sx={{
           borderRadius: 2,
           boxShadow: "0 0 2px 0 rgba(145,158,171,.2), 0 12px 24px -4px rgba(145,158,171,.12)",
           overflow: "hidden",
+        }}
+      >
+      {headerContent && headerContent}
+      <TableContainer
+        component={Paper}
+        sx={{
+          borderRadius: 3,
+          overflowX: "auto",
+          border: "1px solid",
+          borderColor: "divider",
+          backgroundColor: "background.paper"
         }}
       >
         {headerContent && headerContent}
@@ -159,26 +172,26 @@ const AdminTableLayout = ({ title,
               ))}
             </TableBody>
 
-          </Table>
-        </TableContainer>
-        <TablePagination
-          component="div"
-          count={totalCount ?? (data.length < rowsPerPage ? page * rowsPerPage + data.length : -1)}
-          page={page}
-          onPageChange={onPageChange}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={onRowsPerPageChange}
-          rowsPerPageOptions={[5, 10, 25]}
-          sx={{
-            borderTop: "1px solid",
-            borderColor: "divider",
-            ".MuiTablePagination-toolbar": { px: 2 },
-          }}
-        />
-        </Card>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        component="div"
+        count={totalCount ?? (data.length < rowsPerPage ? page * rowsPerPage + data.length : -1)}
+        page={page}
+        onPageChange={onPageChange}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={onRowsPerPageChange}
+        rowsPerPageOptions={[5, 10, 25]}
+        sx={{
+          borderTop: "1px solid",
+          borderColor: "divider",
+          ".MuiTablePagination-toolbar": { px: 2 },
+        }}
+      />
+    </Card>
     </Container>
   );
 
 };
 
-export default AdminTableLayout;
+export default AdminTableLayout;  

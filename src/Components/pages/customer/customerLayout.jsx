@@ -1,26 +1,57 @@
-import React from "react";
+import React, { useContext } from "react";
 import useLogout from "../auth/Logout";
-import { Dashboard,Storefront,ShoppingCart ,GridView} from "@mui/icons-material";
+import { AppBar, Toolbar, Typography, Button, Container, Box, IconButton } from "@mui/material";
+import { Storefront, ShoppingCart, GridView, Person, Search, Logout, Brightness4, Brightness7 } from "@mui/icons-material";
 import CommonLayout from "../../layouts/CommonLayout";
+import { useNavigate, Outlet } from "react-router-dom";
+import { ColorModeContext } from "../../../theme/themeProvider";
 
 const CustomerLayout = () => {
+    const navigate = useNavigate();
+    const { mode, toggleTheme } = useContext(ColorModeContext);
+
     const menuItems = [
-        { text: "Dashboard", icon: <Dashboard />, path: "/customer/customer-profile" },
+        { text: "Products", icon: <GridView/>, path: "/customer/catalog"},
+        { text: "Profile", icon: <Person />, path: "/customer/customer-profile" },
         { text: "Cart", icon: <ShoppingCart />, path: "/customer/cart" },
         { text: "Orders", icon: <Storefront />, path: "/customer/orders" },
-        { text: "Products", icon: <GridView/>, path: "/customer/catalog"},
+        { text: "Search", icon: <Search />, path: "/customer/search"},
     ];
 
+    const handleNavigate = (path) => {
+        navigate(path);
+    };
 
     const { handleLogout } = useLogout();
 
 
     return (
-        <CommonLayout
-            title="Customer Panel"
-            menuItems={menuItems}
-            handleLogout={handleLogout}
-        />
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static">
+                <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        Ecommerce
+                    </Typography>
+                    <Box>
+                        {menuItems.map((item) => (
+                            <Button color="inherit" key={item.path} onClick={() => handleNavigate(item.path)}>
+                                {item.icon}
+                                {item.text}
+                            </Button>
+                        ))}
+                        <IconButton onClick={toggleTheme} color="inherit" sx={{ ml: 1 }}>
+                            {mode === "dark" ? <Brightness7 /> : <Brightness4 />}
+                        </IconButton>
+                        <Button color="error" startIcon={<Logout/>} onClick={handleLogout} sx={{ ml: 2 }}>
+                            Logout 
+                        </Button>
+                    </Box>
+                </Toolbar>
+            </AppBar>
+            <Container sx={{ mt: 4 }}>
+                <Outlet />
+            </Container>
+        </Box>
 
     );
 }

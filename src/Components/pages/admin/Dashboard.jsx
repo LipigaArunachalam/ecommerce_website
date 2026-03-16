@@ -9,13 +9,14 @@ import {
   Alert,
   Divider,
   Chip,
+  Container
 } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import AdminTableLayout from "../../layouts/AdminTableLayout";
 
 const AdminDashboard = () => {
   const { data: adminData } = useGetAdminQuery();
-  const [page, setPage] = useState(0); // 0-indexed for MUI
+  const [page, setPage] = useState(0); 
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [city, setCity] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
@@ -33,7 +34,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // Flatten grouped results into a single array for the table
   const flatData = useMemo(() => {
     if (!searchResults || searchResults.length === 0) return [];
     return searchResults.flatMap((group) =>
@@ -45,7 +45,6 @@ const AdminDashboard = () => {
     );
   }, [searchResults]);
 
-  // Column definitions
   const columns = [
     {
       key: "username",
@@ -76,7 +75,6 @@ const AdminDashboard = () => {
     },
   ];
 
-  // Search form rendered inside the table card
   const searchHeader = (
     <Box sx={{ p: 2.5, borderBottom: "1px solid", borderColor: "divider" }}>
       <Box
@@ -113,7 +111,6 @@ const AdminDashboard = () => {
 
   return (
     <>
-      {/* Welcome banner */}
       <Box sx={{ px: 3, pt: 4, maxWidth: "lg", mx: "auto" }}>
         <Typography
           variant="h4"
@@ -127,7 +124,6 @@ const AdminDashboard = () => {
         <Divider />
       </Box>
 
-      {/* Error / empty state */}
       {error && (
         <Box sx={{ px: 3, maxWidth: "lg", mx: "auto", mt: 2 }}>
           <Alert severity="error">
@@ -143,7 +139,6 @@ const AdminDashboard = () => {
         </Box>
       )}
 
-      {/* Table with search */}
       <AdminTableLayout
         title="Search Customers and Sellers"
         columns={columns}
