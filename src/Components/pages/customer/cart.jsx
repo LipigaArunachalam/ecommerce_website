@@ -3,10 +3,14 @@ import { useCartQuery, useRemoveFromCartMutation} from "../../../services/rtkQue
 import AdminTableLayout from "../../layouts/AdminTableLayout";
 import { useState } from "react";
 import { Stack, Button,Container } from "@mui/material"
+import BuyProductDialog from "./BuyProductDialog";
 
 const Cart = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const [isBuyDialogOpen, setIsBuyDialogOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [remove] = useRemoveFromCartMutation();
 
@@ -60,6 +64,7 @@ const Cart = () => {
       render: (row) => (
         <Stack direction="row" spacing={1} justifyContent="center">
           <Button size="small" variant="outlined" color="error" onClick={(() => handleRemove(row.product_id))}>Remove from cart</Button>
+          <Button size="small" variant="outlined" color="primary" onClick={() => handleBuy(row)}>Buy</Button>
         </Stack>
       )
     }
@@ -74,6 +79,11 @@ const Cart = () => {
     }
   }
 
+  const handleBuy = (product) => {
+        setSelectedProduct(product);
+        setIsBuyDialogOpen(true);
+    };
+
   
 
   if (isLoading) {
@@ -87,7 +97,7 @@ const Cart = () => {
   }
   return (
     // <p>{JSON.stringify(data)}</p>
-
+<Container>
       <AdminTableLayout
         columns={columns}
         data={data || []}
@@ -102,8 +112,12 @@ const Cart = () => {
         isError={!!error}
         getRowId={(row) => row.product_id}
       />
-      
-
+      <BuyProductDialog
+                open={isBuyDialogOpen}
+                onClose={() => setIsBuyDialogOpen(false)}
+                product={selectedProduct}
+            />
+</Container>
   )
 
 

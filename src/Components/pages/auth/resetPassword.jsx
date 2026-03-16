@@ -24,6 +24,15 @@ const ResetPassword = () => {
 
   const [resetPassword] = useResetPasswordMutation();
 
+   const textStyle={
+    "& .MuiInputLabel-root": {
+      color: "black"
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: "black"
+  }
+};
+
   const handleReset = async (data) => {
 
     try {
@@ -52,7 +61,7 @@ const ResetPassword = () => {
       <Card sx={{
         p: 4,
         borderRadius: 4,
-        background: "rgba(220, 164, 246, 0.92)",
+        background: "rgba(199, 122, 235, 0.92)",
         boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
       }}>
         <CardContent>
@@ -73,6 +82,7 @@ const ResetPassword = () => {
                 {...register("newPassword", { required: "password is needed" })}
                 error={!!errors.newPassword}
                 helperText={errors.newPassword?.message}
+                sx={ textStyle}
               />
               <TextField
                 type="password"
@@ -83,6 +93,7 @@ const ResetPassword = () => {
                 {...register("newPassword", { required: "password is needed" })}
                 error={!!errors.newPassword}
                 helperText={errors.newPassword?.message}
+                sx={ textStyle}
               />
 
               <Button variant="contained"
