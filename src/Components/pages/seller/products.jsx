@@ -66,6 +66,10 @@ const Products = () => {
       label: "product category"
     },
     {
+      key: "product_name",
+      label: "Product name"
+    },
+    {
       key: "product_image_url",
       label: "Image",
       render: (row) => (
@@ -101,7 +105,7 @@ const Products = () => {
       label: "Actions",
       render: (row) => (
         <Stack direction="row" spacing={1} justifyContent="center">
-          <Button size="small" variant="outlined" onClick={() => handleUpdate(row)}>Edit</Button>
+          <Button size="small" variant="outlined" color="secondary" onClick={() => handleUpdate(row)}>Edit</Button>
           <Button size="small" variant="outlined" color="error" onClick={() => handleDelete(row.product_id)}>Delete</Button>
         </Stack>
       )
@@ -201,76 +205,196 @@ const Products = () => {
         getRowId={(row) => row.product_id}
       />
 
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-        <DialogTitle>{isEditMode ? "Update Product" : "Add New Product"}</DialogTitle>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth
+        maxWidth="sm"
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+            p: 1
+          }
+        }}
+      >
+        <DialogTitle
+          sx={{
+            fontWeight: "bold",
+            color: "#9c35c5",
+            textAlign: "center",
+            fontSize: "1.4rem"
+          }}
+        >
+          {isEditMode ? "Update Product" : "Add New Product"}
+        </DialogTitle>
+
         <DialogContent>
-          <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
-            <TextField label="Category" {...register("product_category_name", { required: "Category is required" })} disabled={isEditMode} required
+          <Box
+            component="form"
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 2,
+              mt: 1
+            }}
+          >
+            <TextField
+              label="Category"
+              fullWidth
+              {...register("product_category_name", { required: "Category is required" })}
+              disabled={isEditMode}
               error={!!errors.product_category_name}
-              helperText={errors.product_category_name?.message} />
+              helperText={errors.product_category_name?.message}
+            />
 
-            <TextField label="Price" type="number" {...register("price", { required: "Price is required" })} required
-              error={!!errors.product_photos_qty}
-              helperText={errors.product_photos_qty?.message} />
+            <TextField
+              label="Product Name"
+              fullWidth
+              {...register("product_name", { required: "Name is required" })}
+              error={!!errors.product_name}
+              helperText={errors.product_name?.message}
+            />
 
-            <TextField label="Weight" type="number" {...register("product_weight_g", { required: "Weight is required" })} required
-              error={!!errors.product_weight_g}
-              helperText={errors.product_weight_g?.message} />
+            <TextField
+              label="Price"
+              type="number"
+              fullWidth
+              {...register("price", { required: "Price is required" })}
+              error={!!errors.price}
+              helperText={errors.price?.message}
+            />
 
-            <TextField label="Height" type="number" {...register("product_height_cm", { required: "Height is required" })} required
-              error={!!errors.product_height_cm}
-              helperText={errors.product_height_cm?.message} />
-
-            <TextField label="Length" type="number" {...register("product_length_cm", { required: "Length is required" })} required
-              error={!!errors.product_length_cm}
-              helperText={errors.product_length_cm?.message} />
-
-            <TextField label="Width" type="number" {...register("product_width_cm", { required: "Width is required" })} required
-              error={!!errors.product_width_cm}
-              helperText={errors.product_width_cm?.message} />
-
-            <TextField label="Stock" type="number" {...register("product_qty", { required: "Quantity is required" })} required
+            <TextField
+              label="Stock"
+              type="number"
+              fullWidth
+              {...register("product_qty", { required: "Quantity is required" })}
               error={!!errors.product_qty}
-              helperText={errors.product_qty?.message} />
+              helperText={errors.product_qty?.message}
+            />
 
-            {/* <TextField type="file" onChange={handleFileUpload} /> */}
-            <Box>
-              {urlImg && (
-                <Box mt={1}>
-                  <Typography variant="body2">Preview:</Typography>
-                  <img
-                    src={urlImg}
-                    alt="preview"
-                    style={{
-                      width: "120px",
-                      height: "120px",
-                      objectFit: "cover",
-                      borderRadius: "8px",
-                      border: "1px solid #ddd"
-                    }}
-                  />
-                </Box>
-              )}
-              <Button
-                variant="outlined"
-                component="label"
-                sx={{ mb: 2 }}
+            <TextField
+              label="Weight (g)"
+              type="number"
+              fullWidth
+              {...register("product_weight_g", { required: "Weight is required" })}
+              error={!!errors.product_weight_g}
+              helperText={errors.product_weight_g?.message}
+            />
+
+            <TextField
+              label="Height (cm)"
+              type="number"
+              fullWidth
+              {...register("product_height_cm", { required: "Height is required" })}
+              error={!!errors.product_height_cm}
+              helperText={errors.product_height_cm?.message}
+            />
+
+            <TextField
+              label="Length (cm)"
+              type="number"
+              fullWidth
+              {...register("product_length_cm", { required: "Length is required" })}
+              error={!!errors.product_length_cm}
+              helperText={errors.product_length_cm?.message}
+            />
+
+            <TextField
+              label="Width (cm)"
+              type="number"
+              fullWidth
+              {...register("product_width_cm", { required: "Width is required" })}
+              error={!!errors.product_width_cm}
+              helperText={errors.product_width_cm?.message}
+            />
+
+            {/* IMAGE SECTION */}
+            <Box sx={{ gridColumn: "span 2", mt: 1 }}>
+              <Typography
+                variant="subtitle2"
+                sx={{ mb: 1, fontWeight: "bold", color: "text.secondary" }}
               >
-                Change image
-                <input
-                  type="file"
-                  hidden
-                  accept="image/*"
-                  onChange={handleFileUpload}
-                />
-              </Button>
+                Product Image
+              </Typography>
+
+              <Box
+                sx={{
+                  border: "2px dashed #9c35c5",
+                  borderRadius: 2,
+                  p: 2,
+                  textAlign: "center",
+                  background: "rgba(156,53,197,0.04)"
+                }}
+              >
+                {urlImg && (
+                  <Box mb={2}>
+                    <img
+                      src={urlImg}
+                      alt="preview"
+                      style={{
+                        width: 120,
+                        height: 120,
+                        objectFit: "cover",
+                        borderRadius: 10
+                      }}
+                    />
+                  </Box>
+                )}
+
+                <Button
+                  variant="outlined"
+                  component="label"
+                  sx={{
+                    borderColor: "#9c35c5",
+                    color: "#9c35c5",
+                    "&:hover": {
+                      borderColor: "#7b1fa2",
+                      background: "rgba(156,53,197,0.08)"
+                    }
+                  }}
+                >
+                  {isEditMode ? "Change Image" : "Upload Image"}
+                  <input
+                    type="file"
+                    hidden
+                    accept="image/*"
+                    onChange={handleFileUpload}
+                  />
+                </Button>
+              </Box>
             </Box>
           </Box>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit(onSubmit)} variant="contained">
-            {isEditMode ? "Update" : "Add"}
+
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button
+            onClick={handleClose} variant="contained"
+            sx={{
+              background: "#9c35c5",
+              textTransform: "none",
+              px: 3,
+              "&:hover": {
+                background: "#7b1fa2"
+              }
+            }}
+          >
+            Cancel
+          </Button>
+
+          <Button
+            onClick={handleSubmit(onSubmit)}
+            variant="contained"
+            sx={{
+              background: "#9c35c5",
+              textTransform: "none",
+              px: 3,
+              "&:hover": {
+                background: "#7b1fa2"
+              }
+            }}
+          >
+            {isEditMode ? "Update Product" : "Add Product"}
           </Button>
         </DialogActions>
       </Dialog>

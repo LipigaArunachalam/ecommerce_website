@@ -77,7 +77,12 @@ const LoginForm = () => {
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
-      <Card sx={{ p: 2, borderRadius: 7, boxShadow: 4 }}>
+      <Card sx={{
+        p: 4,
+        borderRadius: 4,
+        background: "rgba(220, 164, 246, 0.92)",
+        boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
+      }}>
         <CardContent>
           <Typography variant="h4" align="center" fontWeight="bold">LOGIN</Typography>
 
