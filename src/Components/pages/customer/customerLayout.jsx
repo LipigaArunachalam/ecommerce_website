@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import useLogout from "../auth/Logout";
 import { AppBar, Toolbar, Typography, Button, Container, Box, IconButton } from "@mui/material";
 import { Storefront, ShoppingCart, GridView, Person, Search, Logout, Brightness4, Brightness7 } from "@mui/icons-material";
@@ -9,7 +9,6 @@ import ThemeToggle from "../../../theme/themeToggle";
 
 const CustomerLayout = () => {
     const navigate = useNavigate();
-    const { mode, toggleTheme } = useContext(ColorModeContext);
 
     const menuItems = [
         { text: "Products", icon: <GridView/>, path: "/customer/catalog"},
