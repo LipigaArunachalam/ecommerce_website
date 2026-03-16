@@ -79,9 +79,10 @@ export const customerApi = baseApi.injectEndpoints({
     }),
    
     searchProduct: builder.query({
-      query:({prod})=>({
+      query:({prod,limit, page})=>({
         url :`/users/catalog/${prod}`,
         method:"GET",
+        params:{limit, page}
       }),
       providesTags:["customers"]
     })

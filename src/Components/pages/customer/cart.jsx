@@ -10,8 +10,6 @@ import SnackBar from "../../../services/snackBar/snackBar";
 const Cart = () => {
     const [page, setPage] = useState(0); 
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [isBuyDialogOpen, setIsBuyDialogOpen] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState(null);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [selectedProductId, setSelectedProductId] = useState(null);
 
@@ -19,6 +17,8 @@ const Cart = () => {
     const [snackMessage, setSnackMessage] = useState("");
     const [snackSeverity, setSnackSeverity] = useState("success");
 
+    const [isBuyDialogOpen,setIsBuyDialogOpen]=useState(false)
+    const [selectedProduct, setSelectedProduct]=useState(null)
 
 
     const [remove] = useRemoveFromCartMutation();

@@ -1,8 +1,7 @@
 import React from "react";
 import useLogout from "../auth/Logout";
 import { AppBar, Toolbar, Typography, Button, Container, Box, IconButton } from "@mui/material";
-import { Storefront, ShoppingCart, GridView, Person, Search, Logout, Brightness4, Brightness7 } from "@mui/icons-material";
-import CommonLayout from "../../layouts/CommonLayout";
+import { Storefront, ShoppingCart, GridView, Person, Home, Logout, Brightness4, Brightness7 } from "@mui/icons-material";
 import { useNavigate, Outlet } from "react-router-dom";
 import { ColorModeContext } from "../../../theme/themeProvider";
 import ThemeToggle from "../../../theme/themeToggle";
@@ -11,9 +10,9 @@ const CustomerLayout = () => {
     const navigate = useNavigate();
 
     const menuItems = [
-        { text: "Products", icon: <GridView/>, path: "/customer/catalog"},
+        // { text: "Products", icon: <GridView/>, path: "/customer/catalog"},
+        { text: "Home", icon: <Home />, path: "/customer/search"},
         { text: "Orders", icon: <Storefront />, path: "/customer/orders" },
-        { text: "Search", icon: <Search />, path: "/customer/search"},
         {  icon: <Person />, path: "/customer/customer-profile" },
         {  icon: <ShoppingCart />, path: "/customer/cart" },
     ];
@@ -39,9 +38,12 @@ const CustomerLayout = () => {
                                 {item.text}
                             </Button>
                         ))}
-                        <ThemeToggle/>
-                        <Button color="error" startIcon={<Logout/>} onClick={handleLogout} sx={{ ml: 2 }}>
-                            Logout 
+                        {/* <IconButton onClick={toggleTheme} color="inherit" sx={{ ml: 1 }}>
+                            {mode === "dark" ? <Brightness7 /> : <Brightness4 />}
+                        </IconButton> */}
+                        <ThemeToggle />
+                        <Button variant="contained" color="error" startIcon={<Logout/>} onClick={handleLogout} sx={{ ml: 2 }}>
+                            Logout
                         </Button>
                     </Box>
                 </Toolbar>
