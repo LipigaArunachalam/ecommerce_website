@@ -85,11 +85,20 @@ export const customerApi = baseApi.injectEndpoints({
         params:{limit, page}
       }),
       providesTags:["customers"]
+    }),
+
+    editProfile : builder.mutation({
+      query:({data, uid})=>({
+        url : `/users/${uid}/edit`,
+        method:"PATCH",
+        body:{data}
+      }),
+      invalidatesTags:["customers"]
     })
 })
 });
 
 export const {useCustomerDetailsQuery, useGetCatalogQuery, useGetAllProductsQuery,useUserDashboardQuery,
   useAddToCartMutation, useCartQuery, useBuyProductMutation, useCancelOrderMutation, useRemoveFromCartMutation,
-useSearchProductQuery } = customerApi;
+useSearchProductQuery, useEditProfileMutation } = customerApi;
 
