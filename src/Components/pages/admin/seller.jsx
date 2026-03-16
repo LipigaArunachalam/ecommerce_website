@@ -166,16 +166,18 @@ const Sellers = () => {
         >
           
           <TextField
-            label="Username*"
+            label="Username"
             fullWidth
+            required
             {...register("username", { required: "Username is required" })}
             error={!!errors.username}
             helperText={errors.username?.message}
           />
           <TextField
-            label="Email*"
+            label="Email"
             type="email"
             fullWidth
+            required
             {...register("email", {
               required: "Email is required",
               pattern: {
@@ -187,9 +189,10 @@ const Sellers = () => {
             helperText={errors.email?.message}
           />
           <TextField
-            label="Password*"
+            label="Password"
             type="password"
             fullWidth
+            required
             {...register("password", {
               required: "Password is required",
               minLength: { value: 6, message: "Min 6 characters" },

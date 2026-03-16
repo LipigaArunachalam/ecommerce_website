@@ -1,17 +1,21 @@
 import React from "react";
-import { useCartQuery } from "../../../services/rtkQuery/customerApi";
+import { useCartQuery, useRemoveFromCartMutation } from "../../../services/rtkQuery/customerApi";
 import AdminTableLayout from "../../layouts/AdminTableLayout";
 import { useState } from "react";
-import {Stack,Button}from "@mui/material"
+import {Stack, Button, Box}from "@mui/material"
+import BuyProductDialog from "./BuyProductDialog";
 
 const Cart = () => {
     const [page, setPage] = useState(0); 
-      const [rowsPerPage, setRowsPerPage] = useState(10);
-    
-      const { data, isLoading, error } = useCartQuery({
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [isBuyDialogOpen, setIsBuyDialogOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [remove] = useRemoveFromCartMutation();
+
+    const { data, isLoading, error } = useCartQuery({
         page: page + 1,
         limit: rowsPerPage,
-      });
+    });
     
 
     const columns = [
@@ -55,12 +59,27 @@ const Cart = () => {
           label: "Actions",
           render: (row) => (
             <Stack direction="row" spacing={1} justifyContent="center">
-              <Button size="small" variant="outlined" color="error">Remove from cart</Button>
+              <Button size="small" variant="outlined" color="error" onClick={(()=>handleRemove(row.product_id))}>Remove from cart</Button>
+              <Button size="small" variant="outlined" color="primary" onClick={() => handleBuy(row)}>Buy</Button>
             </Stack>
           )
         }
       ];
 
+    const handleBuy = (product) => {
+        setSelectedProduct(product);
+        setIsBuyDialogOpen(true);
+    };
+
+    const handleRemove=async(pid)=>{
+      try{
+        await remove({uid: localStorage.getItem("user_id"),pid:pid})
+      }
+        catch(err){
+          console.error(err)
+        }
+    }
+    
     if (isLoading) {
         return <p>Loading profile...</p>;
     }
@@ -72,7 +91,7 @@ const Cart = () => {
     }
     return(
         // <p>{JSON.stringify(data)}</p>
-
+        <Box>
         <AdminTableLayout
                 // title="Products"
                 columns={columns}
@@ -88,6 +107,12 @@ const Cart = () => {
                 isError={!!error}
                 getRowId={(row) => row.product_id}
               />
+              <BuyProductDialog
+                open={isBuyDialogOpen}
+                onClose={() => setIsBuyDialogOpen(false)}
+                product={selectedProduct}
+            />
+            </Box>
     )
 
     

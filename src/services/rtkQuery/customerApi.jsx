@@ -48,7 +48,7 @@ export const customerApi = baseApi.injectEndpoints({
    
     addToCart : builder.mutation({
       query :({uid, pid})=>({
-        url : `/users/${uid}/add-to-cart/${pid}`,
+        url : `/users/${uid}/cart/${pid}`,
         method:"POST",
       }),
       invalidatesTags:["customers"]
@@ -60,11 +60,19 @@ export const customerApi = baseApi.injectEndpoints({
         method:"GET",
       }),
       invalidatesTags:["customers"]
+    }),
+
+    removeFromCart:builder.mutation({
+      query : ({uid,pid})=>({
+        url:`/users/${uid}/cart/${pid}`,
+        method:"PATCH"
+      }),
+      invalidatesTags:["customers"]
     })
    
 })
 });
 
 export const {useCustomerDetailsQuery, useGetCatalogQuery, useGetAllProductsQuery,
-  useAddToCartMutation, useCartQuery, useBuyProductMutation, useCancelOrderMutation } = customerApi;
+  useAddToCartMutation, useCartQuery, useBuyProductMutation, useCancelOrderMutation, useRemoveFromCartMutation } = customerApi;
 
