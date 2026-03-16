@@ -19,6 +19,15 @@ const SignUpForm = () => {
 
   const [signup] = useSignupMutation();
 
+  const textStyle={
+    "& .MuiInputLabel-root": {
+      color: "black"
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: "black"
+  }
+};
+
   const handleSignup = async (data) => {
     if (data.password !== data.confirmPassword) {
       setSnackMessage("Password didnt match")
@@ -50,6 +59,8 @@ const SignUpForm = () => {
     }
   };
 
+  
+
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
       <Card sx={{
@@ -63,7 +74,7 @@ const SignUpForm = () => {
         },
         p: 4,
         borderRadius: 4,
-        background: "rgba(220, 164, 246, 0.92)",
+        background: "rgba(199, 122, 235, 0.92)",
         boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
       }}>
         <CardContent>
@@ -78,6 +89,7 @@ const SignUpForm = () => {
                 {...register("username", { required: "Username is required" })}
                 error={!!errors.username}
                 helperText={errors.username?.message}
+                sx={ textStyle}
               />
 
 
@@ -88,6 +100,7 @@ const SignUpForm = () => {
                 {...register("email", { required: "email is required" })}
                 error={!!errors.email}
                 helperText={errors.email?.message}
+                sx={ textStyle}
               />
 
               <TextField
@@ -98,6 +111,7 @@ const SignUpForm = () => {
                 {...register("password", { required: "Password is required" })}
                 error={!!errors.password}
                 helperText={errors.password?.message}
+                sx={ textStyle}
               />
 
               <TextField
@@ -108,6 +122,7 @@ const SignUpForm = () => {
                 {...register("confirmPassword", { required: "Password is required" })}
                 error={!!errors.confirmPassword}
                 helperText={errors.confirmPassword?.message}
+                sx={ textStyle}
               />
 
 
@@ -119,6 +134,7 @@ const SignUpForm = () => {
                 {...register("zip_code", { required: "ZipCode is required" })}
                 error={!!errors.zip_code}
                 helperText={errors.zip_code?.message}
+                sx={ textStyle}
               />
 
               <TextField
@@ -128,6 +144,7 @@ const SignUpForm = () => {
                 {...register("city", { required: "city is required" })}
                 error={!!errors.city}
                 helperText={errors.city?.message}
+                sx={ textStyle}
               />
 
               <TextField
@@ -137,6 +154,7 @@ const SignUpForm = () => {
                 {...register("state", { required: "state is required" })}
                 error={!!errors.state}
                 helperText={errors.state?.message}
+                sx={ textStyle}
               />
 
 

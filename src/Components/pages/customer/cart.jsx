@@ -2,7 +2,7 @@ import React from "react";
 import { useCartQuery, useRemoveFromCartMutation } from "../../../services/rtkQuery/customerApi";
 import AdminTableLayout from "../../layouts/AdminTableLayout";
 import { useState } from "react";
-import {Stack, Button, Box}from "@mui/material"
+import {Stack, Button, Container}from "@mui/material"
 import BuyProductDialog from "./BuyProductDialog";
 import DeleteDialog from "../../dialogs/DeleteDialog";
 import SnackBar from "../../../services/snackBar/snackBar";
@@ -18,6 +18,9 @@ const Cart = () => {
     const [snackOpen, setSnackOpen] = useState(false);
     const [snackMessage, setSnackMessage] = useState("");
     const [snackSeverity, setSnackSeverity] = useState("success");
+    const [isBuyDialogOpen, setIsBuyDialogOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+
 
     const [remove] = useRemoveFromCartMutation();
 
@@ -79,6 +82,53 @@ const Cart = () => {
         setSelectedProduct(product);
         setIsBuyDialogOpen(true);
     };
+  const columns = [
+    {
+      key: "product_category_name",
+      label: "Product Category"
+    },
+    {
+      key: "product_image_url",
+      label: "Image",
+      render: (row) => (
+        <img
+          src={row.product_image_url}
+          alt="product"
+          style={{ height: "100px", width: "100px", objectFit: "cover" }}
+        />
+      )
+    },
+    {
+      key: "price",
+      label: "Price"
+    },
+    {
+      key: "product_weight_g",
+      label: "Weight"
+    },
+    {
+      key: "product_height_cm",
+      label: "Height"
+    },
+    {
+      key: "product_width_cm",
+      label: "Width"
+    },
+    {
+      key: "product_qty",
+      label: "Stock"
+    },
+    {
+      key: "actions",
+      label: "Actions",
+      render: (row) => (
+        <Stack direction="row" spacing={1} justifyContent="center">
+          <Button size="small" variant="outlined" color="error" onClick={(() => handleRemove(row.product_id))}>Remove from cart</Button>
+          <Button size="small" variant="outlined" color="primary" onClick={() => handleBuy(row)}>Buy</Button>
+        </Stack>
+      )
+    }
+  ];
 
     const handleRemove = (pid) => {
         setSelectedProductId(pid);
@@ -114,7 +164,7 @@ const Cart = () => {
 
     return(
         // <p>{JSON.stringify(data)}</p>
-        <Box>
+        <Container>
         <AdminTableLayout
                 // title="Products"
                 columns={columns}
@@ -151,7 +201,7 @@ const Cart = () => {
                 severity={snackSeverity}
                 handleClose={() => setSnackOpen(false)}
             />
-            </Box>
+         </Container>
     )
 
 }

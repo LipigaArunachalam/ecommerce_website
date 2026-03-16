@@ -4,6 +4,7 @@ import { useAddToCartMutation, useGetCatalogQuery } from "../../../services/rtkQ
 import { Box, Stack, Button } from "@mui/material"
 import BuyProductDialog from "./BuyProductDialog";
 // import { useNavigate } from "react-router-dom";
+import SnackBar from './../../../services/snackBar/snackBar'
 
 
 const Catalog = () => {
@@ -12,6 +13,10 @@ const Catalog = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [isBuyDialogOpen, setIsBuyDialogOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+
+    const [snackOpen, setSnackOpen] = useState(false);
+    const [snackMessage, setSnackMessage] = useState("");
+    const [snackSeverity, setSnackSeverity] = useState("error");
 
     // const navigate= useNavigate();
 
@@ -89,8 +94,14 @@ const Catalog = () => {
         try {
             await addToCart({ uid: uid, pid: product_id })
             // navigate("/customer/cart")
+            setSnackMessage("Added to cart");
+            setSnackSeverity("success")
+            setSnackOpen(true)
         } catch (err) {
             console.error(err);
+            setSnackMessage("Failed to add");
+            setSnackSeverity("error")
+            setSnackOpen(true)
         }
     };
 
@@ -118,6 +129,12 @@ const Catalog = () => {
                 open={isBuyDialogOpen}
                 onClose={() => setIsBuyDialogOpen(false)}
                 product={selectedProduct}
+            />
+            <SnackBar
+                open={snackOpen}
+                message={snackMessage}
+                severity={snackSeverity}
+                handleClose={() => setSnackOpen(false)}
             />
         </Box>
     );

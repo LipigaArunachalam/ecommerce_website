@@ -10,7 +10,9 @@ import {
   TableHead,
   TableRow,
   Paper, Container,
-  TablePagination,CircularProgress
+  TablePagination, 
+  CircularProgress,
+  Typography,Card
 } from "@mui/material";
 
 const AdminTableLayout = ({
@@ -26,7 +28,7 @@ const AdminTableLayout = ({
   isError = false,
   headerActions,
   headerContent,
-  getRowId = (row) => row.id || row._id,}) => {
+  getRowId = (row) => row.id || row._id, }) => {
 
   if (isLoading) {
     return (
@@ -48,7 +50,7 @@ const AdminTableLayout = ({
 
   return (
     <Container>
-       <Box
+      <Box
         display="flex"
         flexDirection={{ xs: "column", sm: "row" }}
         justifyContent="space-between"
@@ -84,80 +86,91 @@ const AdminTableLayout = ({
           backgroundColor: "background.paper"
         }}
       >
-        <Table>
+        {headerContent && headerContent}
+        <TableContainer
+          component={Paper}
+          sx={{
+            borderRadius: 3,
+            overflow: "hidden",
+            border: "1px solid",
+            borderColor: "divider",
+            backgroundColor: "background.paper"
+          }}
+        >
+          <Table>
 
-          {/* TABLE HEADER */}
-          <TableHead
-            sx={{
-              backgroundColor: "#6a04a0"
-            }}
-          >
-            <TableRow>
-              {columns.map((col) => (
-                <TableCell
-                  key={col.key}
-                  sx={{
-                    color: "#fff",
-                    fontWeight: 600,
-                    borderBottom: "2px solid #9c35c5"
-                  }}
-                >
-                  {col.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-
-          {/* TABLE BODY */}
-          <TableBody
-            sx={{
-              "& .MuiTableCell-root": {
-                backgroundColor: (theme) =>
-                  theme.palette.mode === "light"
-                    ? "rgba(156,53,197,0.03)"
-                    : "background.paper",
-                color: "text.primary",
-                borderColor: (theme) =>
-                  theme.palette.mode === "light"
-                    ? "rgba(0,0,0,0.08)"
-                    : "divider"
-              }
-            }}
-          >
-            {data.map((row, index) => (
-              <TableRow
-                key={index}
-                hover
-                sx={{
-                  "&:hover": {
-                    backgroundColor: "rgba(156,53,197,0.08)"
-                  }
-                }}
-              >
+            {/* TABLE HEADER */}
+            <TableHead
+              sx={{
+                backgroundColor: "#6a04a0"
+              }}
+            >
+              <TableRow>
                 {columns.map((col) => (
-                  <TableCell key={col.key}>
-
-                    {/* ORDER ID highlight */}
-                    {col.key === "order_id" ? (
-                      <Box
-                        sx={{
-                          color: "#9c35c5",
-                          fontWeight: 600
-                        }}
-                      >
-                        {row[col.key]}
-                      </Box>
-                    ) : col.render ? (
-                      col.render(row)
-                    ) : (
-                      row[col.key]
-                    )}
-
+                  <TableCell
+                    key={col.key}
+                    sx={{
+                      color: "#fff",
+                      fontWeight: 600,
+                      borderBottom: "2px solid #9c35c5"
+                    }}
+                  >
+                    {col.label}
                   </TableCell>
                 ))}
               </TableRow>
-            ))}
-          </TableBody>
+            </TableHead>
+
+            {/* TABLE BODY */}
+            <TableBody
+              sx={{
+                "& .MuiTableCell-root": {
+                  backgroundColor: (theme) =>
+                    theme.palette.mode === "light"
+                      ? "rgba(156,53,197,0.03)"
+                      : "background.paper",
+                  color: "text.primary",
+                  borderColor: (theme) =>
+                    theme.palette.mode === "light"
+                      ? "rgba(0,0,0,0.08)"
+                      : "divider"
+                }
+              }}
+            >
+              {data.map((row, index) => (
+                <TableRow
+                  key={index}
+                  hover
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "rgba(156,53,197,0.08)"
+                    }
+                  }}
+                >
+                  {columns.map((col) => (
+                    <TableCell key={col.key}>
+
+                      {/* ORDER ID highlight */}
+                      {col.key === "order_id" ? (
+                        <Box
+                          sx={{
+                            color: "#9c35c5",
+                            fontWeight: 600
+                          }}
+                        >
+                          {row[col.key]}
+                        </Box>
+                      ) : col.render ? (
+                        col.render(row)
+                      ) : (
+                        row[col.key]
+                      )}
+
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
 
         </Table>
       </TableContainer>
