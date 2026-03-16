@@ -178,7 +178,9 @@ const AdminTableLayout = ({
           ".MuiTablePagination-toolbar": { px: 2 },
         }}
       />
+      
     </Card>
+    
     </Container>
   );
 

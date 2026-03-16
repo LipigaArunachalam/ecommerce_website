@@ -1,19 +1,20 @@
-import React, { useContext } from "react";
+import React from "react";
 import useLogout from "../auth/Logout";
 import { AppBar, Toolbar, Typography, Button, Container, Box, IconButton } from "@mui/material";
-import { Storefront, ShoppingCart, GridView, Person, Search, Logout, Brightness4, Brightness7 } from "@mui/icons-material";
+import { Storefront, ShoppingCart, GridView, Person, Home, Logout, Brightness4, Brightness7 } from "@mui/icons-material";
 import { useNavigate, Outlet } from "react-router-dom";
+import { ColorModeContext } from "../../../theme/themeProvider";
 import ThemeToggle from "../../../theme/themeToggle";
 
 const CustomerLayout = () => {
     const navigate = useNavigate();
 
     const menuItems = [
-        { text: "Products", icon: <GridView/>, path: "/customer/catalog"},
+        // { text: "Products", icon: <GridView/>, path: "/customer/catalog"},
+        { text: "Home", icon: <Home />, path: "/customer/search"},
         { text: "Orders", icon: <Storefront />, path: "/customer/orders" },
-        { text: "Search", icon: <Search />, path: "/customer/search"},
-        { icon: <ShoppingCart />, path: "/customer/cart" },
-        { icon: <Person />, path: "/customer/customer-profile" },
+        {  icon: <Person />, path: "/customer/customer-profile" },
+        {  icon: <ShoppingCart />, path: "/customer/cart" },
     ];
 
     const handleNavigate = (path) => {
@@ -25,7 +26,7 @@ const CustomerLayout = () => {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="static" sx={{ backgroundColor: "#6a04a0" }}>
                 <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Ecommerce

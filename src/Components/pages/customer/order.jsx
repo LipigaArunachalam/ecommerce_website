@@ -23,7 +23,7 @@ const Order = () => {
         uid: uid,
     });
 
-    
+
     const [cancelOrder] = useCancelOrderMutation();
 
     const handleCancel = (row) => {
@@ -50,15 +50,15 @@ const Order = () => {
     };
 
     const columns = [
-        {
-            key: "order_id",
-            label: "Order ID",
-            render: (row) => (
-                <span style={{ color: "#1f77d0", fontWeight: 600 }}>
-                    {row.order_id}
-                </span>
-            )
-        },
+        // {
+        //     key: "order_id",
+        //     label: "Order ID",
+        //     render: (row) => (
+        //         <span style={{ color: "#1f77d0", fontWeight: 600 }}>
+        //             {row.order_id}
+        //         </span>
+        //     )
+        // },
         {
             key: "product_name",
             label: "Category"
@@ -89,6 +89,10 @@ const Order = () => {
         {
             key: "total_price",
             label: "Price",
+            render: (row) => {
+                const total = (row.product_price || 0) + (row.freight_value || 0);
+                return `₹ ${total.toFixed(2)}`;
+            }
         },
         {
             key: "status",
@@ -101,10 +105,6 @@ const Order = () => {
         {
             key: "Installation",
             label: "Installation"
-        },
-        {
-            key: "estimated_delivery",
-            label: "Est. Delivery"
         },
         {
             key: "action",

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ProductCardLayout from "../../layouts/ProductCardLayout";
-import { useAddToCartMutation, useGetCatalogQuery } from "../../../services/rtkQuery/customerApi";
+import { useAddToCartMutation, useGetCatalogQuery,useSearchProductQuery } from "../../../services/rtkQuery/customerApi";
 import { Box } from "@mui/material"
 import BuyProductDialog from "./BuyProductDialog";
 import ProductDetailsDialog from "./ProductDetailsDialog";
@@ -8,7 +8,7 @@ import ProductDetailsDialog from "./ProductDetailsDialog";
 import SnackBar from './../../../services/snackBar/snackBar'
 
 
-const Catalog = () => {
+const Catalog = ({searchTerm}) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(15);
     const [isBuyDialogOpen, setIsBuyDialogOpen] = useState(false);
@@ -19,12 +19,15 @@ const Catalog = () => {
     const [snackMessage, setSnackMessage] = useState("");
     const [snackSeverity, setSnackSeverity] = useState("error");
 
-    // const navigate= useNavigate();
+
 
     const { data, isLoading, error } = useGetCatalogQuery({
         page: page + 1,
         limit: rowsPerPage,
     });
+
+    const { data:searchdata } = useSearchProductQuery({prod:searchTerm,page: page + 1,
+        limit: rowsPerPage},{ skip: !searchTerm });
 
     const [addToCart] = useAddToCartMutation();
 
@@ -54,10 +57,12 @@ const Catalog = () => {
         }
     };
 
+    const displayData = searchTerm ? searchdata : data;
+
     return (
         <Box>
             <ProductCardLayout
-                data={data || []}
+                data={displayData || []}
                 page={page}
                 onPageChange={(_, newPage) => setPage(newPage)}
                 rowsPerPage={rowsPerPage}

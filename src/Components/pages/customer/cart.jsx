@@ -16,8 +16,9 @@ const Cart = () => {
     const [snackOpen, setSnackOpen] = useState(false);
     const [snackMessage, setSnackMessage] = useState("");
     const [snackSeverity, setSnackSeverity] = useState("success");
-    const [isBuyDialogOpen, setIsBuyDialogOpen] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState(null);
+
+    const [isBuyDialogOpen,setIsBuyDialogOpen]=useState(false)
+    const [selectedProduct, setSelectedProduct]=useState(null)
 
 
     const [remove] = useRemoveFromCartMutation();
