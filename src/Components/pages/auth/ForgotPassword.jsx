@@ -44,12 +44,22 @@ const ForgotPassword = () => {
     }
   };
 
+
+   const textStyle={
+    "& .MuiInputLabel-root": {
+      color: "black"
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: "black"
+  }
+};
+
   return (
       <Box  sx={{ display: 'flex', justifyContent: 'center', mt: 7 }}>
         <Card sx={{
         p: 4,
         borderRadius: 4,
-        background: "rgba(220, 164, 246, 0.92)",
+        background: "rgba(199, 122, 235, 0.92)",
         boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
       }}>
           <CardContent >
@@ -67,6 +77,7 @@ const ForgotPassword = () => {
           {...register("email", { required: "Email is required" })}
           error={!!errors.email}
           helperText={errors.email?.message}
+          sx={ textStyle}
         />
 
         <Button variant="contained" type="submit" fullWidth

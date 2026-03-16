@@ -56,7 +56,7 @@ const LoginForm = () => {
           navigate("/seller/seller-profile");
         }
         if (role === "customer") {
-          navigate("/customer/customer-profile");
+          navigate("/customer/catalog");
         }
         if (role === "admin") {
           navigate("/admin");
@@ -75,12 +75,21 @@ const LoginForm = () => {
 
   };
 
+   const textStyle={
+    "& .MuiInputLabel-root": {
+      color: "black"
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: "black"
+  }
+};
+
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
       <Card sx={{
         p: 4,
         borderRadius: 4,
-        background: "rgba(220, 164, 246, 0.92)",
+        background: "rgba(199, 122, 235, 0.92)",
         boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
       }}>
         <CardContent>
@@ -98,6 +107,7 @@ const LoginForm = () => {
                 {...register("email", { required: "Email is required" })}
                 error={!!errors.email}
                 helperText={errors.email?.message}
+                sx={ textStyle}
               />
 
               <TextField
@@ -108,6 +118,7 @@ const LoginForm = () => {
                 {...register("password", { required: "Password is required" })}
                 error={!!errors.password}
                 helperText={errors.password?.message}
+                sx={ textStyle}
               />
 
               <Box sx={{ textAlign: 'right' }}>
