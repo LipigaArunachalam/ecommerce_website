@@ -78,7 +78,7 @@ const AdminTableLayout = ({
         component={Paper}
         sx={{
           borderRadius: 3,
-          overflow: "hidden",
+          overflowX: "auto",
           border: "1px solid",
           borderColor: "divider",
           backgroundColor: "background.paper"
@@ -181,4 +181,4 @@ const AdminTableLayout = ({
 
 };
 
-export default AdminTableLayout;
+export default AdminTableLayout;  

@@ -3,12 +3,17 @@ import AdminTableLayout from "../../layouts/AdminTableLayout";
 import { useGetAllProductsQuery, useCancelOrderMutation } from "../../../services/rtkQuery/customerApi";
 import { Button } from "@mui/material";
 import DeleteDialog from "../../dialogs/DeleteDialog";
+import SnackBar from "../../../services/snackBar/snackBar";
 
 const Order = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
+
+    const [snackOpen, setSnackOpen] = useState(false);
+    const [snackMessage, setSnackMessage] = useState("");
+    const [snackSeverity, setSnackSeverity] = useState("success");
 
     const uid = localStorage.getItem("user_id");
 
@@ -30,10 +35,16 @@ const Order = () => {
         if (selectedOrder) {
             try {
                 await cancelOrder(selectedOrder.order_id).unwrap();
+                setSnackMessage("Order cancelled successfully");
+                setSnackSeverity("success");
+                setSnackOpen(true);
                 setIsDeleteDialogOpen(false);
                 setSelectedOrder(null);
             } catch (err) {
                 console.error("Failed to cancel order:", err);
+                setSnackMessage("Failed to cancel order");
+                setSnackSeverity("error");
+                setSnackOpen(true);
             }
         }
     };
@@ -113,34 +124,39 @@ const Order = () => {
         }
     ]
 
-    if (isLoading) {
-        return <p>Loading orders...</p>;
-    }
-
-    if (error) {
-        return <p>Error loading orders</p>;
-    }
-
-    if (!data) {
-        return <p>No data</p>;
-    }
-
 
     return (
-        <AdminTableLayout
-            columns={columns}
-            data={data || []}
-            page={page}
-            onPageChange={(_, newPage) => setPage(newPage)}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={(e) => {
-                setRowsPerPage(parseInt(e.target.value, 10));
-                setPage(0);
-            }}
-            isLoading={isLoading}
-            isError={!!error}
-            getRowId={(row) => row.product_id}
-        />
+        <>
+            <AdminTableLayout
+                columns={columns}
+                data={data || []}
+                page={page}
+                onPageChange={(_, newPage) => setPage(newPage)}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={(e) => {
+                    setRowsPerPage(parseInt(e.target.value, 10));
+                    setPage(0);
+                }}
+                isLoading={isLoading}
+                isError={!!error}
+                getRowId={(row) => row.product_id}
+            />
+            <DeleteDialog
+                open={isDeleteDialogOpen}
+                onClose={() => setIsDeleteDialogOpen(false)}
+                onConfirm={handleConfirmCancel}
+                title="Cancel Order"
+                description="Are you sure you want to cancel this order?"
+                confirmText="Yes, Cancel"
+                cancelText="No, Keep"
+            />
+            <SnackBar
+                open={snackOpen}
+                message={snackMessage}
+                severity={snackSeverity}
+                handleClose={() => setSnackOpen(false)}
+            />
+        </>
     );
 
 }

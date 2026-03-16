@@ -4,12 +4,21 @@ import AdminTableLayout from "../../layouts/AdminTableLayout";
 import { useState } from "react";
 import {Stack, Button, Box}from "@mui/material"
 import BuyProductDialog from "./BuyProductDialog";
+import DeleteDialog from "../../dialogs/DeleteDialog";
+import SnackBar from "../../../services/snackBar/snackBar";
 
 const Cart = () => {
     const [page, setPage] = useState(0); 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [isBuyDialogOpen, setIsBuyDialogOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [selectedProductId, setSelectedProductId] = useState(null);
+
+    const [snackOpen, setSnackOpen] = useState(false);
+    const [snackMessage, setSnackMessage] = useState("");
+    const [snackSeverity, setSnackSeverity] = useState("success");
+
     const [remove] = useRemoveFromCartMutation();
 
     const { data, isLoading, error } = useCartQuery({
@@ -71,24 +80,38 @@ const Cart = () => {
         setIsBuyDialogOpen(true);
     };
 
-    const handleRemove=async(pid)=>{
-      try{
-        await remove({uid: localStorage.getItem("user_id"),pid:pid})
-      }
-        catch(err){
-          console.error(err)
+    const handleRemove = (pid) => {
+        setSelectedProductId(pid);
+        setIsDeleteDialogOpen(true);
+    };
+
+    const handleConfirmRemove = async () => {
+        try {
+            await remove({ uid: localStorage.getItem("user_id"), pid: selectedProductId }).unwrap();
+            setSnackMessage("Item removed from cart");
+            setSnackSeverity("success");
+            setSnackOpen(true);
+            setIsDeleteDialogOpen(false);
+            setSelectedProductId(null);
+        } catch (err) {
+            console.error(err);
+            setSnackMessage("Failed to remove item");
+            setSnackSeverity("error");
+            setSnackOpen(true);
         }
-    }
+    };
     
-    if (isLoading) {
-        return <p>Loading profile...</p>;
-    }
-    if (error) {
-        return <p>Error loading profile</p>;
-    }
-    if (!data) {
-        return <p>No data</p>;
-    }
+    const handlePurchaseSuccess = async () => {
+        if (selectedProduct) {
+            try {
+                // Silently remove from cart after purchase
+                await remove({ uid: localStorage.getItem("user_id"), pid: selectedProduct.product_id }).unwrap();
+            } catch (err) {
+                console.error("Failed to remove item from cart after purchase:", err);
+            }
+        }
+    };
+
     return(
         // <p>{JSON.stringify(data)}</p>
         <Box>
@@ -111,6 +134,22 @@ const Cart = () => {
                 open={isBuyDialogOpen}
                 onClose={() => setIsBuyDialogOpen(false)}
                 product={selectedProduct}
+                onSuccess={handlePurchaseSuccess}
+            />
+            <DeleteDialog
+                open={isDeleteDialogOpen}
+                onClose={() => setIsDeleteDialogOpen(false)}
+                onConfirm={handleConfirmRemove}
+                title="Remove Item"
+                description="Are you sure you want to remove this item from your cart?"
+                confirmText="Remove"
+                cancelText="Cancel"
+            />
+            <SnackBar
+                open={snackOpen}
+                message={snackMessage}
+                severity={snackSeverity}
+                handleClose={() => setSnackOpen(false)}
             />
             </Box>
     )

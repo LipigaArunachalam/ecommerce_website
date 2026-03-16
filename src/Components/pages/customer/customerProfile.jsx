@@ -18,18 +18,6 @@ const CustomerProfile = () => {
     { icon: <Home color="primary" />, label: "Zip Code", value: data?.zip_code },
   ];
 
-  if (isLoading) {
-    return <p>Loading profile...</p>;
-  }
-
-  if (error) {
-    return <p>Error loading profile</p>;
-  }
-
-  if (!data) {
-    return <p>No data</p>;
-  }
-
 return (
   <Box sx={{ width: "100%" }}>
 

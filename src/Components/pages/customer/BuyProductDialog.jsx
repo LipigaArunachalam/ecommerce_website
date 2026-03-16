@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { useBuyProductMutation } from "../../../services/rtkQuery/customerApi";
 
-const BuyProductDialog = ({ open, onClose, product }) => {
+const BuyProductDialog = ({ open, onClose, product, onSuccess }) => {
   const [buyProduct, { isLoading, isSuccess, isError, error, reset }] = useBuyProductMutation();
 
   const [formData, setFormData] = useState({
@@ -57,6 +57,9 @@ const BuyProductDialog = ({ open, onClose, product }) => {
     try {
       await buyProduct(payload).unwrap();
       setMessage("Product purchased successfully!");
+      if (onSuccess) {
+        onSuccess();
+      }
       
       // Auto close after success message
       setTimeout(() => {

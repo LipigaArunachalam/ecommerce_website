@@ -35,6 +35,7 @@ const DrawerLayout = ({ title, menuItems, handleLogout, isDesktop, handleDrawerT
               <ListItemButton
                 component={NavLink}
                 to={item.path}
+                end
                 className={({ isActive }) => (isActive ? "active" : "")}
                 onClick={!isDesktop ? handleDrawerToggle : undefined}
                 sx={{
