@@ -2,7 +2,7 @@ import React from "react";
 import { useCartQuery, useRemoveFromCartMutation } from "../../../services/rtkQuery/customerApi";
 import AdminTableLayout from "../../layouts/AdminTableLayout";
 import { useState } from "react";
-import {Stack, Button, Box}from "@mui/material"
+import {Stack, Button, Container}from "@mui/material"
 import BuyProductDialog from "./BuyProductDialog";
 import DeleteDialog from "../../dialogs/DeleteDialog";
 import SnackBar from "../../../services/snackBar/snackBar";
@@ -10,14 +10,15 @@ import SnackBar from "../../../services/snackBar/snackBar";
 const Cart = () => {
     const [page, setPage] = useState(0); 
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [isBuyDialogOpen, setIsBuyDialogOpen] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState(null);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [selectedProductId, setSelectedProductId] = useState(null);
 
     const [snackOpen, setSnackOpen] = useState(false);
     const [snackMessage, setSnackMessage] = useState("");
     const [snackSeverity, setSnackSeverity] = useState("success");
+    const [isBuyDialogOpen, setIsBuyDialogOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+
 
     const [remove] = useRemoveFromCartMutation();
 
@@ -79,7 +80,7 @@ const Cart = () => {
         setSelectedProduct(product);
         setIsBuyDialogOpen(true);
     };
-
+  
     const handleRemove = (pid) => {
         setSelectedProductId(pid);
         setIsDeleteDialogOpen(true);
@@ -114,7 +115,7 @@ const Cart = () => {
 
     return(
         // <p>{JSON.stringify(data)}</p>
-        <Box>
+        <Container>
         <AdminTableLayout
                 // title="Products"
                 columns={columns}
@@ -151,7 +152,7 @@ const Cart = () => {
                 severity={snackSeverity}
                 handleClose={() => setSnackOpen(false)}
             />
-            </Box>
+         </Container>
     )
 
 }
