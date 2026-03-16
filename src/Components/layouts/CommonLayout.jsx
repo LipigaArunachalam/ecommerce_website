@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import { Outlet } from "react-router-dom";
-import DrawerLayout from "./DrawerLayout";  
+import DrawerLayout from "./DrawerLayout";
 const drawerWidth = 260;
 
 const CommonLayout = ({ title, menuItems, handleLogout }) => {
@@ -30,8 +30,8 @@ const CommonLayout = ({ title, menuItems, handleLogout }) => {
           position="fixed"
           sx={{
             zIndex: (theme) => theme.zIndex.drawer + 1,
-            backgroundColor: "#fff",
-            color: "#000",
+            backgroundColor: "background.paper",
+            color: "text.primary",
             boxShadow: "0px 1px 4px rgba(0,0,0,0.1)",
           }}
         >
@@ -68,7 +68,9 @@ const CommonLayout = ({ title, menuItems, handleLogout }) => {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
-              borderRight: "1px solid rgba(0, 0, 0, 0.12)",
+              borderRight: "1px solid",
+              borderColor: "divider",
+              backgroundColor: "background.paper"
             },
           }}
         >
@@ -87,7 +89,8 @@ const CommonLayout = ({ title, menuItems, handleLogout }) => {
         sx={{
           flexGrow: 1,
           p: 3,
-          backgroundColor: "#f9f9f9",
+          backgroundColor: "background.default",
+          transition: "background-color 0.3s ease",
           minHeight: "100vh",
           width: { md: `calc(100% - ${drawerWidth}px)` },
           mt: { xs: 8, md: 0 },

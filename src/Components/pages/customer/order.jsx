@@ -18,6 +18,7 @@ const Order = () => {
         uid: uid,
     });
 
+    
     const [cancelOrder] = useCancelOrderMutation();
 
     const handleCancel = (row) => {
@@ -99,9 +100,9 @@ const Order = () => {
             label: "Action",
             render: (row) => {
                 return (
-                    <Button 
-                        variant="outlined" 
-                        color="error" 
+                    <Button
+                        variant="outlined"
+                        color="error"
                         onClick={() => handleCancel(row)}
                         disabled={row.status === "cancelled" || row.status === "delivered"}
                     >
@@ -111,6 +112,19 @@ const Order = () => {
             }
         }
     ]
+
+    if (isLoading) {
+        return <p>Loading orders...</p>;
+    }
+
+    if (error) {
+        return <p>Error loading orders</p>;
+    }
+
+    if (!data) {
+        return <p>No data</p>;
+    }
+
 
     return (
         <AdminTableLayout

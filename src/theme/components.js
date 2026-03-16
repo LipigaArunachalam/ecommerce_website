@@ -1,4 +1,4 @@
-import { palette } from './palette';
+import palette from './palette';
 
 export const components = {
   MuiCssBaseline: {
@@ -13,7 +13,7 @@ export const components = {
   MuiAppBar: {
     styleOverrides: {
       root: {
-        backgroundColor: palette.primary.main,
+        backgroundColor: palette.primary,
         color: '#FFFFFF',
         boxShadow: '0 2px 12px rgba(120, 81, 169, 0.15)',
       },
@@ -39,22 +39,22 @@ export const components = {
         transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
       },
       contained: {
-        backgroundColor: palette.primary.main,
+        backgroundColor: palette.primary,
         color: '#FFFFFF',
         boxShadow: '0 4px 14px rgba(120, 81, 169, 0.35)',
         padding: '10px 28px',
 
         '&:hover': {
-          backgroundColor: palette.primary.dark,
+          backgroundColor: palette.primary,
           boxShadow: '0 6px 18px rgba(120, 81, 169, 0.45)',
         },
       },
       outlined: {
-        border: `2px solid ${palette.primary.main}`,
-        color: palette.primary.main,
+        border: `2px solid ${palette.primary}`,
+        color: palette.primary,
         '&:hover': {
-          border: `2px solid ${palette.primary.main}`, 
-          backgroundColor: 'rgba(120, 81, 169, 0.06)',
+          border: `2px solid ${palette.primary}`,
+          backgroundColor: 'rgba(0, 0, 0, 0.06)',
         },
       },
       text: {
@@ -75,7 +75,7 @@ export const components = {
         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
         borderLeft: '3px solid transparent',
         '&:hover': {
-          borderLeft: `3px solid ${palette.primary.main}`,
+          borderLeft: `3px solid ${palette.primary}`,
           boxShadow: '0 8px 32px rgba(120, 81, 169, 0.14)', 
         },
       },
@@ -85,11 +85,11 @@ export const components = {
   MuiChip: {
     styleOverrides: {
       filledPrimary: {
-        backgroundColor: palette.primary.main,
+        backgroundColor: palette.primary,
         color: '#FFFFFF',
       },
       filledSecondary: {
-        backgroundColor: palette.secondary.main,
+        backgroundColor: palette.secondary,
         color: '#000000',
         fontWeight: 700,
       },
@@ -121,10 +121,10 @@ export const components = {
           borderColor: '#EAE4F2',
         },
         '&:hover .MuiOutlinedInput-notchedOutline': {
-          borderColor: palette.primary.light,
+          borderColor: palette.primary,
         },
         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-          borderColor: palette.primary.main,
+          borderColor: palette.primary ,
         },
       },
     },
@@ -134,7 +134,7 @@ export const components = {
     styleOverrides: {
       root: {
         '&.Mui-focused': {
-          color: palette.primary.main,
+          color: palette.primary,
         },
       },
     },
@@ -143,7 +143,7 @@ export const components = {
   MuiTabs: {
     styleOverrides: {
       indicator: {
-        backgroundColor: palette.primary.main,
+        backgroundColor: palette.primary,
       },
     },
   },
@@ -153,7 +153,7 @@ export const components = {
       root: {
         color: '#5C5C7A',
         '&.Mui-selected': {
-          color: palette.primary.main,
+          color: palette.primary,
         },
       },
     },
@@ -164,10 +164,10 @@ export const components = {
       root: {
         color: '#EAE4F2',
         '&.Mui-active': {
-          color: palette.primary.main,
+          color: palette.primary,
         },
         '&.Mui-completed': {
-          color: palette.primary.light,
+          color: palette.primary,
         },
       },
     },
@@ -176,11 +176,11 @@ export const components = {
   MuiLink: {
     styleOverrides: {
       root: {
-        color: palette.primary.main,
+        color: palette.primary,
         textDecoration: 'none',
         transition: 'color 0.2s ease',
         '&:hover': {
-          color: palette.primary.dark,
+          color: palette.primary,
         },
       },
     },

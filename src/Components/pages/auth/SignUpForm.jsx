@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSignupMutation } from "../../../services/rtkQuery/authApi";
 import { CardContent, Card, Box, Typography, Stack, TextField, Button, Link as MuiLink } from "@mui/material";
-import  SnackBar  from './../../../services/snackBar/snackBar'
+import SnackBar from './../../../services/snackBar/snackBar'
 
 const SignUpForm = () => {
 
@@ -33,11 +33,11 @@ const SignUpForm = () => {
       setSnackMessage("Signup successfull")
       setSnackSeverity("success")
       setSnackOpen(true)
-      
-      setTimeout(()=>{
+
+      setTimeout(() => {
         navigate("/products");
-      },1000)
-      
+      }, 1000)
+
 
     } catch (err) {
 
@@ -52,7 +52,20 @@ const SignUpForm = () => {
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
-      <Card sx={{ p: 2, borderRadius: 7, boxShadow: 4 }}>
+      <Card sx={{
+        width: 420,
+        maxHeight: "80vh",
+        overflowY: "auto",
+        scrollbarWidth: "none",     
+        msOverflowStyle: "none",    
+        "&::-webkit-scrollbar": {
+          display: "none"            
+        },
+        p: 4,
+        borderRadius: 4,
+        background: "rgba(220, 164, 246, 0.92)",
+        boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
+      }}>
         <CardContent>
           <Typography variant="h4" align="center" fontWeight="bold">SIGNUP</Typography>
 

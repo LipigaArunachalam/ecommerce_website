@@ -8,8 +8,8 @@ import { EcommerceThemeProvider } from './theme';
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <EcommerceThemeProvider>
+    {/* <EcommerceThemeProvider> */}
       <App />
-    </EcommerceThemeProvider>
+    {/* </EcommerceThemeProvider> */}
   </Provider>
 );

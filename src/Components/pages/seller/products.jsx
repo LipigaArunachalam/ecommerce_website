@@ -3,13 +3,16 @@ import {
   useDeleteProductMutation,
   useGetProductsQuery,
   useUpdateProductMutation,
-  useAddProductMutation // 1. Import Add Mutation
+  useAddProductMutation
 } from "../../../services/rtkQuery/sellerApi";
 
-import { Box, Typography, Button, Stack, Dialog,
-  DialogTitle, DialogContent, DialogActions, TextField, } from "@mui/material";
+import {
+  Box, Typography, Button, Stack, Dialog,
+  DialogTitle, DialogContent, DialogActions, TextField,
+} from "@mui/material";
 import AdminTableLayout from "../../layouts/AdminTableLayout";
 import { useForm } from "react-hook-form";
+import SnackBar from './../../../services/snackBar/snackBar'
 
 
 const Products = () => {
@@ -17,13 +20,14 @@ const Products = () => {
   const [updateProduct] = useUpdateProductMutation();
   const [addProduct] = useAddProductMutation();
 
-  const [page, setPage] = useState(0); 
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const { data, isLoading, error } = useGetProductsQuery({
-    page: page + 1,
-    limit: rowsPerPage,
-  });
+  const { data, isLoading, error } = useGetProductsQuery({ page: page + 1, limit: rowsPerPage, });
+
+  const [snackOpen, setSnackOpen] = useState(false);
+  const [snackMessage, setSnackMessage] = useState("");
+  const [snackSeverity, setSnackSeverity] = useState("error");
 
 
   const [open, setOpen] = useState(false);
@@ -36,6 +40,7 @@ const Products = () => {
   const handleUpdate = (product) => {
     setIsEditMode(true);
     setCurrentPid(product.product_id);
+    setUrlImg(product.product_image_url);
     reset(product);
     setOpen(true);
   };
@@ -43,6 +48,7 @@ const Products = () => {
   const handleOpenAdd = () => {
     setIsEditMode(false);
     setCurrentPid(null);
+    setUrlImg("");
     reset({
       product_category_name: "",
       product_weight_g: "",
@@ -60,6 +66,10 @@ const Products = () => {
       label: "product category"
     },
     {
+      key: "product_name",
+      label: "Product name"
+    },
+    {
       key: "product_image_url",
       label: "Image",
       render: (row) => (
@@ -71,8 +81,8 @@ const Products = () => {
       )
     },
     {
-      key:"price",
-      label :"Price"
+      key: "price",
+      label: "Price"
     },
     {
       key: "product_weight_g",
@@ -95,7 +105,7 @@ const Products = () => {
       label: "Actions",
       render: (row) => (
         <Stack direction="row" spacing={1} justifyContent="center">
-          <Button size="small" variant="outlined" onClick={() => handleUpdate(row)}>Edit</Button>
+          <Button size="small" variant="outlined" color="secondary" onClick={() => handleUpdate(row)}>Edit</Button>
           <Button size="small" variant="outlined" color="error" onClick={() => handleDelete(row.product_id)}>Delete</Button>
         </Stack>
       )
@@ -132,6 +142,10 @@ const Products = () => {
     console.log(uploaded.secure_url)
   }
 
+  const handleClose = () => {
+    setOpen(false);
+    setUrlImg("");
+  };
 
 
   const onSubmit = async (formData) => {
@@ -145,6 +159,9 @@ const Products = () => {
           data: { ...formData, product_image_url: urlImg }
         }).unwrap();
         setUrlImg("");
+        setSnackMessage("Updated Successfully");
+        setSnackSeverity("info")
+        setSnackOpen(true)
       } else {
         console.log({ ...formData, product_image_url: urlImg })
         await addProduct({
@@ -152,6 +169,9 @@ const Products = () => {
           data: { ...formData, product_image_url: urlImg }
         }).unwrap();
         setUrlImg("");
+        setSnackMessage("Added product Successfully");
+        setSnackSeverity("info")
+        setSnackOpen(true)
       }
       setOpen(false);
 
@@ -176,57 +196,215 @@ const Products = () => {
         onPageChange={(_, newPage) => setPage(newPage)}
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={(e) => {
-        setRowsPerPage(parseInt(e.target.value, 10));
-        setPage(0);
-      }}
+          setRowsPerPage(parseInt(e.target.value, 10));
+          setPage(0);
+        }}
         totalCount={data?.length || 0}
         isLoading={isLoading}
         isError={!!error}
         getRowId={(row) => row.product_id}
       />
 
-      <Dialog open={open} onClose={() => setOpen(false)} fullWidth maxWidth="sm">
-        <DialogTitle>{isEditMode ? "Update Product" : "Add New Product"}</DialogTitle>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth
+        maxWidth="sm"
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+            p: 1
+          }
+        }}
+      >
+        <DialogTitle
+          sx={{
+            fontWeight: "bold",
+            color: "#9c35c5",
+            textAlign: "center",
+            fontSize: "1.4rem"
+          }}
+        >
+          {isEditMode ? "Update Product" : "Add New Product"}
+        </DialogTitle>
+
         <DialogContent>
-          <Box component="form" sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
-            <TextField label="Category" {...register("product_category_name", { required: "Category is required" })} disabled={isEditMode} required
+          <Box
+            component="form"
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 2,
+              mt: 1
+            }}
+          >
+            <TextField
+              label="Category"
+              fullWidth
+              {...register("product_category_name", { required: "Category is required" })}
+              disabled={isEditMode}
               error={!!errors.product_category_name}
-              helperText={errors.product_category_name?.message} />
+              helperText={errors.product_category_name?.message}
+            />
 
-            <TextField label="Price" type="number" {...register("price", { required: "Price is required" })} required
-                error={!!errors.product_photos_qty}
-                helperText={errors.product_photos_qty?.message} />
+            <TextField
+              label="Product Name"
+              fullWidth
+              {...register("product_name", { required: "Name is required" })}
+              error={!!errors.product_name}
+              helperText={errors.product_name?.message}
+            />
 
-            <TextField label="Weight" type="number" {...register("product_weight_g", { required: "Weight is required" })} required 
-              error={!!errors.product_weight_g}
-              helperText={errors.product_weight_g?.message} />
+            <TextField
+              label="Price"
+              type="number"
+              fullWidth
+              {...register("price", { required: "Price is required" })}
+              error={!!errors.price}
+              helperText={errors.price?.message}
+            />
 
-            <TextField label="Height" type="number" {...register("product_height_cm", { required: "Height is required" })} required
-              error={!!errors.product_height_cm}
-              helperText={errors.product_height_cm?.message} />
-
-            <TextField label="Length" type="number" {...register("product_length_cm", { required: "Length is required" })} required
-              error={!!errors.product_length_cm}
-              helperText={errors.product_length_cm?.message} />
-
-            <TextField label="Width" type="number" {...register("product_width_cm", { required: "Width is required" })} required
-              error={!!errors.product_width_cm}
-              helperText={errors.product_width_cm?.message} />
-
-            <TextField label="Stock" type="number" {...register("product_qty", { required: "Quantity is required" })} required
+            <TextField
+              label="Stock"
+              type="number"
+              fullWidth
+              {...register("product_qty", { required: "Quantity is required" })}
               error={!!errors.product_qty}
-              helperText={errors.product_qty?.message} />
+              helperText={errors.product_qty?.message}
+            />
 
-            <TextField type="file" onChange={handleFileUpload} />
+            <TextField
+              label="Weight (g)"
+              type="number"
+              fullWidth
+              {...register("product_weight_g", { required: "Weight is required" })}
+              error={!!errors.product_weight_g}
+              helperText={errors.product_weight_g?.message}
+            />
+
+            <TextField
+              label="Height (cm)"
+              type="number"
+              fullWidth
+              {...register("product_height_cm", { required: "Height is required" })}
+              error={!!errors.product_height_cm}
+              helperText={errors.product_height_cm?.message}
+            />
+
+            <TextField
+              label="Length (cm)"
+              type="number"
+              fullWidth
+              {...register("product_length_cm", { required: "Length is required" })}
+              error={!!errors.product_length_cm}
+              helperText={errors.product_length_cm?.message}
+            />
+
+            <TextField
+              label="Width (cm)"
+              type="number"
+              fullWidth
+              {...register("product_width_cm", { required: "Width is required" })}
+              error={!!errors.product_width_cm}
+              helperText={errors.product_width_cm?.message}
+            />
+
+            {/* IMAGE SECTION */}
+            <Box sx={{ gridColumn: "span 2", mt: 1 }}>
+              <Typography
+                variant="subtitle2"
+                sx={{ mb: 1, fontWeight: "bold", color: "text.secondary" }}
+              >
+                Product Image
+              </Typography>
+
+              <Box
+                sx={{
+                  border: "2px dashed #9c35c5",
+                  borderRadius: 2,
+                  p: 2,
+                  textAlign: "center",
+                  background: "rgba(156,53,197,0.04)"
+                }}
+              >
+                {urlImg && (
+                  <Box mb={2}>
+                    <img
+                      src={urlImg}
+                      alt="preview"
+                      style={{
+                        width: 120,
+                        height: 120,
+                        objectFit: "cover",
+                        borderRadius: 10
+                      }}
+                    />
+                  </Box>
+                )}
+
+                <Button
+                  variant="outlined"
+                  component="label"
+                  sx={{
+                    borderColor: "#9c35c5",
+                    color: "#9c35c5",
+                    "&:hover": {
+                      borderColor: "#7b1fa2",
+                      background: "rgba(156,53,197,0.08)"
+                    }
+                  }}
+                >
+                  {isEditMode ? "Change Image" : "Upload Image"}
+                  <input
+                    type="file"
+                    hidden
+                    accept="image/*"
+                    onChange={handleFileUpload}
+                  />
+                </Button>
+              </Box>
+            </Box>
           </Box>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button onClick={handleSubmit(onSubmit)} variant="contained">
-            {isEditMode ? "Update" : "Add"}
+
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button
+            onClick={handleClose} variant="contained"
+            sx={{
+              background: "#9c35c5",
+              textTransform: "none",
+              px: 3,
+              "&:hover": {
+                background: "#7b1fa2"
+              }
+            }}
+          >
+            Cancel
+          </Button>
+
+          <Button
+            onClick={handleSubmit(onSubmit)}
+            variant="contained"
+            sx={{
+              background: "#9c35c5",
+              textTransform: "none",
+              px: 3,
+              "&:hover": {
+                background: "#7b1fa2"
+              }
+            }}
+          >
+            {isEditMode ? "Update Product" : "Add Product"}
           </Button>
         </DialogActions>
       </Dialog>
+
+      <SnackBar
+        open={snackOpen}
+        message={snackMessage}
+        severity={snackSeverity}
+        handleClose={() => setSnackOpen(false)}
+      />
     </Box>
   );
 };

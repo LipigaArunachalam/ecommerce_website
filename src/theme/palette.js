@@ -1,38 +1,23 @@
-export const palette = {
-  background: {
-    default: '#dad5e1', 
-    paper: '#FFFFFF',   
-  },
-  text: {
-    primary: '#1A1A2E', 
-    secondary: '#5C5C7A', 
-  },
-  divider: '#EAE4F2', 
+const palette = (mode) => ({
+  mode,
 
   primary: {
-    main: '#7851A9',
-    light: '#9B7CC2',
-    dark: '#5A3A87',
-    contrastText: '#FFFFFF',
+    main: "#761fc2"
   },
 
   secondary: {
-    main: '#F0A500',
-    light: '#F5BF40',
-    dark: '#B87D00',
-    contrastText: '#000000',
+    main: "#902ee1"
   },
 
-  error: {
-    main: '#D32F2F',
+  background: {
+    default: mode === "light" ? "#f4f5f7" : "#0f0f14",
+    paper: mode === "light" ? "#ffffff" : "#1c1c25"
   },
-  warning: {
-    main: '#F9A825',
-  },
-  info: {
-    main: '#0288D1',
-  },
-  success: {
-    main: '#2E7D32',
-  },
-};
+
+  text: {
+    primary: mode === "light" ? "#111" : "#fff",
+    secondary: mode === "light" ? "#555" : "#aaa"
+  }
+});
+
+export default palette;

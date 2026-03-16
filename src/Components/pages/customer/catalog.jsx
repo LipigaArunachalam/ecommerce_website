@@ -3,7 +3,7 @@ import AdminTableLayout from "../../layouts/AdminTableLayout";
 import { useAddToCartMutation, useGetCatalogQuery } from "../../../services/rtkQuery/customerApi";
 import { Box, Stack, Button } from "@mui/material"
 import BuyProductDialog from "./BuyProductDialog";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 
 const Catalog = () => {
@@ -13,7 +13,7 @@ const Catalog = () => {
     const [isBuyDialogOpen, setIsBuyDialogOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
 
-    const navigate= useNavigate();
+    // const navigate= useNavigate();
 
     const { data, isLoading, error } = useGetCatalogQuery({
         page: page + 1,
@@ -26,17 +26,25 @@ const Catalog = () => {
     const columns = [
         {
             key: "product_category_name",
-            label: "product category"
+            label: "Product Category"
+        },
+        {
+            key: "product_name",
+            label: "Product Name"
         },
         {
             key: "product_image_url",
             label: "Image",
             render: (row) => (
-                <img
-                    src={row.product_image_url}
-                    alt="product"
-                    style={{ height: "100px", width: "100px", objectFit: "cover" }}
-                />
+                row.product_image_url ? (
+                    <img
+                        src={row.product_image_url}
+                        alt="-"
+                        style={{ height: "100px", width: "100px", objectFit: "cover" }}
+                    />
+                ) : (
+                    <span>-</span>
+                )
             )
         },
         {
@@ -77,13 +85,13 @@ const Catalog = () => {
     };
 
     const handleCart = async (product_id) => {
-          const uid = localStorage.getItem("user_id")
-          try{
-            await addToCart({uid:uid, pid : product_id})
-            navigate("/customer/cart")
-          }catch(err){
+        const uid = localStorage.getItem("user_id")
+        try {
+            await addToCart({ uid: uid, pid: product_id })
+            // navigate("/customer/cart")
+        } catch (err) {
             console.error(err);
-          }
+        }
     };
 
 

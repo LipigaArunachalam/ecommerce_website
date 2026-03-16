@@ -157,7 +157,6 @@ const Sellers = () => {
         }
       />
 
-      {/* ── Add Seller Dialog ── */}
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle>Add New Seller</DialogTitle>
         <DialogContent
@@ -229,7 +228,6 @@ const Sellers = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      {/* ── Delete Confirmation Dialog ── */}
       <DeleteDialog
         open={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}

@@ -5,8 +5,8 @@ import {
   CssBaseline,
 } from '@mui/material';
 
-import { palette } from './palette';
-import { typography } from './typography';
+import  palette  from './palette';
+import typography from './typography';
 import { shadows } from './shadows';
 import { components } from './components';
 import { breakpoints } from './breakpoints';

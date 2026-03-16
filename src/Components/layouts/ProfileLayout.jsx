@@ -34,7 +34,7 @@ const ProfileLayout = ({
     return (
       <Container maxWidth="sm" sx={{ mt: 4 }}>
         <Alert severity="error">
-          Error loading profile. Please try again later.
+          Error loading profile.
         </Alert>
       </Container>
     );
@@ -43,7 +43,7 @@ const ProfileLayout = ({
   if (!data) {
     return (
       <Container maxWidth="sm" sx={{ mt: 4 }}>
-        <Alert severity="info">No profile data available.</Alert>
+        <Alert severity="info">Profile data not available.</Alert>
       </Container>
     );
   }
@@ -56,8 +56,7 @@ const ProfileLayout = ({
         sx={{
           p: 4,
           borderRadius: 2,
-          boxShadow:
-            "0 0 2px 0 rgba(145,158,171,.2), 0 12px 24px -4px rgba(145,158,171,.12)",
+          
         }}
       >
         <Box
@@ -72,6 +71,7 @@ const ProfileLayout = ({
               width: 100,
               height: 100,
               bgcolor: "primary.main",
+              color: "primary.contrastText",
               fontSize: "2.5rem",
             }}
           >

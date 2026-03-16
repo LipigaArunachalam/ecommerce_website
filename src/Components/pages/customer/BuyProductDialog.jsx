@@ -47,7 +47,7 @@ const BuyProductDialog = ({ open, onClose, product }) => {
     }
 
     const payload = {
-      product_id: product.product_id,
+      product_id: String(product.product_id),
       quantity: Number(formData.quantity),
       customer_id: customerId,
       payment_type: formData.payment_type,

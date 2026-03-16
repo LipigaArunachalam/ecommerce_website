@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useLoginMutation } from "../../../services/rtkQuery/authApi";
 import { Button, Card, CardContent, Stack, Typography, Link as MuiLink, TextField, Box } from "@mui/material";
-import  SnackBar  from './../../../services/snackBar/snackBar'
+import SnackBar from './../../../services/snackBar/snackBar'
 
 const LoginForm = () => {
 
@@ -19,6 +19,22 @@ const LoginForm = () => {
   const [snackOpen, setSnackOpen] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
   const [snackSeverity, setSnackSeverity] = useState("error");
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+
+    if (role === "seller") {
+      navigate("/seller/seller-profile");
+    }
+
+    if (role === "customer") {
+      navigate("/customer/customer-profile");
+    }
+
+    if (role === "admin") {
+      navigate("/admin");
+    }
+  }, [navigate]);
 
   const onSubmit = async (data) => {
 
@@ -35,16 +51,16 @@ const LoginForm = () => {
       setSnackSeverity("success")
       setSnackOpen(true);
 
-      setTimeout(()=>{
+      setTimeout(() => {
         if (role === "seller") {
-        navigate("/seller/seller-profile");
-      }
-      if (role === "customer") {
-        navigate("/customer/customer-profile");
-      }
-      if (role === "admin") {
-        navigate("/admin");
-      }
+          navigate("/seller/seller-profile");
+        }
+        if (role === "customer") {
+          navigate("/customer/customer-profile");
+        }
+        if (role === "admin") {
+          navigate("/admin");
+        }
       }, 1000);
 
     } catch (err) {
@@ -61,7 +77,12 @@ const LoginForm = () => {
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
-      <Card sx={{ p: 2, borderRadius: 7, boxShadow: 4 }}>
+      <Card sx={{
+        p: 4,
+        borderRadius: 4,
+        background: "rgba(220, 164, 246, 0.92)",
+        boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
+      }}>
         <CardContent>
           <Typography variant="h4" align="center" fontWeight="bold">LOGIN</Typography>
 

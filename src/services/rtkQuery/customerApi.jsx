@@ -59,7 +59,7 @@ export const customerApi = baseApi.injectEndpoints({
         url : "/users/cart",
         method:"GET",
       }),
-      invalidatesTags:["customers"]
+      providesTags:["customers"]
     }),
 
     removeFromCart:builder.mutation({
@@ -68,11 +68,19 @@ export const customerApi = baseApi.injectEndpoints({
         method:"PATCH"
       }),
       invalidatesTags:["customers"]
-    })
+    }),
+
+    userDashboard: builder.query({
+      query: () => ({
+        url: `/users/dashboard`,
+        method: "GET"
+      }),
+      invalidatesTags: ["customers"],
+    }),
    
 })
 });
 
-export const {useCustomerDetailsQuery, useGetCatalogQuery, useGetAllProductsQuery,
+export const {useCustomerDetailsQuery, useGetCatalogQuery, useGetAllProductsQuery,useUserDashboardQuery,
   useAddToCartMutation, useCartQuery, useBuyProductMutation, useCancelOrderMutation, useRemoveFromCartMutation } = customerApi;
 
