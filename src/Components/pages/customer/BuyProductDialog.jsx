@@ -126,7 +126,7 @@ const BuyProductDialog = ({ open, onClose, product, onSuccess }) => {
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} disabled={isLoading}>
+        <Button onClick={handleClose} variant="contained" color="error" disabled={isLoading}>
           Cancel
         </Button>
         <Button

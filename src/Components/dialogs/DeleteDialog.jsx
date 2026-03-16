@@ -48,7 +48,7 @@ const DeleteDialog = ({
           {confirmText}
         </Button>
         <Button
-          variant="outlined"
+          variant="contained"
           onClick={onClose}
           sx={{
             color: "text.primary",
@@ -57,7 +57,6 @@ const DeleteDialog = ({
             fontWeight: 600,
             borderRadius: 1.5,
             px: 3,
-            "&:hover": { bgcolor: "grey.100" },
           }}
         >
           {cancelText}

@@ -85,11 +85,27 @@ export const customerApi = baseApi.injectEndpoints({
         params:{limit, page}
       }),
       providesTags:["customers"]
+    }),
+    getAllCategory: builder.query({
+      query:()=>({
+        url : "/users/all-category",
+        method:"GET",
+      }),
+      providesTags:["customers"]
+    }),
+    
+    getCategory: builder.query({
+      query: ({name, limit, page}) =>({
+        url : `/users/category/${name}`,
+        method:"GET",
+        params:{limit, page},
+      }),
+      providesTags:["customers"]
     })
 })
 });
 
 export const {useCustomerDetailsQuery, useGetCatalogQuery, useGetAllProductsQuery,useUserDashboardQuery,
   useAddToCartMutation, useCartQuery, useBuyProductMutation, useCancelOrderMutation, useRemoveFromCartMutation,
-useSearchProductQuery } = customerApi;
+useSearchProductQuery, useGetCategoryQuery, useGetAllCategoryQuery } = customerApi;
 
