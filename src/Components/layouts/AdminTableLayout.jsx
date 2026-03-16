@@ -85,7 +85,7 @@ const AdminTableLayout = ({
           backgroundColor: "background.paper"
         }}
       >
-        {headerContent && headerContent}
+     
        
           <Table>
 

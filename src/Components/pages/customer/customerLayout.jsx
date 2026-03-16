@@ -5,6 +5,7 @@ import { Storefront, ShoppingCart, GridView, Person, Search, Logout, Brightness4
 import CommonLayout from "../../layouts/CommonLayout";
 import { useNavigate, Outlet } from "react-router-dom";
 import { ColorModeContext } from "../../../theme/themeProvider";
+import ThemeToggle from "../../../theme/themeToggle";
 
 const CustomerLayout = () => {
     const navigate = useNavigate();
@@ -39,9 +40,7 @@ const CustomerLayout = () => {
                                 {item.text}
                             </Button>
                         ))}
-                        <IconButton onClick={toggleTheme} color="inherit" sx={{ ml: 1 }}>
-                            {mode === "dark" ? <Brightness7 /> : <Brightness4 />}
-                        </IconButton>
+                        <ThemeToggle/>
                         <Button color="error" startIcon={<Logout/>} onClick={handleLogout} sx={{ ml: 2 }}>
                             Logout 
                         </Button>
