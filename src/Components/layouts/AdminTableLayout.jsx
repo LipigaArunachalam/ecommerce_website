@@ -9,10 +9,11 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper, Container,
-  TablePagination, 
+  Paper,
+  Container,
+  TablePagination,
   CircularProgress,
-  Typography,Card
+  Alert
 } from "@mui/material";
 
 const AdminTableLayout = ({
@@ -86,17 +87,6 @@ const AdminTableLayout = ({
           backgroundColor: "background.paper"
         }}
       >
-        {headerContent && headerContent}
-        <TableContainer
-          component={Paper}
-          sx={{
-            borderRadius: 3,
-            overflow: "hidden",
-            border: "1px solid",
-            borderColor: "divider",
-            backgroundColor: "background.paper"
-          }}
-        >
           <Table>
 
             {/* TABLE HEADER */}
