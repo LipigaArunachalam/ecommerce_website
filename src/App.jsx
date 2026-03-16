@@ -21,6 +21,7 @@ import Login from './Components/pages/auth/login';
 import Signup from './Components/pages/auth/signup';
 import ForgetPassword from './Components/pages/auth/forgetPass';
 import PasswordReset from './Components/pages/auth/passwordReset';
+import Search from './Components/pages/customer/search';
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
               <Route path="cart" element={<Cart />} />
               <Route path="orders" element={<Order />} />
               <Route path="logout" element={<Logout />} />
+              <Route path="search" element={<Search/>}/>
             </Route>
           </Route>
 

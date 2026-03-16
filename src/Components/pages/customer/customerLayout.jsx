@@ -12,10 +12,10 @@ const CustomerLayout = () => {
 
     const menuItems = [
         { text: "Products", icon: <GridView/>, path: "/customer/catalog"},
-        { text: "Profile", icon: <Person />, path: "/customer/customer-profile" },
-        { text: "Cart", icon: <ShoppingCart />, path: "/customer/cart" },
         { text: "Orders", icon: <Storefront />, path: "/customer/orders" },
         { text: "Search", icon: <Search />, path: "/customer/search"},
+        {  icon: <Person />, path: "/customer/customer-profile" },
+        {  icon: <ShoppingCart />, path: "/customer/cart" },
     ];
 
     const handleNavigate = (path) => {
@@ -27,7 +27,7 @@ const CustomerLayout = () => {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="static" sx={{ backgroundColor: "#6a04a0" }}>
                 <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Ecommerce

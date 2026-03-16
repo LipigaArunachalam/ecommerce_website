@@ -10,9 +10,8 @@ import {
   TableHead,
   TableRow,
   Paper, Container,
-  TablePagination, 
+  TablePagination, Alert,
   CircularProgress,
-  Typography,Card
 } from "@mui/material";
 
 const AdminTableLayout = ({
@@ -87,16 +86,7 @@ const AdminTableLayout = ({
         }}
       >
         {headerContent && headerContent}
-        <TableContainer
-          component={Paper}
-          sx={{
-            borderRadius: 3,
-            overflow: "hidden",
-            border: "1px solid",
-            borderColor: "divider",
-            backgroundColor: "background.paper"
-          }}
-        >
+       
           <Table>
 
             {/* TABLE HEADER */}
@@ -188,7 +178,9 @@ const AdminTableLayout = ({
           ".MuiTablePagination-toolbar": { px: 2 },
         }}
       />
+      
     </Card>
+    
     </Container>
   );
 
