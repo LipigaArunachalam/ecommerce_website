@@ -26,21 +26,25 @@ const Catalog = () => {
     const columns = [
         {
             key: "product_category_name",
-            label: "product category"
+            label: "Product Category"
         },
         {
-            key:"product_name",
-            label:"Product name"
+            key: "product_name",
+            label: "Product Name"
         },
         {
             key: "product_image_url",
             label: "Image",
             render: (row) => (
-                <img
-                    src={row.product_image_url}
-                    alt="product"
-                    style={{ height: "100px", width: "100px", objectFit: "cover" }}
-                />
+                row.product_image_url ? (
+                    <img
+                        src={row.product_image_url}
+                        alt="-"
+                        style={{ height: "100px", width: "100px", objectFit: "cover" }}
+                    />
+                ) : (
+                    <span>-</span>
+                )
             )
         },
         {
@@ -81,13 +85,13 @@ const Catalog = () => {
     };
 
     const handleCart = async (product_id) => {
-          const uid = localStorage.getItem("user_id")
-          try{
-            await addToCart({uid:uid, pid : product_id})
+        const uid = localStorage.getItem("user_id")
+        try {
+            await addToCart({ uid: uid, pid: product_id })
             // navigate("/customer/cart")
-          }catch(err){
+        } catch (err) {
             console.error(err);
-          }
+        }
     };
 
 

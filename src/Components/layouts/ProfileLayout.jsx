@@ -34,7 +34,7 @@ const ProfileLayout = ({
     return (
       <Container maxWidth="sm" sx={{ mt: 4 }}>
         <Alert severity="error">
-          Error loading profile. Please try again later.
+          Error loading profile.
         </Alert>
       </Container>
     );
@@ -43,7 +43,7 @@ const ProfileLayout = ({
   if (!data) {
     return (
       <Container maxWidth="sm" sx={{ mt: 4 }}>
-        <Alert severity="info">No profile data available.</Alert>
+        <Alert severity="info">Profile data not available.</Alert>
       </Container>
     );
   }
@@ -97,7 +97,7 @@ const ProfileLayout = ({
 
         <Divider sx={{ mb: 4 }} />
 
-        {/* ── Detail fields ── */}
+  
         <Grid container spacing={3}>
           {fields.map((field, idx) => (
             <Grid item xs={12} sm={6} key={idx}>

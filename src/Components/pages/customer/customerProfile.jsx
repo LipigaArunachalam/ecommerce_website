@@ -33,7 +33,7 @@ const CustomerProfile = () => {
 return (
   <Box sx={{ width: "100%" }}>
 
-    {/* Profile */}
+
     <ProfileLayout
       data={data}
       isLoading={isLoading}
@@ -41,14 +41,12 @@ return (
       fields={fields}
     />
 
-    {/* Dashboard */}
     <Box sx={{ mt: 5, px: 2 }}>
 
       <Typography variant="h5" fontWeight="bold" sx={{ mb: 3 }}>
         Customer Dashboard
       </Typography>
 
-      {/* Row 1 - Cards */}
       <Box
         sx={{
           display: "grid",
@@ -115,7 +113,6 @@ return (
 
       </Box>
 
-      {/* Row 2 - Charts */}
       <Box
         sx={{
           display: "grid",
