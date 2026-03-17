@@ -103,10 +103,6 @@ const Order = () => {
             label: "Payment"
         },
         {
-            key: "Installation",
-            label: "Installation"
-        },
-        {
             key: "action",
             label: "Action",
             render: (row) => {

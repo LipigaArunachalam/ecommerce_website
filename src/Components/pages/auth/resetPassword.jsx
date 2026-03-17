@@ -66,7 +66,7 @@ const ResetPassword = () => {
       }}>
         <CardContent>
 
-          <Typography variant="h4" align="center" fontWeight="bold">RESET PASSWORD</Typography>
+          <Typography variant="h4" align="center" fontWeight="bold" color="black">RESET PASSWORD</Typography>
           <form onSubmit={handleSubmit(handleReset)}>
             <Stack spacing={3} sx={{ mt: 2 }}>
 

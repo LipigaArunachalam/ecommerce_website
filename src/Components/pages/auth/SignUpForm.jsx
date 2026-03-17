@@ -78,7 +78,7 @@ const SignUpForm = () => {
         boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
       }}>
         <CardContent>
-          <Typography variant="h4" align="center" fontWeight="bold">SIGNUP</Typography>
+          <Typography variant="h4" align="center" fontWeight="bold" color="black">SIGNUP</Typography>
 
           <form onSubmit={handleSubmit(handleSignup)}>
             <Stack spacing={2} sx={{ mt: 2 }}>

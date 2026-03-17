@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import {
   useCustomerDetailsQuery, useUserDashboardQuery, useEditProfileMutation,
-  useAddAddressMutation, useDeleteAddressMutation
-} from "../../../services/rtkQuery/customerApi";
+  useDeleteAddressMutation} from "../../../services/rtkQuery/customerApi";
 import { Email, LocationOn, Home, Map } from "@mui/icons-material";
 import ProfileLayout from "../../layouts/ProfileLayout";
 import { PieChart } from "@mui/x-charts/PieChart";
