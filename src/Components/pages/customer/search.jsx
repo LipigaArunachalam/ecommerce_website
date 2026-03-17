@@ -31,7 +31,6 @@ const Search = () => {
         }}
       />
 
-      {/* pass search term to catalog */}
       <Catalog searchTerm={searchTerm} />
 
     </Box>
