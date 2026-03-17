@@ -94,11 +94,29 @@ export const customerApi = baseApi.injectEndpoints({
         body:{data}
       }),
       invalidatesTags:["customers"]
+    }),
+
+    addAddress: builder.mutation({
+      query:({uid,data})=>({
+        url : `/users/address/add/${uid}`,
+        method:"PATCH",
+        body : {data}
+      }),
+      invalidatesTags:["customers"]
+    }),
+
+    deleteAddress: builder.mutation({
+      query:({uid,data})=>({
+        url : `/users/address/delete/${uid}`,
+        method:"PATCH",
+        body : {data}
+      }),
+      invalidatesTags:["customers"]
     })
 })
 });
 
 export const {useCustomerDetailsQuery, useGetCatalogQuery, useGetAllProductsQuery,useUserDashboardQuery,
   useAddToCartMutation, useCartQuery, useBuyProductMutation, useCancelOrderMutation, useRemoveFromCartMutation,
-useSearchProductQuery, useEditProfileMutation } = customerApi;
+useSearchProductQuery, useEditProfileMutation, useAddAddressMutation, useDeleteAddressMutation } = customerApi;
 
