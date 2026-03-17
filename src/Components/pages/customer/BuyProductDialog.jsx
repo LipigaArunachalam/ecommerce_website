@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -17,16 +17,25 @@ const BuyProductDialog = ({ open, onClose, product, onSuccess }) => {
   const [buyProduct, { isLoading, isSuccess, isError, error, reset }] = useBuyProductMutation();
 
   const [formData, setFormData] = useState({
-    quantity: 1,
+    // quantity: product.quantity || 1,
     payment_type: "credit_card",
     payment_installments: 1,
   });
 
   const [message, setMessage] = useState("");
 
+  useEffect(() => {
+    if (product) {
+      setFormData((prev) => ({
+        ...prev,
+        quantity: product.quantity || 1
+      }));
+    }
+  }, [product]);
+
   const handleClose = () => {
     setMessage("");
-    reset(); // Clear RTK Query mutation state
+    reset();
     onClose();
   };
 
@@ -60,12 +69,12 @@ const BuyProductDialog = ({ open, onClose, product, onSuccess }) => {
       if (onSuccess) {
         onSuccess();
       }
-      
+
       // Auto close after success message
       setTimeout(() => {
         handleClose();
       }, 2000);
-      
+
     } catch (err) {
       console.error("Purchase failed:", err);
       setMessage(err?.data?.message || "Purchase failed. Please try again.");

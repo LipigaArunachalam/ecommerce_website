@@ -62,7 +62,7 @@ const Search = () => {
         {!categoriesLoading && categories?.map((cat) => {
           const categoryName = typeof cat === 'string' ? cat : cat.category_name;
           const categoryId = typeof cat === 'string' ? cat : (cat.category_id || cat.category_name);
-          
+
           // Format label: agro_industry_and_commerce -> Agro Industry And Commerce
           const displayLabel = categoryName
             .split('_')
@@ -74,8 +74,8 @@ const Search = () => {
               key={categoryId}
               variant={selectedCategory === categoryName ? "contained" : "outlined"}
               onClick={() => handleCategoryClick(categoryName)}
-              sx={{ 
-                borderRadius: 20, 
+              sx={{
+                borderRadius: 20,
                 flexShrink: 0,
                 textTransform: 'none', // Disable default uppercase to use our custom Case
                 minWidth: 'auto',

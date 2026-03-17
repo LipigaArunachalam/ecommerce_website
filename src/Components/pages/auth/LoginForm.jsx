@@ -28,7 +28,7 @@ const LoginForm = () => {
     }
 
     if (role === "customer") {
-      navigate("/customer/catalog");
+      navigate("/customer/search");
     }
 
     if (role === "admin") {
@@ -93,7 +93,7 @@ const LoginForm = () => {
         boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
       }}>
         <CardContent>
-          <Typography variant="h4" align="center" fontWeight="bold">LOGIN</Typography>
+          <Typography variant="h4" align="center" fontWeight="bold" color="black">LOGIN</Typography>
 
           {/* {error && <Typography color="error" align="center">{error}</Typography>} */}
 

@@ -63,7 +63,7 @@ const ForgotPassword = () => {
         boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
       }}>
           <CardContent >
-          <Typography  variant="h5" align="center" fontWeight="bold">FORGET PASSWORD</Typography>
+          <Typography  variant="h5" align="center" fontWeight="bold" color="black">FORGET PASSWORD</Typography>
 
       <form onSubmit={handleSubmit(handlePassword)}>
         <Stack spacing={3} sx={{ mt: 2 }}>
