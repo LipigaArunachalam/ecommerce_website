@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { useCustomerDetailsQuery, useUserDashboardQuery, useEditProfileMutation } from "../../../services/rtkQuery/customerApi";
+import {
+  useCustomerDetailsQuery, useUserDashboardQuery, useEditProfileMutation,
+  useAddAddressMutation, useDeleteAddressMutation
+} from "../../../services/rtkQuery/customerApi";
 import { Email, LocationOn, Home, Map } from "@mui/icons-material";
 import ProfileLayout from "../../layouts/ProfileLayout";
 import { PieChart } from "@mui/x-charts/PieChart";
@@ -28,26 +31,32 @@ const CustomerProfile = () => {
 
   const fields = [
     { icon: <Email color="primary" />, label: "Email Address", value: data?.email },
-    { icon: <LocationOn color="primary" />, label: "City", value: data?.city },
-    { icon: <Map color="primary" />, label: "State", value: data?.state },
-    { icon: <Home color="primary" />, label: "Zip Code", value: data?.zip_code },
+    {
+      icon: <Home color="primary" />,
+      label: "Address",
+      value: `${data?.addresses?.length || 0} saved`
+    }
   ];
 
-  const [openEdit, setOpenEdit] = useState(false);
+  // const [addAddress] = useAddAddressMutation();
+  const [deleteAddress] = useDeleteAddressMutation();
 
-  const [formData, setFormData] = useState({
-    email: "",
+  const [newAddress, setNewAddress] = useState({
+    address_line: "",
     city: "",
     state: "",
     zip_code: ""
   });
 
+  const [openEdit, setOpenEdit] = useState(false);
+
+  const [formData, setFormData] = useState({
+    email: "",
+  });
+
   const handleEditOpen = () => {
     setFormData({
       email: data?.email || "",
-      city: data?.city || "",
-      state: data?.state || "",
-      zip_code: data?.zip_code || ""
     });
 
     setOpenEdit(true);
@@ -66,16 +75,82 @@ const CustomerProfile = () => {
     }));
   };
 
+
+  // const handleAddAddress = async () => {
+  //   const uid = localStorage.getItem("user_id");
+
+  //   try {
+  //     if (!newAddress.address_line || !newAddress.city || !newAddress.state || !newAddress.zip_code) {
+  //       setSnackMessage("Please fill all fields");
+  //       setSnackSeverity("error");
+  //       setSnackOpen(true);
+  //       return;
+  //     } else {
+  //       await addAddress({
+  //         uid,
+  //         data: newAddress
+  //       }).unwrap();
+
+  //       setSnackMessage("Address added");
+  //       setSnackSeverity("success");
+  //       setSnackOpen(true);
+
+  //       setNewAddress({
+  //         address_line: "",
+  //         city: "",
+  //         state: "",
+  //         zip_code: ""
+  //       });
+  //     }
+
+  //   } catch (err) {
+  //     setSnackMessage("Failed to add address");
+  //     setSnackSeverity("error");
+  //     setSnackOpen(true);
+  //   }
+  // };
+
+  const handleDeleteAddress = async (id) => {
+    const uid = localStorage.getItem("user_id");
+
+    try {
+      await deleteAddress({ uid, data: { _id: id } }).unwrap();
+
+      setSnackMessage("Address deleted");
+      setSnackSeverity("success");
+      setSnackOpen(true);
+
+    } catch (err) {
+      setSnackMessage("Delete failed");
+      setSnackSeverity("error");
+      setSnackOpen(true);
+    }
+  };
+
   const handleSubmit = async () => {
     try {
 
       const uid = localStorage.getItem("user_id");
       console.log(formData)
+      if (newAddress.address_line == "" || newAddress.city == "" || newAddress.state == "" || newAddress.zip_code == "") {
+        setSnackMessage("Fill all the feilds")
+        setSnackSeverity("error")
+        setSnackOpen(true)
+        return
+      }
       await editProfile({
         uid: uid,
-        data: formData
+        data: {
+          email: formData.email,
+          addresses: [...data.addresses, newAddress]
+        }
       }).unwrap();
-     
+      setNewAddress({
+        address_line: "",
+        city: "",
+        state: "",
+        zip_code: ""
+      });
       setOpenEdit(false);
       setSnackMessage("edited sucessfully")
       setSnackSeverity("success")
@@ -113,7 +188,16 @@ const CustomerProfile = () => {
 
         <DialogTitle>Edit Profile</DialogTitle>
 
-        <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
+        <DialogContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            mt: 1,
+            maxHeight: "70vh",
+            overflowY: "auto"
+          }}
+        >
 
           <TextField
             label="Email"
@@ -123,29 +207,82 @@ const CustomerProfile = () => {
             fullWidth
           />
 
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            Addresses
+          </Typography>
+
+          {data?.addresses?.map((addr) => (
+            <Box
+              key={addr._id}
+              sx={{
+                p: 1.5,
+                mt: 1,
+                border: "1px solid",
+                borderColor: "divider",
+                borderRadius: 2
+              }}
+            >
+              <Typography variant="body2">
+                {addr.address_line}, {addr.city}, {addr.state} - {addr.zip_code}
+              </Typography>
+
+              <Button
+                size="small"
+                color="error"
+                onClick={() => handleDeleteAddress(addr._id)}
+              >
+                Delete
+              </Button>
+            </Box>
+          ))}
+
+          <Typography variant="subtitle1" sx={{ mt: 2 }}>
+            Add New Address
+          </Typography>
+
+          <TextField
+            label="Address"
+            fullWidth
+            value={newAddress.address_line}
+            onChange={(e) =>
+              setNewAddress({ ...newAddress, address_line: e.target.value })
+            }
+          />
+
           <TextField
             label="City"
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
             fullWidth
+            value={newAddress.city}
+            onChange={(e) =>
+              setNewAddress({ ...newAddress, city: e.target.value })
+            }
           />
 
           <TextField
             label="State"
-            name="state"
-            value={formData.state}
-            onChange={handleChange}
             fullWidth
+            value={newAddress.state}
+            onChange={(e) =>
+              setNewAddress({ ...newAddress, state: e.target.value })
+            }
           />
 
           <TextField
             label="Zip Code"
-            name="zip_code"
-            value={formData.zip_code}
-            onChange={handleChange}
             fullWidth
+            value={newAddress.zip_code}
+            onChange={(e) =>
+              setNewAddress({ ...newAddress, zip_code: e.target.value })
+            }
           />
+
+          {/* <Button
+            variant="outlined"
+            sx={{ mt: 1 }}
+            onClick={handleAddAddress}
+          >
+            Add Address
+          </Button> */}
 
         </DialogContent>
 
@@ -314,119 +451,5 @@ const CustomerProfile = () => {
     </Box>
   );
 }
-
-
-
-
-// return (
-//   <Box>
-//   <ProfileLayout
-//         data={data}
-//         isLoading={isLoading}
-//         isError={!!error}
-//         fields={fields}/>
-
-//   <Box sx={{ mt: 4 }}>
-
-//       <Typography variant="h5" fontWeight="bold" sx={{ mb: 3 }}>
-//         Customer Dashboard
-//       </Typography>
-
-//       <Grid container spacing={3}>
-
-//         <Grid item xs={12} md={4}>
-//           <Paper sx={{ p: 3, borderRadius: 3 }}>
-//             <Typography variant="subtitle2" color="text.secondary">
-//               Total Spent
-//             </Typography>
-//             <Typography variant="h4" sx={{ color: "#9c35c5", fontWeight: 700 }}>
-//               ${dashboard?.total_spent || 0}
-//             </Typography>
-//           </Paper>
-//         </Grid>
-
-//         <Grid item xs={12} md={4}>
-//           <Paper sx={{ p: 3, borderRadius: 3 }}>
-//             <Typography variant="subtitle2" color="text.secondary">
-//               Total Orders
-//             </Typography>
-//             <Typography variant="h4" sx={{ fontWeight: 700 }}>
-//               {dashboard?.total_orders || 0}
-//             </Typography>
-//           </Paper>
-//         </Grid>
-
-//         <Grid item xs={12} md={4}>
-//           <Paper sx={{ p: 3, borderRadius: 3 }}>
-//             <Typography variant="subtitle2" color="text.secondary">
-//               Delivered Orders
-//             </Typography>
-//             <Typography variant="h4" sx={{ fontWeight: 700 }}>
-//               {dashboard?.delivered_orders || 0}
-//             </Typography>
-//           </Paper>
-//         </Grid>
-
-//         <Grid item xs={12} md={6}>
-//           <Paper sx={{ p: 3, borderRadius: 3 }}>
-//             <Typography variant="h6" sx={{ mb: 2 }}>
-//               Order Status
-//             </Typography>
-
-//             <PieChart
-//               series={[
-//                 {
-//                   data: [
-//                     { id: 0, value: dashboard?.delivered_orders || 0, label: "Delivered", color: "#4caf50" },
-//                     {
-//                       id: 1,
-//                       value: (dashboard?.total_orders || 0) - (dashboard?.delivered_orders || 0),
-//                       label: "Pending",
-//                       color: "#9c35c5"
-//                     }
-//                   ]
-//                 }
-//               ]}
-//               width={350}
-//               height={250}
-//             />
-//           </Paper>
-//         </Grid>
-
-//         <Grid item xs={12} md={6}>
-//           <Paper sx={{ p: 3, borderRadius: 3 }}>
-//             <Typography variant="h6" sx={{ mb: 2 }}>
-//               Orders Overview
-//             </Typography>
-
-//             <BarChart
-//               xAxis={[
-//                 {
-//                   scaleType: "band",
-//                   data: ["Orders", "Delivered"]
-//                 }
-//               ]}
-//               series={[
-//                 {
-//                   data: [
-//                     dashboard?.total_orders || 0,
-//                     dashboard?.delivered_orders || 0
-//                   ],
-//                   color: "#9c35c5"
-//                 }
-//               ]}
-//               width={350}
-//               height={250}
-//             />
-//           </Paper>
-//         </Grid>
-
-//       </Grid>
-
-//     </Box>
-
-//   </Box>
-// );
-// };
 
 export default CustomerProfile;
