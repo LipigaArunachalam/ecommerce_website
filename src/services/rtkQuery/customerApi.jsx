@@ -86,7 +86,22 @@ export const customerApi = baseApi.injectEndpoints({
       }),
       providesTags:["customers"]
     }),
-
+    getAllCategory: builder.query({
+      query:()=>({
+        url : "/users/all-category",
+        method:"GET",
+      }),
+      providesTags:["customers"]
+    }),
+    
+    getCategory: builder.query({
+      query: ({name, limit, page}) =>({
+        url : `/users/category/${name}`,
+        method:"GET",
+        params:{limit, page},
+      }),
+      providesTags:["customers"]
+    }),
     editProfile : builder.mutation({
       query:({data, uid})=>({
         url : `/users/${uid}/edit`,
@@ -113,10 +128,9 @@ export const customerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags:["customers"]
     })
-})
+  })
 });
 
 export const {useCustomerDetailsQuery, useGetCatalogQuery, useGetAllProductsQuery,useUserDashboardQuery,
   useAddToCartMutation, useCartQuery, useBuyProductMutation, useCancelOrderMutation, useRemoveFromCartMutation,
-useSearchProductQuery, useEditProfileMutation, useAddAddressMutation, useDeleteAddressMutation } = customerApi;
-
+useSearchProductQuery, useGetCategoryQuery, useGetAllCategoryQuery, useEditProfileMutation, useAddAddressMutation, useDeleteAddressMutation } = customerApi;

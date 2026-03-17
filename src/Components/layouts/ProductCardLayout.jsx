@@ -42,7 +42,7 @@ const ProductCardLayout = ({
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
-      <Grid container spacing={3}>
+      <Grid container spacing={1}>
         {data.length > 0 ? (
           data.map((product) => (
             <Grid item key={product.product_id} xs={12} sm={6} md={4} lg={3}>

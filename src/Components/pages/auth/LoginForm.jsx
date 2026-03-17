@@ -56,7 +56,7 @@ const LoginForm = () => {
           navigate("/seller/seller-profile");
         }
         if (role === "customer") {
-          navigate("/customer/catalog");
+          navigate("/customer/search");
         }
         if (role === "admin") {
           navigate("/admin");

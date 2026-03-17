@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ProductCardLayout from "../../layouts/ProductCardLayout";
-import { useAddToCartMutation, useGetCatalogQuery,useSearchProductQuery } from "../../../services/rtkQuery/customerApi";
+import { useAddToCartMutation, useGetCatalogQuery, useSearchProductQuery, useGetCategoryQuery } from "../../../services/rtkQuery/customerApi";
 import { Box } from "@mui/material"
 import BuyProductDialog from "./BuyProductDialog";
 import ProductDetailsDialog from "./ProductDetailsDialog";
@@ -8,7 +8,7 @@ import ProductDetailsDialog from "./ProductDetailsDialog";
 import SnackBar from './../../../services/snackBar/snackBar'
 
 
-const Catalog = ({searchTerm}) => {
+const Catalog = ({ searchTerm, selectedCategory }) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(15);
     const [isBuyDialogOpen, setIsBuyDialogOpen] = useState(false);
@@ -21,13 +21,21 @@ const Catalog = ({searchTerm}) => {
 
 
 
-    const { data, isLoading, error } = useGetCatalogQuery({
+    const { data: catalogData, isLoading: catalogLoading, error: catalogError } = useGetCatalogQuery({
         page: page + 1,
         limit: rowsPerPage,
-    });
+    }, { skip: !!searchTerm || !!selectedCategory });
 
-    const { data:searchdata } = useSearchProductQuery({prod:searchTerm,page: page + 1,
-        limit: rowsPerPage},{ skip: !searchTerm });
+    const { data: searchdata, isLoading: isSearchLoading, error: searchError } = useSearchProductQuery({
+        prod: searchTerm, page: page + 1,
+        limit: rowsPerPage
+    }, { skip: !searchTerm });
+
+    const { data: categoryData, isLoading: isCategoryLoading, error: categoryError } = useGetCategoryQuery({
+        name: selectedCategory,
+        page: page + 1,
+        limit: rowsPerPage
+    }, { skip: !!searchTerm || !selectedCategory });
 
     const [addToCart] = useAddToCartMutation();
 
@@ -57,7 +65,23 @@ const Catalog = ({searchTerm}) => {
         }
     };
 
-    const displayData = searchTerm ? searchdata : data;
+    let displayData = [];
+    let finalLoading = false;
+    let finalError = null;
+
+    if (searchTerm) {
+        displayData = searchdata;
+        finalLoading = isSearchLoading;
+        finalError = searchError;
+    } else if (selectedCategory) {
+        displayData = categoryData;
+        finalLoading = isCategoryLoading;
+        finalError = categoryError;
+    } else {
+        displayData = catalogData;
+        finalLoading = catalogLoading;
+        finalError = catalogError;
+    }
 
     return (
         <Box>
@@ -70,8 +94,8 @@ const Catalog = ({searchTerm}) => {
                     setRowsPerPage(parseInt(e.target.value, 10));
                     setPage(0);
                 }}
-                isLoading={isLoading}
-                isError={!!error}
+                isLoading={finalLoading}
+                isError={!!finalError}
                 onCardClick={handleCardClick}
             />
 

@@ -98,12 +98,12 @@ const ProductDetailsDialog = ({ open, onClose, product, onAddToCart, onBuy }) =>
         </Grid>
       </DialogContent>
       <DialogActions sx={{ p: 2, justifyContent: 'space-between' }}>
-        <Button onClick={onClose} variant="text">
+        <Button onClick={onClose} variant="contained" color="error">
           Close
         </Button>
         <Stack direction="row" spacing={2}>
           <Button
-            variant="outlined"
+            variant="contained"
             startIcon={<ShoppingCart />}
             onClick={() => {
               onAddToCart(product.product_id);
