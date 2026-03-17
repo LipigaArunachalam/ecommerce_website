@@ -59,6 +59,7 @@ function App() {
             <Route path="/customer" element={<CustomerLayout />}>
               <Route path="search" element={<Search />} />
               <Route path="catalog" element={<Catalog />} />
+              {/* <Route path="catalog" element={<Catalog />} /> */}
               <Route path="customer-profile" element={<CustomerProfile />} />
               <Route path="cart" element={<Cart />} />
               <Route path="orders" element={<Order />} />
